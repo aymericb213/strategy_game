@@ -1,4 +1,4 @@
-package ppc;
+package modele;
 
 import java.util.*;
 
