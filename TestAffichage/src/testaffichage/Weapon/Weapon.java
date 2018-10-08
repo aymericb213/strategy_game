@@ -1,5 +1,5 @@
 
-package testaffichage;
+package testaffichage.Weapon;
 
 /**
  *

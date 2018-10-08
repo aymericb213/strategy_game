@@ -1,5 +1,7 @@
 
-package testaffichage;
+package testaffichage.Weapon;
+
+import testaffichage.Weapon.Weapon;
 
 /**
  *
@@ -39,7 +41,14 @@ public class NormalWeapon implements Weapon{
 
     @Override
     public void buttkick() {
-        throw new UnsupportedOperationException("Can't buttkick with grenade ."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public String toString(){
+        String s="Weapon :"+weapName+"\n\tdamage :"+damage+"\n\tmultiplier :"+multiplier+
+                "\n\trange of effect :"+range+"\n\tstealth :"+spread+"\n\tnombre de projectiles"+nbBullet+"\n\n";
+        return s;
     }
 
 }

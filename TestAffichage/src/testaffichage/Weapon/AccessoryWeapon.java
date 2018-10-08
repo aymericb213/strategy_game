@@ -1,5 +1,7 @@
 
-package testaffichage;
+package testaffichage.Weapon;
+
+import testaffichage.Weapon.Weapon;
 
 /**
  *
@@ -40,7 +42,14 @@ public class AccessoryWeapon implements Weapon{
 
     @Override
     public void buttkick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Can't buttkick with grenade."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public String toString(){
+        String s="Weapon :"+weapName+"\n\tdamage :"+damage+"\n\trange of throw :"+rangeOfThrow+
+                "\n\trange of effect :"+rangeOfEffect+"\n\tstealth :"+stealth+"\n\n";
+        return s;
     }
 
 }
