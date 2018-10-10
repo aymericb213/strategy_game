@@ -5,10 +5,17 @@
  */
 package Graphics;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author quentindeme
  */
 public interface ListenableModel {
+    
+    ArrayList<ModelListener> listeners = new ArrayList<ModelListener>();
+    
+    void addListener(ModelListener listener);
+    void removeListener(ModelListener listener);
     
 }

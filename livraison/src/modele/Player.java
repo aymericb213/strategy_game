@@ -19,8 +19,8 @@ public class Player extends Tile{
     private int energy;
     private int life;
     
-    public Player(String name, BufferedImage img){
-        super(50,50,img);
+    public Player(int x, int y,String name, BufferedImage img){
+        super(x,y,img);
         nbInstance++;
         this.name = name;
         initPlayer();

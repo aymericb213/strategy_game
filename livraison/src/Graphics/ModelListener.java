@@ -11,4 +11,6 @@ package Graphics;
  */
 public interface ModelListener {
     
+    void update(Object source);
+    
 }
