@@ -22,6 +22,6 @@ public class FreeTile extends Tile {
 	*/
   @Override
   public String toString() {
-    return " ";
+    return "_";
   }
 }
