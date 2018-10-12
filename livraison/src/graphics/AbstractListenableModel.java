@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Graphics;
+package graphics;
 
 import java.util.ArrayList;
 
@@ -12,22 +12,22 @@ import java.util.ArrayList;
  * @author quentindeme
  */
 public abstract class AbstractListenableModel implements ListenableModel{
-    
+
     private ArrayList<ModelListener> listeners;
-    
+
     public AbstractListenableModel(){
         this.listeners = new ArrayList<ModelListener>();
     }
-    
+
     @Override
     public void addListener(ModelListener listener){
         listeners.add(listener);
     }
-    
+
     public void removeListener(ModelListener listener){
         listeners.remove(listener);
     }
-    
+
     /**
     * Update models
     */
@@ -36,5 +36,5 @@ public abstract class AbstractListenableModel implements ListenableModel{
                 listener.update(this);
         }
     }
-    
+
 }

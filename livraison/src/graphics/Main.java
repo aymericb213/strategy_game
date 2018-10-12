@@ -1,7 +1,6 @@
-package modele;
+package graphics;
 
-import Graphics.GUI;
-import Graphics.View;
+import modele.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +10,8 @@ import javax.imageio.ImageIO;
 public class Main {
 
 	public static void main(String[] args) {
-            
+
             System.out.println(System.getProperty("user.dir"));
-            
-            
 
             //Chargement de l'image qui représentera le joueur
             BufferedImage img = null;
@@ -25,12 +22,12 @@ public class Main {
             }catch(IOException e){
                 System.out.println(e);
             }
-            
+
             Player hitman = new Player(0,0,"Hitman", img);
             Game game = new Game();
             game.addPlayer(hitman);
-            
-            
+
+
             GUI gui = new GUI(game);
             gui.getView().update(null);
 	}

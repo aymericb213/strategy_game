@@ -3,43 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Graphics;
+package graphics;
 
+import modele.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import modele.Game;
-import modele.Player;
-import modele.Tile;
 
 /**
  *
  * @author quentindeme
  */
 public class View extends JPanel implements ModelListener{
-    
+
     private ArrayList<Tile> entities;
     private Game game;
     private Dimension sizeImg;
-    
+
     public View(ArrayList<Tile> entities, Game game) {
-        this.entities = entities; 
+        this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
         game.addListener(this);
     }
-    
+
     public View(Game game){
         this(new ArrayList<Tile>(), game);
     }
-    
+
     public void addEntity(Tile entity){
         entities.add(entity);
     }
-    
+
     @Override
     public void paintComponent(Graphics g){
         System.out.println();

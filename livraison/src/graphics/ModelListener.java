@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Graphics;
+package graphics;
 
 /**
  *
  * @author quentindeme
  */
 public interface ModelListener {
-    
+
     void update(Object source);
-    
+
 }

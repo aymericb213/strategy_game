@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Graphics;
+package graphics;
 
+import modele.*;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import modele.Game;
-import modele.Player;
 
 /**
  *
  * @author quentindeme
  */
 public class GUI extends JFrame{
-    
+
     private View view;
     private Game game;
-    
+
     public GUI(){
         this(new Game());
     }
-    
+
     public GUI(Game game){
         this.game = game;
         this.view = new View(game);
@@ -33,8 +32,8 @@ public class GUI extends JFrame{
         setSize(800,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
-        
+
+
         getContentPane().add(new JButton(new AbstractAction("Update"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getPlayers()){
@@ -42,15 +41,15 @@ public class GUI extends JFrame{
                     p.setY(p.getY() + 1);
                     game.stateChange();
                 }
-                
+
             }
         }));
-        
-        
+
+
         setVisible(true);
-        
+
     }
-    
+
     public View getView(){
         return this.view;
     }
@@ -58,6 +57,6 @@ public class GUI extends JFrame{
     public Game getGame(){
         return this.game;
     }
-    
-    
+
+
 }
