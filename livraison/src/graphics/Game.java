@@ -6,6 +6,8 @@
 package graphics;
 
 import modele.*;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +17,9 @@ import java.util.List;
  */
 public class Game extends AbstractListenableModel {
 
-    private List<Player> players;
     private Grid grid;
+		protected BufferedImage tile_image;
+		protected BufferedImage player_image;
 
     public Game(){
         this(null);
@@ -24,15 +27,29 @@ public class Game extends AbstractListenableModel {
 
     public Game(Grid grid){
         this.grid = grid;
-        this.players = new ArrayList<Player>();
     }
 
-    public void addPlayer(Player p){
-        players.add(p);
-    }
+		public Grid getGrid() {
+			return this.grid;
+		}
 
-    public List<Player> getPlayers(){
-        return players;
-    }
+		public BufferedImage getTileImg(){
+				return this.tile_image;
+		}
 
+		public void setTileImg(BufferedImage imageRepr) {
+				this.tile_image = imageRepr;
+		}
+
+		public BufferedImage getPlayerImg(){
+				return this.player_image;
+		}
+
+		public void setPlayerImg(BufferedImage imageRepr) {
+				this.player_image = imageRepr;
+		}
+
+		public void paint(Graphics g){
+	//			g.drawImage(imageRepr, super.x, super.y, null);
+		}
 }

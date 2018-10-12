@@ -36,7 +36,7 @@ public class GUI extends JFrame{
 
         getContentPane().add(new JButton(new AbstractAction("Update"){
             public void actionPerformed(ActionEvent e){
-                for(Player p : game.getPlayers()){
+                for(Player p : game.getGrid().getPlayers()){
                     p.setX(p.getX() + 1);
                     p.setY(p.getY() + 1);
                     game.stateChange();

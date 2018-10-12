@@ -28,6 +28,14 @@ public class Grid {
 		}
 	}
 
+	public Player[] getPlayers() {
+		return this.players;
+	}
+
+	public void addPlayer(Player p){
+			this.players[Player.nbInstance-1]=p;
+	}
+
 	public String toString() {
 		String res = "";
 		for (int i=0 ; i<this.tiles.length ; i++) {

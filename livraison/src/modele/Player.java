@@ -5,54 +5,61 @@
  */
 package modele;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.util.*;
 
 /**
  *
  * @author quentindeme
  */
-public class Player extends Tile{
+public class Player {
 
-    public static int nbInstance = 0;
-    private final String name;
-    private int energy;
-    private int life;
+	private int x;
+	private int y;
+  public static int nbInstance = 0;
+  private final String name;
+  private int energy;
+  private int life;
+	private HashMap<Weapon,Integer> loadout;
 
-    public Player(int x, int y,String name, BufferedImage img){
-        super(x,y,img);
-        nbInstance++;
-        this.name = name;
-        initPlayer();
-    }
+  public Player(int x, int y,String name){
+    nbInstance++;
+		this.x = x;
+		this.y = y;
+		this.energy = 10;
+    this.life = 10;
+    this.name = name;
+		this.loadout = new HashMap<Weapon,Integer>();
+  }
 
-    public Player(){
-        super(0,0,null);
-        nbInstance++;
-        String defaultName = "Player ";
-        defaultName += Integer.toString(nbInstance);
-        this.name = defaultName;
-        initPlayer();
-    }
+  public Player(){
+		this(0,0,new String("Player " + nbInstance));
+  }
 
-    public void initPlayer(){
-        this.energy = 10;
-        this.life = 10;
-    }
+  public String printStats(){
+    StringBuilder res = new StringBuilder();
+    res.append(name+":\n");
+    res.append("Energie : "+energy);
+    res.append("\nPoints de vie : "+life);
+    return res.toString();
+  }
 
-    @Override
-    public String toString(){
-        StringBuilder res = new StringBuilder();
+	public int getX() {
+			return this.x;
+	}
 
-        res.append(name+":\n");
-        res.append("Energie : "+energy);
-        res.append("\nPoints de vie : "+life);
-        return res.toString();
-    }
+	public int getY() {
+			return this.y;
+	}
 
-		//GUI -> enlever du modèle
-    @Override
-    public void paint(Graphics g){
-        g.drawImage(imageRepr, super.x, super.y, null);
-    }
+	public void setX(int x) {
+			this.x = x;
+	}
+
+	public void setY(int y) {
+			this.y = y;
+	}
+
+	public String toString() {
+		return "\u001B31;1m@";
+	}
 }

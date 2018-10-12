@@ -41,9 +41,9 @@ public class View extends JPanel implements ModelListener{
     @Override
     public void paintComponent(Graphics g){
         System.out.println();
-        List<Player> l = game.getPlayers();
+        Player[] l = game.getGrid().getPlayers();
         for(Player p : l){
-            BufferedImage img = p.getImg();
+            BufferedImage img = game.getPlayerImg();
             int x = (int)(sizeImg.getWidth()) * p.getX();
             int y = (int)(sizeImg.getHeight()) * p.getY();
 
