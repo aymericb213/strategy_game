@@ -23,7 +23,7 @@ public class Main {
 			System.out.println(e);
 		}
 
-		Player hitman = new Player(0,0,"Hitman");
+		Player hitman = new Player(0,0,10,10,"Hitman");
 		Game game = new Game();
 		game.getGrid().addPlayer(hitman);
 

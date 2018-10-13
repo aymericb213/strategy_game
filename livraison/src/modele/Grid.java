@@ -6,7 +6,8 @@ public class Grid {
 
 	private int width;
 	public Tile[] tiles;
-	public Player[] players;
+	private Player[] players;
+	private boolean alternate_string = false;
 
 	public Grid(int width, int height, int nb_players) {
 		this.width = width;
@@ -33,18 +34,33 @@ public class Grid {
 	}
 
 	public void addPlayer(Player p){
-			this.players[Player.nbInstance-1]=p;
+			this.players[PlayerFactory.nbInstance-1]=p;
+	}
+
+	public String[] buildStrings() {
+		String[] res = new String[2];
+		for (int i=0 ; i<this.tiles.length ; i++) {
+			if (i%this.width == 0) {
+				res[0]+="\n";
+				res[1]+="\n";
+			}
+			res[0]+=this.tiles[i];
+			for (Player p : this.players) {
+				if (p.getX()==i%this.width && p.getY()==i/this.width) {
+					res[1]+=p.toString();
+				} else {
+					res[1]+=this.tiles[i];
+				}
+			}
+		}
+		return res;
 	}
 
 	public String toString() {
-		String res = "";
-		for (int i=0 ; i<this.tiles.length ; i++) {
-			if (i%this.width == 0) {
-				res+="\n";
-			}
-			res+=this.tiles[i];
-		}
-		return res;
+		System.out.println("\033[H\033[2J");
+		this.alternate_string= !(this.alternate_string);
+		String[] print = this.buildStrings();
+		return (this.alternate_string) ? print[0] : print[1];
 	}
 
 }

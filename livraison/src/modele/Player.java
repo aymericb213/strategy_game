@@ -15,32 +15,27 @@ public class Player {
 
 	private int x;
 	private int y;
-  public static int nbInstance = 0;
   private final String name;
   private int energy;
   private int life;
 	private HashMap<Weapon,Integer> loadout;
 
-  public Player(int x, int y,String name){
-    nbInstance++;
+  public Player(int x, int y, int hp, int mp, String name){
+    PlayerFactory.nbInstance++;
 		this.x = x;
 		this.y = y;
-		this.energy = 10;
-    this.life = 10;
+		this.energy = hp;
+    this.life = mp;
     this.name = name;
 		this.loadout = new HashMap<Weapon,Integer>();
   }
 
   public Player(){
-		this(0,0,new String("Player " + nbInstance));
+		this(0,0,10,10,new String("Player " + (PlayerFactory.nbInstance+1)));
   }
 
   public String printStats(){
-    StringBuilder res = new StringBuilder();
-    res.append(name+":\n");
-    res.append("Energie : "+energy);
-    res.append("\nPoints de vie : "+life);
-    return res.toString();
+    return this.name + ":\nEnergie : " + this.energy + "\nPoints de vie : " + this.life;
   }
 
 	public int getX() {
@@ -60,6 +55,6 @@ public class Player {
 	}
 
 	public String toString() {
-		return "\u001B31;1m@";
+		return "\u001B[31m@\u001B[37m";
 	}
 }
