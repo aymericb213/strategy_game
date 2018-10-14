@@ -66,4 +66,10 @@ public class Player {
 	public void useShield() {
 		this.shield_up=true;
 	}
+
+	public void move(Grid g, int x, int y) {
+		if (!(g.getGrid()[x+y*g.getWidth()] instanceof Wall)) {
+			this.setPosition(x,y);
+		}
+	}
 }

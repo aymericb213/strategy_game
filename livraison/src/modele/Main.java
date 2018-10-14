@@ -23,8 +23,9 @@ public class Main {
 		g.generateRandomGrid();
 		while(true) {
 			try {
-			Thread.sleep(500);
-			System.out.println(g);
+				Thread.sleep(500);
+				System.out.println(g);
+				p4.move(g,5,4);
 			} catch (InterruptedException e) {}
 		}
 	}

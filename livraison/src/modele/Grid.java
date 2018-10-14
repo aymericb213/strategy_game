@@ -22,7 +22,7 @@ public class Grid {
 			double nr = r.nextDouble();
 			if (nr < 0.1) {
 				n = new Bonus(i%this.width,i/this.width, 50);
-			} else if (nr >= 0.1 && nr < 0.4) {
+			} else if (nr >= 0.1 && nr < 0.3) {
 				n = new Wall(i%this.width,i/this.width);
 			}
 			this.tiles[i]=n;
@@ -31,6 +31,14 @@ public class Grid {
 
 	public Player[] getPlayers() {
 		return this.players;
+	}
+
+	public Tile[] getGrid() {
+		return this.tiles;
+	}
+
+	public int getWidth() {
+		return this.width;
 	}
 
 	public void addPlayer(Player p){
