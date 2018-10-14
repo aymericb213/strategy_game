@@ -19,9 +19,9 @@ public class Player {
   private int energy;
   private int life;
 	private HashMap<Weapon,Integer> loadout;
+	private boolean shield_up = false;
 
-  public Player(int x, int y, int hp, int mp, String name){
-    PlayerFactory.nbInstance++;
+  public Player(int x, int y, int hp, int mp, String name) {
 		this.x = x;
 		this.y = y;
 		this.energy = hp;
@@ -30,8 +30,8 @@ public class Player {
 		this.loadout = new HashMap<Weapon,Integer>();
   }
 
-  public Player(){
-		this(0,0,10,10,new String("Player " + (PlayerFactory.nbInstance+1)));
+  public Player() {
+		this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
   public String printStats(){
@@ -54,7 +54,16 @@ public class Player {
 			this.y = y;
 	}
 
+	public void setPosition(int x,int y) {
+		this.setX(x);
+		this.setY(y);
+	}
+
 	public String toString() {
-		return "\u001B[31m@\u001B[37m";
+		return "@";
+	}
+
+	public void useShield() {
+		this.shield_up=true;
 	}
 }

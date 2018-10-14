@@ -34,33 +34,32 @@ public class Grid {
 	}
 
 	public void addPlayer(Player p){
-			this.players[PlayerFactory.nbInstance-1]=p;
-	}
-
-	public String[] buildStrings() {
-		String[] res = new String[2];
-		for (int i=0 ; i<this.tiles.length ; i++) {
-			if (i%this.width == 0) {
-				res[0]+="\n";
-				res[1]+="\n";
-			}
-			res[0]+=this.tiles[i];
-			for (Player p : this.players) {
-				if (p.getX()==i%this.width && p.getY()==i/this.width) {
-					res[1]+=p.toString();
-				} else {
-					res[1]+=this.tiles[i];
-				}
-			}
-		}
-		return res;
+			this.players[PlayerFactory.nb_instances-1]=p;
 	}
 
 	public String toString() {
-		System.out.println("\033[H\033[2J");
+		StringBuilder res = new StringBuilder();
+		for (int i=0 ; i<this.tiles.length ; i++) {
+			if (i>0 && i%this.width == 0) {
+				res.append("\n");
+			}
+			for (Player p : this.players) {
+				if (p.getX()==i%this.width && p.getY()==i/this.width) {
+					res.append(p.toString());
+					break;
+				} else if (this.players[PlayerFactory.nb_instances-1]==p){
+					res.append(this.tiles[i]);
+				}
+			}
+		}
+		StringBuilder res2 = new StringBuilder(res.toString());
+		for (Player p : this.players) {
+			int position = p.getX()+(p.getY()*(this.width+1));
+			res2.replace(position,position+1,this.tiles[position-p.getY()].toString());
+		}
 		this.alternate_string= !(this.alternate_string);
-		String[] print = this.buildStrings();
-		return (this.alternate_string) ? print[0] : print[1];
+		System.out.println("\033[H\033[2J");
+		return (this.alternate_string) ? res.toString() : res2.toString();
 	}
 
 }
