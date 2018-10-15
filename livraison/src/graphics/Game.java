@@ -18,8 +18,9 @@ import java.util.List;
 public class Game extends AbstractListenableModel {
 
     private Grid grid;
-		protected BufferedImage tile_image;
-		protected BufferedImage player_image;
+	protected BufferedImage tile_image;
+	protected BufferedImage player_image;
+	private ArrayList<Players>;
 
     public Game(){
         this(null);

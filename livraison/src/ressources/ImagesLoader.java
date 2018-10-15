@@ -19,7 +19,7 @@ public class ImagesLoader {
     
     public static ArrayList<BufferedImage> imageList;
     
-    //The last elements of the first 8 lines or empty
+    //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
     public static ArrayList<BufferedImage> loadImages(){
         imageList = new ArrayList<BufferedImage>();
         
@@ -32,15 +32,31 @@ public class ImagesLoader {
         }
         
         int width = tilesheet.getWidth();
+        int height = tilesheet.getHeight();
         int size = 64;
-        int nbImages = width / size;
-        System.out.println(width/size);        
-        for(int i = 0; i < nbImages ; i++){
-            
-            BufferedImage temp = tilesheet.getSubimage(i*size , 0, size, size);
-            imageList.add(temp);
-        }
+        int nbImagesWidth = width / size;
+        int nbImagesHeight = height / size;
         
+        System.out.println("Largeur "+ nbImagesWidth);
+        System.out.println("Hauteur "+nbImagesHeight);
+        
+        /*
+        for(int i = 0; i < nbImagesWidth ; i++){
+            for(int j = 0 ; j < nbImagesHeight; j++){
+                System.out.println(i+" "+j);
+                BufferedImage temp = tilesheet.getSubimage(j*size , i*size, size, size);
+                
+                imageList.add(temp);
+            }
+        }
+        */
+        for(int y = 0 ; y < nbImagesHeight ; y++){
+            for(int x = 0 ; x < nbImagesWidth ; x++){
+                BufferedImage temp = tilesheet.getSubimage(x*size , y*size, size, size);
+                
+                imageList.add(temp);
+            }
+        }
         return imageList;
     }
 }

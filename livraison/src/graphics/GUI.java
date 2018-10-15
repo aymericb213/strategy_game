@@ -23,33 +23,43 @@ public class GUI extends JFrame{
     public GUI(){
         this(new Game());
     }
-
+    
     public GUI(Game game){
         this.game = game;
         this.view = new View(game);
+        view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
         setTitle("Shooter Game");
-        setSize(800,500);
+        setSize(960,960); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-
-        getContentPane().add(new JButton(new AbstractAction("Update"){
+        
+        
+        getContentPane().add(new JButton(new AbstractAction("MoveDown"){
             public void actionPerformed(ActionEvent e){
-                for(Player p : game.getGrid().getPlayers()){
-                    p.setX(p.getX() + 1);
-                    p.setY(p.getY() + 1);
+                for(Player p : game.getPlayers()){
+                    p.move(Direction.s);
                     game.stateChange();
                 }
-
+                
             }
         }));
-
-
+        
+        getContentPane().add(new JButton(new AbstractAction("MoveRight"){
+            public void actionPerformed(ActionEvent e){
+                for(Player p : game.getPlayers()){
+                    p.move(Direction.d);
+                    game.stateChange();
+                }
+                
+            }
+        }));
+        
+        
         setVisible(true);
-
+        
     }
-
+    
     public View getView(){
         return this.view;
     }
@@ -57,6 +67,5 @@ public class GUI extends JFrame{
     public Game getGame(){
         return this.game;
     }
-
 
 }

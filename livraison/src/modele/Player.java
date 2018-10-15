@@ -25,10 +25,28 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.energy = hp;
-    this.life = mp;
-    this.name = name;
+    	this.life = mp;
+    	this.name = name;
 		this.loadout = new HashMap<Weapon,Integer>();
   }
+
+  /*
+  public Player(int x, int y,String name, BufferedImage img){
+        super(x,y,img);
+        nbInstance++;
+        this.name = name;
+        initPlayer();
+    }
+    
+    public Player(){
+        super(0,0,null);
+        nbInstance++;
+        String defaultName = "Player ";
+        defaultName += Integer.toString(nbInstance);
+        this.name = defaultName;
+        initPlayer();
+    }
+    */
 
   public Player() {
 		this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
@@ -79,6 +97,29 @@ public class Player {
 			g.getGrid()[x+y*g.getWidth()].explode();
 		}
 	}
+
+	public void move(Direction d){
+        this.x += d.x();
+        this.y += d.y();
+    }
+    
+    public ArrayList<Direction> possibleMoves(Grid grid){
+        ArrayList<Direction> res = new ArrayList<Direction>();
+        
+        if(this.y > 0){
+            res.add(Direction.z);
+        }
+        if(this.y < grid.getHeight() -1){
+            res.add(Direction.s);
+        }
+        if(this.x > 0){
+            res.add(Direction.q);
+        }
+        if(this.x < grid.getWidth() -1){
+            res.add(Direction.d);
+        }
+        return res;
+    }
 
 	public String toString() {
 		return "@";
