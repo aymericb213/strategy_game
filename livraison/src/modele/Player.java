@@ -5,13 +5,14 @@
  */
 package modele;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 /**
  *
  * @author quentindeme
  */
-public class Player {
+public class Player extends Tile{
 
 	private int x;
 	private int y;
@@ -20,7 +21,9 @@ public class Player {
   private int life;
 	private HashMap<Weapon,Integer> loadout;
 	private boolean shield_up = false;
-
+        private BufferedImage img;
+        public static int nbInstance = 0;
+/*
   public Player(int x, int y, int hp, int mp, String name) {
 		this.x = x;
 		this.y = y;
@@ -28,14 +31,14 @@ public class Player {
     	this.life = mp;
     	this.name = name;
 		this.loadout = new HashMap<Weapon,Integer>();
-  }
+  }*/
 
-  /*
+  
   public Player(int x, int y,String name, BufferedImage img){
         super(x,y,img);
         nbInstance++;
         this.name = name;
-        initPlayer();
+        //initPlayer();
     }
     
     public Player(){
@@ -44,14 +47,14 @@ public class Player {
         String defaultName = "Player ";
         defaultName += Integer.toString(nbInstance);
         this.name = defaultName;
-        initPlayer();
+        //initPlayer();
     }
-    */
-
+    
+/*
   public Player() {
 		this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
   }
-
+*/
   public String printStats(){
     return this.name + ":\nEnergie : " + this.energy + "\nPoints de vie : " + this.life;
   }
@@ -88,7 +91,7 @@ public class Player {
 	public void useShield() {
 		this.shield_up=true;
 	}
-
+/*
 	public void move(Grid g, int x, int y) {
 		if (!(g.getGrid()[x+y*g.getWidth()] instanceof Wall)) {
 			this.setPosition(x,y);
@@ -97,7 +100,7 @@ public class Player {
 			g.getGrid()[x+y*g.getWidth()].explode();
 		}
 	}
-
+*/
 	public void move(Direction d){
         this.x += d.x();
         this.y += d.y();
@@ -121,6 +124,9 @@ public class Player {
         return res;
     }
 
+    public BufferedImage getImg(){
+        return this.imageRepr;
+    }
 	public String toString() {
 		return "@";
 	}

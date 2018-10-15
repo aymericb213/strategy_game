@@ -20,7 +20,7 @@ public class Game extends AbstractListenableModel {
     private Grid grid;
 	protected BufferedImage tile_image;
 	protected BufferedImage player_image;
-	private ArrayList<Players>;
+	private ArrayList<Player> listPlayers;
 
     public Game(){
         this(null);
@@ -53,4 +53,8 @@ public class Game extends AbstractListenableModel {
 		public void paint(Graphics g){
 	//			g.drawImage(imageRepr, super.x, super.y, null);
 		}
+
+    List<Player> getPlayers() {
+        return this.listPlayers;
+    }
 }
