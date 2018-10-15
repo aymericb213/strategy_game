@@ -5,6 +5,8 @@ package modele;
 */
 public class Mine extends Tile implements Weapon {
 
+	private int damage;
+
 	/**
 		* Constructeur de la classe.
 		* @param x
@@ -12,8 +14,9 @@ public class Mine extends Tile implements Weapon {
 		* @param y
 		* Abscisse de la case.
 	*/
-  public Mine(int x, int y) {
+  public Mine(int x, int y, int damage) {
     super(x,y);
+		this.damage = damage;
   }
 
 	/**
@@ -25,13 +28,17 @@ public class Mine extends Tile implements Weapon {
     return ";";
   }
 
-    @Override
-    public void fire() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  @Override
+  public void fire() {
+    throw new UnsupportedOperationException("Not supported.");
+  }
 
-    @Override
-    public void explode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  @Override
+  public void explode(Grid g) {
+		for (Player p : g.getPlayers()) {
+			if (p.getX() == this.x && p.getY() == this.y) {
+				p.setLife()=p.getLife()-this.damage;
+			}
+		}
+  }
 }

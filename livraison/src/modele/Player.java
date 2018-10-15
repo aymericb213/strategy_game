@@ -59,8 +59,12 @@ public class Player {
 		this.setY(y);
 	}
 
-	public String toString() {
-		return "@";
+	public int getLife() {
+		return this.life;
+	}
+	
+	public void setLife(int new_life) {
+		this.life=new_life;
 	}
 
 	public void useShield() {
@@ -71,5 +75,12 @@ public class Player {
 		if (!(g.getGrid()[x+y*g.getWidth()] instanceof Wall)) {
 			this.setPosition(x,y);
 		}
+		if (g.getGrid()[x+y*g.getWidth()] instanceof Mine) {
+			g.getGrid()[x+y*g.getWidth()].explode();
+		}
+	}
+
+	public String toString() {
+		return "@";
 	}
 }
