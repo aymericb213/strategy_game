@@ -1,6 +1,8 @@
 package graphics;
 
 import modele.*;
+import ressources.*;
+import java.util.logging.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class Main {
 
         //Player two = new Player(1,1,"hitman2", img2);
         Game game = new Game(grid);
-        game.addPlayer(hitman);
+        game.getGrid().addPlayer(hitman);
         GUI gui = new GUI(game);
         //GUI gui2 = new GUI(game);
         //gui.getView().addEntity(ground);
