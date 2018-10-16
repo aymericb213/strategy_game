@@ -37,8 +37,10 @@ public class Mine extends Tile implements Weapon {
   public void explode(Grid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX()==this.x && p.getY()==this.y) {
-				
-				p.setLife(p.getLife()-this.damage);
+				g.getGrid()[(this.y*g.getWidth())+this.x]=new FreeTile(x,y);
+				if (!(p.shieldIsUp())) {
+					p.setLife(p.getLife()-this.damage);
+				}
 			}
 		}
   }

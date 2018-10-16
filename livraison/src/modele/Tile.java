@@ -1,7 +1,5 @@
 package modele;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 /**
 	* Classe abstraite représentant un objet du plateau de jeu.
@@ -10,7 +8,6 @@ public abstract class Tile {
 
   protected int x;
   protected int y;
-  protected BufferedImage imageRepr;
 
 	/**
 		* Constructeur de la classe.
@@ -22,11 +19,6 @@ public abstract class Tile {
   public Tile(int x, int y) {
     this.x = x;
     this.y = y;
-  }
-  
-  public Tile(int x,int y,BufferedImage img){
-      this(x,y);
-      this.imageRepr = img;
   }
 
 	/**
@@ -49,9 +41,5 @@ public abstract class Tile {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public Image getImageRepr() {
-        return this.imageRepr;
     }
 }

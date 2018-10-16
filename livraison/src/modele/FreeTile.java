@@ -14,12 +14,9 @@ public class FreeTile extends Tile {
 		* @param y
 		* Abscisse de la case.
 	*/
- public FreeTile(int x, int y, BufferedImage img) {
-    super(x,y, img);
-  }
-  
+
   public FreeTile(int x, int y){
-      this(x,y,null);
+      super(x,y);
   }
 
 

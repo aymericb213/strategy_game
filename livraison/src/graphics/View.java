@@ -44,7 +44,7 @@ public class View extends JPanel implements ModelListener{
             }else{
                 int x = (int)(64 * t.getX());
                 int y = (int)(64 * t.getY());
-                g.drawImage(t.getImageRepr(), x , y, this);
+                g.drawImage(game.getTileImg(), x , y, this);
             }
         }
 
