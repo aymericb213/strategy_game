@@ -36,7 +36,8 @@ public class Mine extends Tile implements Weapon {
   @Override
   public void explode(Grid g) {
 		for (Player p : g.getPlayers()) {
-			if (p.getX() == this.x && p.getY() == this.y) {
+			if (p.getX()==this.x && p.getY()==this.y) {
+				
 				p.setLife(p.getLife()-this.damage);
 			}
 		}
