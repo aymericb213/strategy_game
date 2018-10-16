@@ -39,9 +39,13 @@ public class View extends JPanel implements ModelListener{
     public void paintComponent(Graphics g){
         System.out.println();
         for(Tile t : entities){
-            int x = (int)(64 * t.getX());
-            int y = (int)(64 * t.getY());
-            g.drawImage(t.getImageRepr(), x , y, this);
+            if(t==null){
+                continue;
+            }else{
+                int x = (int)(64 * t.getX());
+                int y = (int)(64 * t.getY());
+                g.drawImage(t.getImageRepr(), x , y, this);
+            }
         }
 
         Grid grid = game.getGrid();
