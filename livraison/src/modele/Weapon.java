@@ -2,7 +2,7 @@ package modele;
 
 public interface Weapon {
 
-    public void fire();
+    public void fire(Grid g);
 
-    public void explode();
+    public void explode(Grid g);
 }

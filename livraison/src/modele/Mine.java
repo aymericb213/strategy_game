@@ -29,7 +29,7 @@ public class Mine extends Tile implements Weapon {
   }
 
   @Override
-  public void fire() {
+  public void fire(Grid g) {
     throw new UnsupportedOperationException("Not supported.");
   }
 
@@ -37,7 +37,7 @@ public class Mine extends Tile implements Weapon {
   public void explode(Grid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX() == this.x && p.getY() == this.y) {
-				p.setLife()=p.getLife()-this.damage;
+				p.setLife(p.getLife()-this.damage);
 			}
 		}
   }

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
 
-    /*
+
 	public static void main(String[] args) {
 
 		PlayerFactory factory = PlayerFactory.getInstance();
@@ -29,5 +29,5 @@ public class Main {
 			} catch (InterruptedException e) {}
 		}
 	}
-    */
+
 }

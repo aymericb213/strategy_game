@@ -25,15 +25,14 @@ public class Player extends Tile{
         public static int nbInstance = 0;
 
     public Player(int x, int y, int hp, int mp, String name) {
-        this.x = x;
-        this.y = y;
+				super(x,y);
         this.energy = hp;
         this.life = mp;
         this.name = name;
         this.loadout = new HashMap<Weapon,Integer>();
     }
 
-    
+
 
     public Player() {
 	this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
@@ -67,7 +66,7 @@ public class Player extends Tile{
 	public int getLife() {
 		return this.life;
 	}
-	
+
 	public void setLife(int new_life) {
 		this.life=new_life;
 	}
@@ -89,10 +88,10 @@ public class Player extends Tile{
         this.x += d.x();
         this.y += d.y();
     }
-    
+
     public ArrayList<Direction> possibleMoves(Grid grid){
         ArrayList<Direction> res = new ArrayList<Direction>();
-        
+
         if(this.y > 0){
             res.add(Direction.z);
         }

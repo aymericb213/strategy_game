@@ -40,7 +40,7 @@ public class Grid {
         }
     }
 
-        
+
         public ArrayList<Tile> loadSimpleGrid(){
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
         ArrayList<Tile> res = new ArrayList<Tile>();
@@ -54,9 +54,9 @@ public class Grid {
         }
         return res;
     }
-        
+
         public void loadGrid(File file) throws IOException, ParserConfigurationException, SAXException{
-        
+
         LevelHandlerParser lvlHandler = new LevelHandlerParser();
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try{
@@ -65,15 +65,15 @@ public class Grid {
         } catch (SAXException ex) {
             Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         this.width = lvlHandler.x;
         //this.height = lvlHandler.y;
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(lvlHandler.y);
-        
+
         System.out.println(lvlHandler.listCase.size());
-        
+
         String myString = "";
-        
+
         for(int i = 0; i < lvlHandler.listCase.size() ; i++){
             for(int j = 0; j < lvlHandler.listCase.get(i).length(); j++){
                 if(lvlHandler.listCase.get(i).charAt(j) != ' ' || lvlHandler.listCase.get(i).charAt(j) != '\n'){
@@ -81,17 +81,17 @@ public class Grid {
                 }
             }
         }
-        
+
         myString = myString.replaceAll("[^\\d,]", "");
         //System.out.println(myString);
-        
+
         String[] cases = myString.split(",");
         /*
         On a cases qui contient TOUTES LES cases de layer. Il faut donc les "empiler"
         */
         int nbLayer = lvlHandler.nbLayer;
         HashMap<Integer, ArrayList<ArrayList<Integer>>> layers = new HashMap<Integer, ArrayList<ArrayList<Integer>>>();
-        
+
         for(int layer = 0; layer < nbLayer ; layer++){
             ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
             for(int y = 0; y < lvlHandler.y/*cases.length*/ ; y++){
@@ -118,14 +118,14 @@ public class Grid {
                 layers.put(layer,copyList(temp));
             }
         }
-        
+
         System.out.println(layers);
         System.out.println(res);
         computeTileGrid(layers);
         //computeTileGrid(res
-        
+
     }
-    
+
     public ArrayList<ArrayList<Integer>> copyList(ArrayList<ArrayList<Integer>> l){
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < l.size() ; i++){
@@ -136,17 +136,17 @@ public class Grid {
         }
         return res;
     }
-    
+
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
-        
+
         int size = l.get(0).size() * l.get(0).get(0).size() * l.size();
         System.out.println("Taille --> "+size);
-        
+
         Tile[] res = new Tile[size];
         Random r = new Random();
-        
+
         int indice = 0;
-        
+
         for(int i = 0 ; i < l.size() ; i++){
             ArrayList<ArrayList<Integer>> list = l.get(i);
             for(int y = 0 ; y < list.size(); y++){
@@ -167,14 +167,14 @@ public class Grid {
         }
         this.tiles = res;
     }
-    
+
     public void computeTileGrid(ArrayList<ArrayList<Integer>> l){
-        
+
         Tile[] res = new Tile[l.size()*l.get(0).size()];
         Random r = new Random();
-        
+
         int indice = 0;
-        
+
         for(int i = 0 ; i < l.size() ; i++){
             for(int j = 0 ; j < l.get(i).size() ; j++){
                 int index = l.get(i).get(j);
@@ -190,7 +190,7 @@ public class Grid {
         }
         this.tiles = res;
     }
-    
+
     public Tile[] getGrid() {
         return tiles;
     }
@@ -201,12 +201,12 @@ public class Grid {
     	public int getWidth() {
 		return this.width;
 	}
-        /*
+
 	public void addPlayer(Player p){
             this.players[PlayerFactory.nb_instances-1]=p;
 	}
-        */
-        /*
+
+
 	public String toString() {
 		StringBuilder res = new StringBuilder();
 		for (int i=0 ; i<this.tiles.length ; i++) {
@@ -231,7 +231,7 @@ public class Grid {
 		System.out.println("\033[H\033[2J");
 		return (this.alternate_string) ? res.toString() : res2.toString();
 	}
-        */
 
-    
+
+
 }

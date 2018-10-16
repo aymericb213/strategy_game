@@ -14,8 +14,8 @@ public class Bomb extends Mine {
 		* @param y
 		* Abscisse de la case.
 	*/
-  public Bomb(int x, int y, int t) {
-    super(x,y);
+  public Bomb(int x, int y, int damage, int t) {
+    super(x,y, damage);
 		this.delay=t;
   }
 
@@ -25,6 +25,6 @@ public class Bomb extends Mine {
 	*/
   @Override
   public String toString() {
-    return "!";
+    return ""+this.delay;
   }
 }
