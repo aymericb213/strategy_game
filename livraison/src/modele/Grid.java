@@ -15,42 +15,30 @@ import ressources.LevelHandlerParser;
 
 public class Grid {
 
-    
-        public Tile[] tiles;
-    public ArrayList<Player> players;
-    private ArrayList<Tile> grid;
-    private int width,height;
+    private int width;
+    public Tile[] tiles;
+    private Player[] players;
+    private boolean alternate_string = false;
 
     public Grid(int width, int height, int nb_players) {
-            this.tiles = new Tile[width*height];
-            this.players = new ArrayList<Player>();//new Tile[nb_players];
-            this.grid = loadSimpleGrid();
+        this.width = width;
+        this.tiles = new Tile[width*height];
+        this.players = new Player[nb_players];
     }
-    /*
-	private int width;
-	public Tile[] tiles;
-	private Player[] players;
-	private boolean alternate_string = false;
 
-	public Grid(int width, int height, int nb_players) {
-		this.width = width;
-		this.tiles = new Tile[width*height];
-		this.players = new Player[nb_players];
-	}
-*/
-	public void generateRandomGrid() {
-		Random r = new Random();
-		for (int i=0 ; i<this.tiles.length ; i++) {
-		Tile n = new FreeTile(i%this.width,i/this.width);
-			double nr = r.nextDouble();
-			if (nr < 0.1) {
-				n = new Bonus(i%this.width,i/this.width, 50);
-			} else if (nr >= 0.1 && nr < 0.3) {
-				n = new Wall(i%this.width,i/this.width);
-			}
-			this.tiles[i]=n;
-		}
-	}
+    public void generateRandomGrid() {
+        Random r = new Random();
+        for (int i=0 ; i<this.tiles.length ; i++) {
+        Tile n = new FreeTile(i%this.width,i/this.width);
+            double nr = r.nextDouble();
+            if (nr < 0.1) {
+                n = new Bonus(i%this.width,i/this.width, 50);
+            } else if (nr >= 0.1 && nr < 0.3) {
+                n = new Wall(i%this.width,i/this.width);
+            }
+            this.tiles[i]=n;
+        }
+    }
 
         
         public ArrayList<Tile> loadSimpleGrid(){
@@ -79,7 +67,7 @@ public class Grid {
         }
         
         this.width = lvlHandler.x;
-        this.height = lvlHandler.y;
+        //this.height = lvlHandler.y;
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(lvlHandler.y);
         
         System.out.println(lvlHandler.listCase.size());
@@ -151,8 +139,13 @@ public class Grid {
     
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
         
-        ArrayList<Tile> res = new ArrayList<Tile>();
+        int size = l.get(0).size() * l.get(0).get(0).size() * l.size();
+        System.out.println("Taille --> "+size);
+        
+        Tile[] res = new Tile[size];
         Random r = new Random();
+        
+        int indice = 0;
         
         for(int i = 0 ; i < l.size() ; i++){
             ArrayList<ArrayList<Integer>> list = l.get(i);
@@ -166,18 +159,21 @@ public class Grid {
                         if(index == 1){
                             index = r.nextInt(4);
                         }
-                        res.add(new FreeTile(x,y, ImagesLoader.imageList.get(index)));
+                        res[indice] = (new FreeTile(x,y, ImagesLoader.imageList.get(index)));
+                        indice++;
                     }
                 }
             }
         }
-        this.grid = res;
+        this.tiles = res;
     }
     
     public void computeTileGrid(ArrayList<ArrayList<Integer>> l){
         
-        ArrayList<Tile> res = new ArrayList<Tile>();
+        Tile[] res = new Tile[l.size()*l.get(0).size()];
         Random r = new Random();
+        
+        int indice = 0;
         
         for(int i = 0 ; i < l.size() ; i++){
             for(int j = 0 ; j < l.get(i).size() ; j++){
@@ -188,16 +184,17 @@ public class Grid {
                 if(index == 1){
                     index = r.nextInt(4);
                 }
-                res.add(new FreeTile(j,i, ImagesLoader.imageList.get(index)));
+                res[indice] = (new FreeTile(j,i, ImagesLoader.imageList.get(index)));
+                indice++;
             }
         }
-        this.grid = res;
+        this.tiles = res;
     }
     
-    public ArrayList<Tile> getGrid() {
-        return grid;
+    public Tile[] getGrid() {
+        return tiles;
     }
-	public ArrayList<Player> getPlayers() {
+	public Player[] getPlayers() {
             return this.players;
 	}
 
@@ -236,7 +233,5 @@ public class Grid {
 	}
         */
 
-    int getHeight() {
-        return this.height;
-    }
+    
 }

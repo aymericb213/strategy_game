@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParserConfigurationException, SAXException {
 
 		System.out.println(System.getProperty("user.dir"));
 
@@ -32,12 +34,12 @@ public class Main {
       try {
         grid.loadGrid(file);
 
-        Player hitman = new Player(0,0,"Hitman", img);
+        //Player hitman = new Player(0,0,"Hitman", img);
         //FreeTile ground = new FreeTile(0,0,images.get(0));
 
         //Player two = new Player(1,1,"hitman2", img2);
         Game game = new Game(grid);
-        game.getGrid().addPlayer(hitman);
+        //game.getGrid().addPlayer(hitman);
         GUI gui = new GUI(game);
         //GUI gui2 = new GUI(game);
         //gui.getView().addEntity(ground);

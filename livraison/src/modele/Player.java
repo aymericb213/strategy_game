@@ -23,38 +23,22 @@ public class Player extends Tile{
 	private boolean shield_up = false;
         private BufferedImage img;
         public static int nbInstance = 0;
-/*
-  public Player(int x, int y, int hp, int mp, String name) {
-		this.x = x;
-		this.y = y;
-		this.energy = hp;
-    	this.life = mp;
-    	this.name = name;
-		this.loadout = new HashMap<Weapon,Integer>();
-  }*/
 
-  
-  public Player(int x, int y,String name, BufferedImage img){
-        super(x,y,img);
-        nbInstance++;
+    public Player(int x, int y, int hp, int mp, String name) {
+        this.x = x;
+        this.y = y;
+        this.energy = hp;
+        this.life = mp;
         this.name = name;
-        //initPlayer();
+        this.loadout = new HashMap<Weapon,Integer>();
     }
+
     
-    public Player(){
-        super(0,0,null);
-        nbInstance++;
-        String defaultName = "Player ";
-        defaultName += Integer.toString(nbInstance);
-        this.name = defaultName;
-        //initPlayer();
+
+    public Player() {
+	this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
     }
-    
-/*
-  public Player() {
-		this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
-  }
-*/
+
   public String printStats(){
     return this.name + ":\nEnergie : " + this.energy + "\nPoints de vie : " + this.life;
   }
@@ -112,7 +96,7 @@ public class Player extends Tile{
         if(this.y > 0){
             res.add(Direction.z);
         }
-        if(this.y < grid.getHeight() -1){
+        if(this.y < grid.getWidth() -1){
             res.add(Direction.s);
         }
         if(this.x > 0){

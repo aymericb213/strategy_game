@@ -26,7 +26,7 @@ public class GUI extends JFrame{
     
     public GUI(Game game){
         this.game = game;
-        this.view = new View(game);
+        this.view = new View(null,game);
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
         setTitle("Shooter Game");
@@ -34,7 +34,7 @@ public class GUI extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
-        
+        /*
         getContentPane().add(new JButton(new AbstractAction("MoveDown"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getPlayers()){
@@ -54,7 +54,7 @@ public class GUI extends JFrame{
                 
             }
         }));
-        
+        */
         
         setVisible(true);
         

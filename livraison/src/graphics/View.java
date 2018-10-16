@@ -19,24 +19,21 @@ import javax.swing.JPanel;
  * @author quentindeme
  */
 public class View extends JPanel implements ModelListener{
-    private ArrayList<Tile> entities;
+    private Tile[] entities;
     private Game game;
     private Dimension sizeImg;
 
-    public View(ArrayList<Tile> entities, Game game) {
+    public View(Tile[] entities, Game game) {
         this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
         game.addListener(this);
     }
-
-    public View(Game game){
-        this(new ArrayList<Tile>(), game);
-    }
-
+    /*
     public void addEntity(Tile entity){
         entities.add(entity);
     }
+    */
 
     @Override
     public void paintComponent(Graphics g){
@@ -48,6 +45,7 @@ public class View extends JPanel implements ModelListener{
         }
 
         Grid grid = game.getGrid();
+        /*
         List<Player> l = game.getPlayers();
         for(Player p : l){
             BufferedImage img = p.getImg();
@@ -68,9 +66,10 @@ public class View extends JPanel implements ModelListener{
             }
 
         }
+        */
     }
 
-    public void setEntities(ArrayList<Tile> l){
+    public void setEntities(Tile[] l){
         this.entities = l;
     }
 
