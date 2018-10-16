@@ -67,8 +67,6 @@ public class Grid {
         }
 
         this.width = lvlHandler.x;
-        //this.height = lvlHandler.y;
-        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(lvlHandler.y);
 
         System.out.println(lvlHandler.listCase.size());
 
@@ -81,10 +79,7 @@ public class Grid {
                 }
             }
         }
-
         myString = myString.replaceAll("[^\\d,]", "");
-        //System.out.println(myString);
-
         String[] cases = myString.split(",");
         /*
         On a cases qui contient TOUTES LES cases de layer. Il faut donc les "empiler"
@@ -95,34 +90,19 @@ public class Grid {
         for(int layer = 0; layer < nbLayer ; layer++){
             ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>();
             for(int y = 0; y < lvlHandler.y/*cases.length*/ ; y++){
-                res.add(new ArrayList<Integer>());
-                if(layer != 0){
-                    temp.add(new ArrayList<Integer>());
-                }
+                
+                temp.add(new ArrayList<Integer>());
+                
                 for(int x = 0;  x < lvlHandler.x ; x++){
-                    //System.out.println((lvlHandler.x * y) + x + ((layer+1)*lvlHandler.x*lvlHandler.y));
-                    if(layer==0){
-                        res.get(y).add((Integer.parseInt(cases[((lvlHandler.x * y) + x) + layer*lvlHandler.x*lvlHandler.y])));
-                    }else{
-                        temp.get(y).add(Integer.parseInt(cases[((lvlHandler.x * y) + x) + layer*lvlHandler.x*lvlHandler.y]));
-                        if(Integer.parseInt(cases[((lvlHandler.x * y) + x) + layer*lvlHandler.x*lvlHandler.y]) != 0 && layer != 0){
-                            res.get(y).set(x,(Integer.parseInt(cases[((lvlHandler.x * y) + x) + layer*lvlHandler.x*lvlHandler.y])));
-                        }
-                    }
-                    //res.get(y).add((Integer.parseInt(cases[(lvlHandler.x * y) + x]))-1);
+                    
+                    temp.get(y).add(Integer.parseInt(cases[((lvlHandler.x * y) + x) + layer*lvlHandler.x*lvlHandler.y]));
                 }
             }
-            if(layer == 0){
-                layers.put(layer,copyList(res));
-            }else{
-                layers.put(layer,copyList(temp));
-            }
+            layers.put(layer,copyList(temp));
+            
         }
-
-        System.out.println(layers);
-        System.out.println(res);
+        // La HashMap représente les différen`tes couches.
         computeTileGrid(layers);
-        //computeTileGrid(res
 
     }
 
@@ -140,6 +120,7 @@ public class Grid {
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
 
         int size = l.get(0).size() * l.get(0).get(0).size() * l.size();
+        
         System.out.println("Taille --> "+size);
 
         Tile[] res = new Tile[size];

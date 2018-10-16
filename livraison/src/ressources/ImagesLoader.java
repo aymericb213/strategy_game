@@ -41,16 +41,6 @@ public class ImagesLoader {
         System.out.println("Largeur "+ nbImagesWidth);
         System.out.println("Hauteur "+nbImagesHeight);
 
-        /*
-        for(int i = 0; i < nbImagesWidth ; i++){
-            for(int j = 0 ; j < nbImagesHeight; j++){
-                System.out.println(i+" "+j);
-                BufferedImage temp = tilesheet.getSubimage(j*size , i*size, size, size);
-
-                imageList.add(temp);
-            }
-        }
-        */
         for(int y = 0 ; y < nbImagesHeight ; y++){
             for(int x = 0 ; x < nbImagesWidth ; x++){
                 BufferedImage temp = tilesheet.getSubimage(x*size , y*size, size, size);
