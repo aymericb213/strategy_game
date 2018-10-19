@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JPanel;
 
 /**
@@ -37,14 +38,13 @@ public class View extends JPanel implements ModelListener{
 
     @Override
     public void paintComponent(Graphics g){
-        System.out.println();
         for(Tile t : entities){
             if(t==null){
                 continue;
             }else{
                 int x = (int)(64 * t.getX());
                 int y = (int)(64 * t.getY());
-                g.drawImage(game.getTileImg(), x , y, this);
+                g.drawImage(game.getTiles(), x , y, this);
             }
         }
 

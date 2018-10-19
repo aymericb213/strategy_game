@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 	* Classe fille de Tile représentant une case vide.
 */
 public class FreeTile extends Tile {
-
 	/**
 		* Constructeur de la classe.
 		* @param x
@@ -15,10 +14,9 @@ public class FreeTile extends Tile {
 		* Abscisse de la case.
 	*/
 
-  public FreeTile(int x, int y){
-      super(x,y);
-  }
-
+    public FreeTile(int x, int y){
+        super(x,y);
+    }
 
 
 	/**
