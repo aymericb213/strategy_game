@@ -14,10 +14,21 @@ public class FreeTile extends Tile {
 		* Abscisse de la case.
 	*/
 
+    
+    private BufferedImage imgRepr;
+    
     public FreeTile(int x, int y){
         super(x,y);
     }
+    
+    public FreeTile(int x, int y, BufferedImage img){
+        this(x,y);
+        this.imgRepr = img;
+    }
 
+    public BufferedImage getImgRepr() {
+        return imgRepr;
+    }
 
 	/**
 		* Retourne la représentation de la case vide.

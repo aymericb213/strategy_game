@@ -38,6 +38,17 @@ public class View extends JPanel implements ModelListener{
 
     @Override
     public void paintComponent(Graphics g){
+        
+        for(int i = 0; i < game.getTileList2().size(); i++){
+            ArrayList<Tile> list = game.getTileList2().get(i);
+            for(Tile t : list){
+                int x = (int)(64 * t.getX());
+                int y = (int)(64 * t.getY());
+                g.drawImage(t.getImgRepr(), x , y, this);
+            }
+        }
+        
+        /*
         for(Tile t : entities){
             if(t==null){
                 continue;
@@ -47,7 +58,7 @@ public class View extends JPanel implements ModelListener{
                 g.drawImage(game.getTiles(), x , y, this);
             }
         }
-
+        */
         Grid grid = game.getGrid();
         /*
         List<Player> l = game.getPlayers();

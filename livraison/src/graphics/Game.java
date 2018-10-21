@@ -28,6 +28,7 @@ public class Game extends AbstractListenableModel {
 
   private Grid grid;
   private HashMap<int[], BufferedImage> tileList;
+  private HashMap<Integer, ArrayList<Tile>> tileList2;
   protected BufferedImage tile_image;
   protected BufferedImage player_image;
 
@@ -57,6 +58,10 @@ public class Game extends AbstractListenableModel {
 
     public void setPlayerImg(BufferedImage imageRepr) {
         this.player_image = imageRepr;
+    }
+
+    public HashMap<Integer, ArrayList<Tile>> getTileList2() {
+        return tileList2;
     }
 
     public ArrayList<Tile> loadSimpleGrid(){
@@ -121,7 +126,7 @@ public class Game extends AbstractListenableModel {
             }
             // La HashMap représente les différen`tes couches.
             System.out.println(layers);
-            computeTileGrid(layers);
+            computeTileGrid2(layers);
 
 }
 
@@ -173,27 +178,38 @@ public class Game extends AbstractListenableModel {
         this.tileList = listImages;
 }
 
-    public void computeTileGrid(ArrayList<ArrayList<Integer>> l){
+    public void computeTileGrid2(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
 
-                    Tile[] res = new Tile[l.size()*l.get(0).size()];
-                    Random r = new Random();
+        Tile[] res = new Tile[l.size()*l.get(0).size()];
+        Random r = new Random();
+        HashMap<Integer, ArrayList<Tile>> hashTile = new HashMap<Integer, ArrayList<Tile>>();
 
-                    int indice = 0;
-
-                    for(int i = 0 ; i < l.size() ; i++){
-                                    for(int j = 0 ; j < l.get(i).size() ; j++){
-                                                    int index = l.get(i).get(j);
-                                                    if(index > 1){
-                                                                    index--;
-                                                    }
-                                                    if(index == 1){
-                                                                    index = r.nextInt(4);
-                                                    }
-                                                    res[indice] = (new FreeTile(j,i));
-                                                    indice++;
-                                    }
+        int indice = 0;
+        
+        for(int i = 0; i < l.size() ; i++){
+            ArrayList<ArrayList<Integer>> list = l.get(i);
+            ArrayList<Tile> tileList = new ArrayList<Tile>();
+            for(int j = 0; j < list.size() ; j++){
+                for(int x = 0; x < list.get(j).size() ; x++){
+                    
+                    int index = list.get(j).get(x);
+                    if(index != 0){
+                        if(index > 1){
+                            index--;
+                        }
+                        if(index == 1){
+                            index = r.nextInt(4);
+                        }
+                        BufferedImage img = ImagesLoader.imageList.get(index);
+                        Tile tile = new FreeTile(x,j, img);
+                        tileList.add(tile);
                     }
-                    this.grid.setGrid(res);
+                }
+            }
+            hashTile.put(i, tileList);
+            
+        }
+        this.tileList2 = hashTile;
     }
 
             public void paint(Graphics g){

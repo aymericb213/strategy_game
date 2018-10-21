@@ -57,4 +57,10 @@ public abstract class Tile {
     public void setY(int y) {
         this.y = y;
     }
+
+    public BufferedImage getImgRepr() {
+        return imgRepr;
+    }
+    
+    
 }
