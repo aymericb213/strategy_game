@@ -30,7 +30,7 @@ public class GUI extends JFrame{
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
         setTitle("Shooter Game");
-        setSize(960,960); //64*20;
+        setSize(832,854); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         

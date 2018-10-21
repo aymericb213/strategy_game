@@ -29,7 +29,7 @@ public class Main {
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
         Grid grid = new Grid(0,0,1);
 
-        File file = new File("src/Levels/level22.xml");
+        File file = new File("src/Levels/level3.xml");
         try {
             Game game = new Game(grid);
             game.loadGrid(file);
