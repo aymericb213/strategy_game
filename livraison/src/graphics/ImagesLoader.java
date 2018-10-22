@@ -16,36 +16,36 @@ import javax.imageio.ImageIO;
  * @author quentindeme
  */
 public class ImagesLoader {
-    
+
     public static ArrayList<BufferedImage> imageList;
-    
+
     //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
     public static ArrayList<BufferedImage> loadImages(){
         imageList = new ArrayList<BufferedImage>();
-        
+
         BufferedImage tilesheet = null;
-        
+
         try{
-            tilesheet = ImageIO.read(new File("src/Images/Tilesheet/tilesheet_complete.png"));
+            tilesheet = ImageIO.read(new File("Images/Tilesheet/tilesheet_complete.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }
-        
+
         int width = tilesheet.getWidth();
         int height = tilesheet.getHeight();
         int size = 64;
         int nbImagesWidth = width / size;
         int nbImagesHeight = height / size;
-        
+
         System.out.println("Largeur "+ nbImagesWidth);
         System.out.println("Hauteur "+nbImagesHeight);
-        
+
         /*
         for(int i = 0; i < nbImagesWidth ; i++){
             for(int j = 0 ; j < nbImagesHeight; j++){
                 System.out.println(i+" "+j);
                 BufferedImage temp = tilesheet.getSubimage(j*size , i*size, size, size);
-                
+
                 imageList.add(temp);
             }
         }
@@ -53,11 +53,10 @@ public class ImagesLoader {
         for(int y = 0 ; y < nbImagesHeight ; y++){
             for(int x = 0 ; x < nbImagesWidth ; x++){
                 BufferedImage temp = tilesheet.getSubimage(x*size , y*size, size, size);
-                
+
                 imageList.add(temp);
             }
         }
         return imageList;
     }
 }
-   

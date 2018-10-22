@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		PlayerFactory factory = PlayerFactory.getInstance();
-		Grid g = new Grid(10,10,4);
+		RealGrid g = new RealGrid(10,10,4);
 		Player p1 = factory.buildBasic();
 		g.addPlayer(p1);
 		Player p2 = factory.buildBasic();

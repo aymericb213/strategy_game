@@ -26,35 +26,20 @@ import org.xml.sax.SAXException;
  */
 public class Game extends AbstractListenableModel {
 
-  private Grid grid;
-  private HashMap<int[], BufferedImage> tileList;
+  private RealGrid grid;
   private HashMap<Integer, ArrayList<Tile>> tileList2;
-  protected BufferedImage tile_image;
-  protected BufferedImage player_image;
   protected HashMap<Player, BufferedImage> listPlayers = new HashMap<>();
 
   public Game(){
       this(null);
   }
 
-  public Game(Grid grid){
+  public Game(RealGrid grid){
       this.grid = grid;
   }
 
-    public Grid getGrid() {
+    public RealGrid getGrid() {
         return this.grid;
-    }
-
-    public BufferedImage getTileImg(){
-        return this.tile_image;
-    }
-
-    public void setTileImg(BufferedImage imageRepr) {
-        this.tile_image = imageRepr;
-    }
-
-    public BufferedImage getPlayerImg(){
-        return this.player_image;
     }
 
     public void addPlayer(Player p){
@@ -63,10 +48,6 @@ public class Game extends AbstractListenableModel {
 
     public HashMap<Player, BufferedImage> getListPlayers() {
         return listPlayers;
-    }
-
-    public void setPlayerImg(BufferedImage imageRepr) {
-        this.player_image = imageRepr;
     }
 
     public HashMap<Integer, ArrayList<Tile>> getTileList2() {
@@ -139,7 +120,7 @@ public class Game extends AbstractListenableModel {
 
 }
 
-    public ArrayList<ArrayList<Integer>> copyList(ArrayList<ArrayList<Integer>> l){
+    public ArrayList<ArrayList<Integer>> copyList(ArrayList<ArrayList<Integer>> l) {
         ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < l.size() ; i++){
             res.add(new ArrayList<Integer>());
@@ -155,7 +136,7 @@ public class Game extends AbstractListenableModel {
         HashMap<int[], BufferedImage> listImages = new HashMap<int[], BufferedImage>();
         int size = l.get(0).size() * l.get(0).get(0).size() * l.size();
 
-        System.out.println("Taille --> "+size);
+        System.out.println("Taille --> " + size);
 
         Tile[] res = new Tile[size];
         Random r = new Random();
@@ -184,7 +165,6 @@ public class Game extends AbstractListenableModel {
             }
         }
         this.grid.setGrid(res);
-        this.tileList = listImages;
 }
 
     public void computeTileGrid2(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
@@ -224,9 +204,5 @@ public class Game extends AbstractListenableModel {
             public void paint(Graphics g){
     //			g.drawImage(imageRepr, super.x, super.y, null);
             }
-
-    public HashMap<int[],BufferedImage> getTiles() {
-        return tileList;
-    }
 
 }

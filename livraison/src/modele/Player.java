@@ -88,8 +88,8 @@ public class Player extends Tile {
     public void setImg(BufferedImage img) {
         this.img = img;
     }
-    
-    public ArrayList<Direction> possibleMoves(Grid grid){
+
+    public ArrayList<Direction> possibleMoves(RealGrid grid){
         ArrayList<Direction> res = new ArrayList<Direction>();
 
         if(this.y > 0){
