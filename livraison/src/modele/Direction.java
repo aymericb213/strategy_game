@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modele;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author quentindeme
+ *  Class used for movements. We use it by add direction's value to the object position.
+ *  This makes him move to right direction.
+ * 
  */
 public enum Direction {
     

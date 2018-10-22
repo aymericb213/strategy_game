@@ -34,10 +34,10 @@ public class GUI extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
-        /*
+        
         getContentPane().add(new JButton(new AbstractAction("MoveDown"){
             public void actionPerformed(ActionEvent e){
-                for(Player p : game.getPlayers()){
+                for(Player p : game.getListPlayers().keySet()){
                     p.move(Direction.s);
                     game.stateChange();
                 }
@@ -47,14 +47,14 @@ public class GUI extends JFrame{
         
         getContentPane().add(new JButton(new AbstractAction("MoveRight"){
             public void actionPerformed(ActionEvent e){
-                for(Player p : game.getPlayers()){
+                for(Player p : game.getListPlayers().keySet()){
                     p.move(Direction.d);
                     game.stateChange();
                 }
                 
             }
         }));
-        */
+        
         
         setVisible(true);
         

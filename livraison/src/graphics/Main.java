@@ -31,7 +31,10 @@ public class Main {
 
         File file = new File("src/Levels/level3.xml");
         try {
+            Player p = new Player();
+            p.setImg(img);
             Game game = new Game(grid);
+            game.addPlayer(p);
             game.loadGrid(file);
             GUI gui = new GUI(game);
             //GUI gui2 = new GUI(game);

@@ -31,6 +31,7 @@ public class Game extends AbstractListenableModel {
   private HashMap<Integer, ArrayList<Tile>> tileList2;
   protected BufferedImage tile_image;
   protected BufferedImage player_image;
+  protected HashMap<Player, BufferedImage> listPlayers = new HashMap<Player, BufferedImage>();
 
   public Game(){
       this(null);
@@ -56,6 +57,14 @@ public class Game extends AbstractListenableModel {
         return this.player_image;
     }
 
+    public void addPlayer(Player p){
+        listPlayers.put(p, p.getImg());
+    }
+
+    public HashMap<Player, BufferedImage> getListPlayers() {
+        return listPlayers;
+    }
+    
     public void setPlayerImg(BufferedImage imageRepr) {
         this.player_image = imageRepr;
     }

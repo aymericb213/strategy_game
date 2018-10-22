@@ -48,17 +48,25 @@ public class View extends JPanel implements ModelListener{
             }
         }
         
-        /*
-        for(Tile t : entities){
-            if(t==null){
-                continue;
-            }else{
-                int x = (int)(64 * t.getX());
-                int y = (int)(64 * t.getY());
-                g.drawImage(game.getTiles(), x , y, this);
+        Set<Player> players = game.getListPlayers().keySet();
+        for(Player p: players){
+            BufferedImage img = p.getImg();
+
+            int baseX = (int)(( 64 - sizeImg.getWidth())/2);
+            int baseY = (int)(( 64 - sizeImg.getHeight())/2);
+
+            int x = 64 * p.getX() + baseX;
+            int y = 64 * p.getY() + baseY;
+            g.drawImage(img,x ,y , this);
+
+            ArrayList<Direction> possibleMoves = p.possibleMoves(game.getGrid());
+            System.out.println(possibleMoves);
+
+            g.setColor(new Color(0,255,255, 200));
+            for(Direction d : possibleMoves){
+                g.fillRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
             }
         }
-        */
         Grid grid = game.getGrid();
         /*
         List<Player> l = game.getPlayers();
