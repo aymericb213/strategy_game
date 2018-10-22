@@ -4,30 +4,30 @@ import java.util.*;
 
 public class RealGrid implements Grid {
 
-    private int width;
-    public Tile[] tiles;
-    private Player[] players;
-    private boolean alternate_string = false;
+  private int width;
+  public Tile[] tiles;
+  private Player[] players;
+  private boolean alternate_string = false;
 
-    public RealGrid(int width, int height, int nb_players) {
-        this.width = width;
-        this.tiles = new Tile[width*height];
-        this.players = new Player[nb_players];
-    }
+  public RealGrid(int width, int height, int nb_players) {
+    this.width = width;
+    this.tiles = new Tile[width*height];
+    this.players = new Player[nb_players];
+  }
 
-    public void generateRandomGrid() {
-        Random r = new Random();
-        for (int i=0 ; i<this.tiles.length ; i++) {
-        Tile n = new FreeTile(i%this.width,i/this.width);
-            double nr = r.nextDouble();
-            if (nr < 0.1) {
-                n = new Bonus(i%this.width,i/this.width, 50);
-            } else if (nr >= 0.1 && nr < 0.3) {
-                n = new Wall(i%this.width,i/this.width);
-            }
-            this.tiles[i]=n;
-        }
-    }
+  public void generateRandomGrid() {
+      Random r = new Random();
+      for (int i=0 ; i<this.tiles.length ; i++) {
+      Tile n = new FreeTile(i%this.width,i/this.width);
+          double nr = r.nextDouble();
+          if (nr < 0.1) {
+              n = new Bonus(i%this.width,i/this.width, 50);
+          } else if (nr >= 0.1 && nr < 0.3) {
+              n = new Wall(i%this.width,i/this.width);
+          }
+          this.tiles[i]=n;
+      }
+  }
 
 	@Override
 	public Tile getTileAt(int x, int y) {

@@ -38,16 +38,16 @@ public class View extends JPanel implements ModelListener{
 
     @Override
     public void paintComponent(Graphics g){
-        
-        for(int i = 0; i < game.getTileList2().size(); i++){
-            ArrayList<Tile> list = game.getTileList2().get(i);
+
+        for(int i = 0; i < game.getTileList().size(); i++){
+            ArrayList<Tile> list = game.getTileList().get(i);
             for(Tile t : list){
                 int x = (int)(64 * t.getX());
                 int y = (int)(64 * t.getY());
                 g.drawImage(t.getImgRepr(), x , y, this);
             }
         }
-        
+
         Set<Player> players = game.getListPlayers().keySet();
         for(Player p: players){
             BufferedImage img = p.getImg();

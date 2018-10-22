@@ -2,9 +2,8 @@ package graphics;
 
 import modele.*;
 import java.util.logging.*;
+import java.io.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
