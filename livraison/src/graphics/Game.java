@@ -136,13 +136,18 @@ public class Game extends AbstractListenableModel {
                 index = new Random().nextInt(4);
               }
               BufferedImage img = ImagesLoader.imageList.get(index);
-              Tile tile = new FreeTile(x,j, img);
+              Tile tile = null;
+              if(i ==2){
+                  tile = new Wall(x,j, img);
+              }else{
+                  tile = new FreeTile(x,j, img);
+              }
               tileList.add(tile);
-							res[x+(j*this.grid.getWidth())]=new FreeTile(x,j);
+		res[x+(j*this.grid.getWidth())]=new FreeTile(x,j);
             }
         }
       }
-      hashTile.put(i, tileList);
+        hashTile.put(i, tileList);
     }
     this.tileList = hashTile;
 		this.grid.setGrid(res);

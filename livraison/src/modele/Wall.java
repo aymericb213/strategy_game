@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.image.BufferedImage;
+
 /**
 	* Classe fille de Tile représentant un mur.
 */
@@ -14,6 +16,10 @@ public class Wall extends Tile {
 	*/
   public Wall(int x, int y) {
     super(x,y);
+  }
+  
+  public Wall(int x, int y, BufferedImage img){
+      super(x,y,img);
   }
 
 	/**

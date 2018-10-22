@@ -40,7 +40,7 @@ public abstract class Tile {
 		* Retourne la représentation de la case.
 		* @return Un caractère représentant le type de la case.
 	*/
-  public abstract String toString();
+    public abstract String toString();
 
     public int getX() {
         return this.x;
@@ -61,6 +61,4 @@ public abstract class Tile {
     public BufferedImage getImgRepr() {
         return imgRepr;
     }
-    
-    
 }

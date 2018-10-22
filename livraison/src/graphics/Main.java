@@ -19,16 +19,16 @@ public class Main {
         BufferedImage img = null;
         BufferedImage img2 = null;
         try {
-          img = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_hold.png"));
-          img2 = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_gun.png"));
+          img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
+          img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
         } catch(IOException e) {
           System.out.println(e);
         }
 
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-				RealGrid grid = new RealGrid(0,0,1);
+	RealGrid grid = new RealGrid(0,0,1);
 
-        File file = new File("Levels/level3.xml");
+        File file = new File("src/Levels/level3.xml");
         try {
             Player p = new Player();
             p.setImg(img);
@@ -36,7 +36,8 @@ public class Main {
             game.addPlayer(p);
             game.loadGrid(file);
             GUI gui = new GUI(game);
-						System.out.println(game.getGrid());
+//            System.out.println(game.getGrid());
+            game.getGrid().displayGrid();
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
         } catch (IOException ex) {
