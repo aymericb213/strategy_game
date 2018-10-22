@@ -29,7 +29,7 @@ public class Mine extends Tile implements Weapon {
   }
 
   @Override
-  public void fire(Grid g, Direction d) {
+  public void fire(Grid g) {
     throw new UnsupportedOperationException("Not supported.");
   }
 

@@ -23,7 +23,7 @@ public class GUI extends JFrame{
     public GUI(){
         this(new Game());
     }
-    
+
     public GUI(Game game){
         this.game = game;
         this.view = new View(null,game);
@@ -33,33 +33,34 @@ public class GUI extends JFrame{
         setSize(832,854); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
-        
+
+
         getContentPane().add(new JButton(new AbstractAction("MoveDown"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getListPlayers().keySet()){
-                    p.move(Direction.s);
-                    game.stateChange();
+                    if(p.possibleMoves(game.getGrid()).contains(Direction.s)){
+                      p.move(Direction.s);
+                      game.stateChange();
+                    }
                 }
-                
             }
         }));
-        
+
         getContentPane().add(new JButton(new AbstractAction("MoveRight"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getListPlayers().keySet()){
+                  if(p.possibleMoves(game.getGrid()).contains(Direction.d)){
                     p.move(Direction.d);
                     game.stateChange();
+                  }
                 }
-                
             }
         }));
-        
-        
+
         setVisible(true);
-        
+
     }
-    
+
     public View getView(){
         return this.view;
     }

@@ -27,7 +27,10 @@ import org.xml.sax.SAXException;
 public class Game extends AbstractListenableModel {
 
   private Grid grid;
+  private HashMap<int[], BufferedImage> tileList;
   private HashMap<Integer, ArrayList<Tile>> tileList2;
+  protected BufferedImage tile_image;
+  protected BufferedImage player_image;
   protected HashMap<Player, BufferedImage> listPlayers = new HashMap<Player, BufferedImage>();
 
   public Game(){
@@ -42,12 +45,28 @@ public class Game extends AbstractListenableModel {
         return this.grid;
     }
 
+    public BufferedImage getTileImg(){
+        return this.tile_image;
+    }
+
+    public void setTileImg(BufferedImage imageRepr) {
+        this.tile_image = imageRepr;
+    }
+
+    public BufferedImage getPlayerImg(){
+        return this.player_image;
+    }
+
     public void addPlayer(Player p){
         listPlayers.put(p, p.getImg());
     }
 
     public HashMap<Player, BufferedImage> getListPlayers() {
         return listPlayers;
+    }
+    
+    public void setPlayerImg(BufferedImage imageRepr) {
+        this.player_image = imageRepr;
     }
 
     public HashMap<Integer, ArrayList<Tile>> getTileList2() {
@@ -165,6 +184,7 @@ public class Game extends AbstractListenableModel {
             }
         }
         this.grid.setGrid(res);
+        this.tileList = listImages;
 }
 
     public void computeTileGrid2(HashMap<Integer,ArrayList<ArrayList<Integer>>> l){
@@ -174,13 +194,13 @@ public class Game extends AbstractListenableModel {
         HashMap<Integer, ArrayList<Tile>> hashTile = new HashMap<Integer, ArrayList<Tile>>();
 
         int indice = 0;
-
+        
         for(int i = 0; i < l.size() ; i++){
             ArrayList<ArrayList<Integer>> list = l.get(i);
             ArrayList<Tile> tileList = new ArrayList<Tile>();
             for(int j = 0; j < list.size() ; j++){
                 for(int x = 0; x < list.get(j).size() ; x++){
-
+                    
                     int index = list.get(j).get(x);
                     if(index != 0){
                         if(index > 1){
@@ -196,7 +216,7 @@ public class Game extends AbstractListenableModel {
                 }
             }
             hashTile.put(i, tileList);
-
+            
         }
         this.tileList2 = hashTile;
     }
@@ -204,5 +224,9 @@ public class Game extends AbstractListenableModel {
             public void paint(Graphics g){
     //			g.drawImage(imageRepr, super.x, super.y, null);
             }
+
+    public HashMap<int[],BufferedImage> getTiles() {
+        return tileList;
+    }
 
 }
