@@ -25,19 +25,20 @@ public class Main {
           System.out.println(e);
         }
 
+				PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-	RealGrid grid = new RealGrid(0,0,1);
+				RealGrid grid = new RealGrid(0,0,1);
 
         File file = new File("src/Levels/level3.xml");
         try {
-            Player p = new Player();
+            Player p = factory.buildBasic();
             p.setImg(img);
             Game game = new Game(grid);
             game.addPlayer(p);
+						game.getGrid().addPlayer(p);
             game.loadGrid(file);
             GUI gui = new GUI(game);
-//            System.out.println(game.getGrid());
-            game.getGrid().displayGrid();
+						System.out.println(game.getGrid());
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
         } catch (IOException ex) {
