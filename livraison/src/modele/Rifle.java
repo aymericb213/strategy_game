@@ -15,7 +15,7 @@ public class Rifle implements Weapon {
 
 	}
 
-	public void explode(RealGrid g) {
+	public void explode(Grid g) {
 		throw new UnsupportedOperationException("Not supported.");
 	}
 }

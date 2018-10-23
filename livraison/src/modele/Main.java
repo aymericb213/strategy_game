@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc= new Scanner(System.in);
 		PlayerFactory factory = PlayerFactory.getInstance();
-		RealGrid g = new RealGrid(10,10,4);
+		Grid g = new Grid(10,10,4);
 		Player p1 = factory.buildBasic();
 		p1.setPosition(4,5);
 		g.addPlayer(p1);

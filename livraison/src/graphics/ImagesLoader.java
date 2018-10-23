@@ -26,7 +26,7 @@ public class ImagesLoader {
         BufferedImage tilesheet = null;
 
         try{
-            tilesheet = ImageIO.read(new File("src/Images/Tilesheet/tilesheet_complete.png"));
+            tilesheet = ImageIO.read(new File("Images/Tilesheet/tilesheet_complete.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }

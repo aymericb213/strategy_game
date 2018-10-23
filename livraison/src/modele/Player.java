@@ -99,7 +99,7 @@ public class Player extends Tile {
 		this.y += d.y();
 	}
 
-  public ArrayList<Direction> possibleMoves(RealGrid grid){
+  public ArrayList<Direction> possibleMoves(Grid grid){
     ArrayList<Direction> res = new ArrayList<Direction>();
     if(this.y > 0) {
       res.add(Direction.z);

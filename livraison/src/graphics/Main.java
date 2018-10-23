@@ -27,7 +27,7 @@ public class Main {
 
 				PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-				RealGrid grid = new RealGrid(0,0,1);
+				Grid grid = new Grid(0,0,1);
 
         File file = new File("src/Levels/level3.xml");
         try {
