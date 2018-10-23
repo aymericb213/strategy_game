@@ -5,7 +5,8 @@ package modele;
 */
 public class Mine extends Tile implements Weapon {
 
-	private int damage;
+	private Player owner;
+	private int damage = 10;
 
 	/**
 		* Constructeur de la classe.
@@ -14,9 +15,15 @@ public class Mine extends Tile implements Weapon {
 		* @param y
 		* Abscisse de la case.
 	*/
-  public Mine(int x, int y, int damage) {
+
+	public Mine(Player owner) {
+		super(-1,-1);
+		this.owner = owner;
+	}
+
+  public Mine(Player owner, int x, int y) {
     super(x,y);
-		this.damage = damage;
+		this.owner = owner;
   }
 
 	/**

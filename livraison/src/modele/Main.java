@@ -4,9 +4,8 @@ import java.util.*;
 
 public class Main {
 
-
 	public static void main(String[] args) {
-
+		Scanner sc= new Scanner(System.in);
 		PlayerFactory factory = PlayerFactory.getInstance();
 		RealGrid g = new RealGrid(10,10,4);
 		Player p1 = factory.buildBasic();
@@ -20,14 +19,41 @@ public class Main {
 		Player p4 = factory.buildBasic();
 		p4.setPosition(7,7);
 		g.addPlayer(p4);
-		System.out.println("\033[H\033[2J");
 		g.generateRandomGrid();
-		while(true) {
-			try {
-				Thread.sleep(500);
-				System.out.println(g);
-			} catch (InterruptedException e) {}
+		end :
+		while(!(g.gameIsOver())) {
+			for (int i=0 ; i<g.getPlayers().length ; i++) {
+				Player p = g.getPlayers()[i];
+				Runnable thread = new PrintThread(g,i,p);
+				Thread t = new Thread(thread);
+				t.start();
+				String input=sc.nextLine();
+				if (input.equals("E") || input.equals("e")) {
+					t.interrupt();
+					break end;
+				}
+				if (input.equals("Z") || input.equals("z")) {
+					t.interrupt();
+					p.move(Direction.z);
+				}
+				else if (input.equals("Q") || input.equals("q")) {
+					t.interrupt();
+					p.move(Direction.q);
+				}
+				else if (input.equals("D") || input.equals("d")) {
+					t.interrupt();
+					p.move(Direction.d);
+				}
+				else if (input.equals("S") || input.equals("s")) {
+					t.interrupt();
+					p.move(Direction.s);
+				}
+				else {
+					t.interrupt();
+					System.out.println("Entrez une commande valide.");
+				}
+			}
+			g.nextTurn();
 		}
 	}
-
 }

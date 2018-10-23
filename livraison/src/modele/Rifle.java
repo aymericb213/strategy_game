@@ -3,13 +3,11 @@ package modele;
 public class Rifle implements Weapon {
 
 	private Player owner;
-	private int damage;
-	private int range;
+	private int damage = 5;
+	private int range = 3;
 
-	public Rifle(Player owner, int damage, int range) {
+	public Rifle(Player owner) {
 		this.owner = owner;
-		this.damage = damage;
-		this.range = range;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.*;
 
 public class RealGrid implements Grid {
 
+	private int turn_number = 1;
   private int width;
   public Tile[] tiles;
   private Player[] players;
@@ -19,7 +20,7 @@ public class RealGrid implements Grid {
       Random r = new Random();
       for (int i=0 ; i<this.tiles.length ; i++) {
       Tile n = new FreeTile(i%this.width,i/this.width);
-          double nr = r.nextDouble();
+          double nr = 1;
           if (nr < 0.1) {
               n = new Bonus(i%this.width,i/this.width, 50);
           } else if (nr >= 0.1 && nr < 0.3) {
@@ -29,9 +30,27 @@ public class RealGrid implements Grid {
       }
   }
 
+	public boolean gameIsOver() {
+		int cpt = 0;
+		for (Player p : players) {
+			if (p.getLife() > 0) {
+				cpt++;
+			}
+		}
+		return cpt==1;
+	}
+
 	@Override
 	public Tile getTileAt(int x, int y) {
 		return this.tiles[x+(y*this.width)];
+	}
+
+	public int getTurnNumber() {
+		return this.turn_number;
+	}
+
+	public void nextTurn() {
+		this.turn_number++;
 	}
 
   public Tile[] getGrid() {
@@ -57,37 +76,32 @@ public class RealGrid implements Grid {
 	public void addPlayer(Player p){
     this.players[PlayerFactory.nb_instances-1]=p;
 	}
-        
-    public void displayGrid(){
-        System.out.println(Arrays.toString(this.tiles));
-    }
 
-    public String toString() {
-        displayGrid();
-            StringBuilder res = new StringBuilder();
-            for (int i=0 ; i<this.tiles.length ; i++) {
-                    if (i>0 && i%this.width == 0) {
-                            res.append("\n");
-                    }
-                    for (Player p : this.players) {
-                            if (p.getX()==i%this.width && p.getY()==i/this.width) {
-                                    res.append(p.toString()+" ");
-                                    break;
-                            } else if (this.players[PlayerFactory.nb_instances-1]==p){
-                                    res.append(this.tiles[i]+" ");
-                            }
-                    }
-            }
-        StringBuilder res2 = new StringBuilder(res.toString());
-        for (Player p : this.players) {
-                int position = p.getX()+(p.getY()*(this.width+1));
-                res2.replace(position,position+1,this.tiles[position-p.getY()].toString());
+  public void displayGrid(){
+    System.out.println(Arrays.toString(this.tiles));
+  }
+
+  public String toString() {
+    StringBuilder res = new StringBuilder();
+    for (int i=0 ; i<this.tiles.length ; i++) {
+      if (i>0 && i%this.width == 0) {
+        res.append("\n");
+      }
+      for (Player p : this.players) {
+        if (p.getX()==i%this.width && p.getY()==i/this.width) {
+          res.append(p.toString());
+          break;
+        } else if (this.players[PlayerFactory.nb_instances-1]==p){
+          res.append(this.tiles[i]);
         }
-        this.alternate_string= !(this.alternate_string);
-        System.out.println("\033[H\033[2J");
-        return (this.alternate_string) ? res.toString() : res2.toString();
+      }
     }
-
-
-
+    StringBuilder res2 = new StringBuilder(res.toString());
+    for (Player p : this.players) {
+      int position = p.getX()+(p.getY()*(this.width+1));
+      res2.replace(position,position+1,this.tiles[position-p.getY()].toString());
+    }
+    this.alternate_string= !(this.alternate_string);
+    return (this.alternate_string) ? res.toString() : res2.toString();
+  }
 }
