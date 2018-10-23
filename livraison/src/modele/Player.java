@@ -21,6 +21,7 @@ public class Player extends Tile {
   private int life;
   private HashMap<Weapon,Integer> loadout;
   private boolean shield_up = false;
+	private PlayerStrategy strategy;
   private BufferedImage img;
 
   public Player(int x, int y, int hp, int mp, String name) {
@@ -29,6 +30,7 @@ public class Player extends Tile {
     this.energy = mp;
     this.name = name;
     this.loadout = new HashMap<Weapon,Integer>();
+		this.strategy = new RandomStrategy(this);
   }
 
   public Player() {
@@ -38,6 +40,14 @@ public class Player extends Tile {
   public void useShield() {
     this.shield_up=true;
   }
+
+	public void act() {
+		this.strategy.execute();
+	}
+
+	public void setStrategy(PlayerStrategy s) {
+		this.strategy = s;
+	}
 
 	public void addWeapon(Weapon w, int ammo) {
 		this.loadout.put(w,ammo);
@@ -107,7 +117,7 @@ public class Player extends Tile {
   }
 
 	public String printStats() {
-		return this.name + ":\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
 	}
 
   public String toString() {

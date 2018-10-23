@@ -9,12 +9,13 @@ public class Main {
 		PlayerFactory factory = PlayerFactory.getInstance();
 		RealGrid g = new RealGrid(10,10,4);
 		Player p1 = factory.buildBasic();
+		p1.setPosition(4,5);
 		g.addPlayer(p1);
 		Player p2 = factory.buildBasic();
-		p2.setPosition(2,3);
+		p2.setPosition(5,5);
 		g.addPlayer(p2);
 		Player p3 = factory.buildBasic();
-		p3.setPosition(1,9);
+		p3.setPosition(6,6);
 		g.addPlayer(p3);
 		Player p4 = factory.buildBasic();
 		p4.setPosition(7,7);
@@ -27,12 +28,17 @@ public class Main {
 				Runnable thread = new PrintThread(g,i,p);
 				Thread t = new Thread(thread);
 				t.start();
+				p.act();
 				String input=sc.nextLine();
+				if (input.equals("N") || input.equals("n")) {
+					t.interrupt();
+					continue;
+				}
 				if (input.equals("E") || input.equals("e")) {
 					t.interrupt();
 					break end;
 				}
-				if (input.equals("Z") || input.equals("z")) {
+				/*if (input.equals("Z") || input.equals("z")) {
 					t.interrupt();
 					p.move(Direction.z);
 				}
@@ -51,7 +57,7 @@ public class Main {
 				else {
 					t.interrupt();
 					System.out.println("Entrez une commande valide.");
-				}
+				}*/
 			}
 			g.nextTurn();
 		}
