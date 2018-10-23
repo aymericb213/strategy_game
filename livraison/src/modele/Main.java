@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc= new Scanner(System.in);
 		PlayerFactory factory = PlayerFactory.getInstance();
-		Grid g = new Grid(10,10,4);
+		RealGrid g = new RealGrid(10,10,4);
 		Player p1 = factory.buildBasic();
 		p1.setPosition(4,5);
 		g.addPlayer(p1);
@@ -38,7 +38,7 @@ public class Main {
 					t.interrupt();
 					break end;
 				}
-				/*if (input.equals("Z") || input.equals("z")) {
+				if (input.equals("Z") || input.equals("z")) {
 					t.interrupt();
 					p.move(Direction.z);
 				}
@@ -57,7 +57,7 @@ public class Main {
 				else {
 					t.interrupt();
 					System.out.println("Entrez une commande valide.");
-				}*/
+				}
 			}
 			g.nextTurn();
 		}

@@ -11,11 +11,11 @@ public class Rifle implements Weapon {
 	}
 
 	@Override
-	public void fire(Grid g, Direction d) {
+	public void fire(RealGrid g, Direction d) {
 
 	}
 
-	public void explode(Grid g) {
+	public void explode(RealGrid g) {
 		throw new UnsupportedOperationException("Not supported.");
 	}
 }

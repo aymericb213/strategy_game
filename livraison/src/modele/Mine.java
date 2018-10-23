@@ -36,12 +36,12 @@ public class Mine extends Tile implements Weapon {
   }
 
   @Override
-  public void fire(Grid g, Direction d) {
+  public void fire(RealGrid g, Direction d) {
     throw new UnsupportedOperationException("Not supported.");
   }
 
   @Override
-  public void explode(Grid g) {
+  public void explode(RealGrid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX()==this.x && p.getY()==this.y) {
 				g.getGrid()[(this.y*g.getWidth())+this.x]=new FreeTile(x,y);

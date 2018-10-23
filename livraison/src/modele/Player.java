@@ -99,18 +99,18 @@ public class Player extends Tile {
 		this.y += d.y();
 	}
 
-  public ArrayList<Direction> possibleMoves(Grid grid){
+  public ArrayList<Direction> possibleMoves(RealGrid grid){
     ArrayList<Direction> res = new ArrayList<Direction>();
-    if(this.y > 0) {
+    if((this.y > 0) && !(grid.getTileAt(this.x,this.y-1) instanceof Wall || grid.getTileAt(this.x,this.y-1) instanceof Player)) {
       res.add(Direction.z);
     }
-    if(this.y < grid.getWidth() -1){
+    if((this.y < (grid.getGrid().length/grid.getWidth())-1) && !(grid.getTileAt(this.x,this.y+1) instanceof Wall || grid.getTileAt(this.x,this.y+1) instanceof Player)){
       res.add(Direction.s);
     }
-    if(this.x > 0){
+    if((this.x > 0) && !(grid.getTileAt(this.x-1,this.y) instanceof Wall || grid.getTileAt(this.x-1,this.y) instanceof Player)){
       res.add(Direction.q);
     }
-    if(this.x < grid.getWidth() -1){
+    if((this.x < grid.getWidth() -1) && !(grid.getTileAt(this.x+1,this.y) instanceof Wall || grid.getTileAt(this.x+1,this.y) instanceof Player)){
       res.add(Direction.d);
     }
     return res;
