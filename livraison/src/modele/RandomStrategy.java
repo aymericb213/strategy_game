@@ -4,14 +4,14 @@ import java.util.Random;
 
 public class RandomStrategy implements PlayerStrategy {
 
-	private Player p;
+	private Player client;
 
-	public RandomStrategy(Player p) {
-		this.p = p;
+	public RandomStrategy(Player client) {
+		this.client = client;
 	}
-	
+
 	public void execute() {
 		int r = new Random().nextInt(4);
-		p.move(Direction.getDirections().get(r));
+		client.move(Direction.getDirections().get(r));
 	}
 }

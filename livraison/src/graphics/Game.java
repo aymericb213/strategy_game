@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
  */
 public class Game extends AbstractListenableModel {
 
-  private RealGrid grid;
+  private Grid grid;
   private HashMap<Integer, ArrayList<Tile>> tile_map;
   protected HashMap<Player, BufferedImage> listPlayers = new HashMap<>();
 
@@ -34,11 +34,11 @@ public class Game extends AbstractListenableModel {
       this(null);
   }
 
-  public Game(RealGrid grid) {
+  public Game(Grid grid) {
       this.grid = grid;
   }
 
-  public RealGrid getGrid() {
+  public Grid getGrid() {
     return this.grid;
   }
 
@@ -117,7 +117,7 @@ public class Game extends AbstractListenableModel {
     }
     return res;
   }
-    
+
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l) {
         int size = l.get(0).get(0).size()*l.get(0).size();
         Tile[] res = new Tile[l.get(0).get(0).size()*l.get(0).size()];

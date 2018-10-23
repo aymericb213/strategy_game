@@ -41,7 +41,7 @@ public class Mine extends Tile implements Weapon {
   }
 
   @Override
-  public void explode(RealGrid g) {
+  public void explode(Grid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX()==this.x && p.getY()==this.y) {
 				g.getGrid()[(this.y*g.getWidth())+this.x]=new FreeTile(x,y);

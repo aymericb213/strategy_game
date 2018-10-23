@@ -5,11 +5,11 @@ package modele;
 	*/
 public class PrintThread implements Runnable {
 
-    private RealGrid g;
+    private Grid g;
 		private int i;
 		private Player p;
 
-    public PrintThread(RealGrid g, int i, Player p) {
+    public PrintThread(Grid g, int i, Player p) {
       this.g = g;
 			this.i = i;
 			this.p = p;
