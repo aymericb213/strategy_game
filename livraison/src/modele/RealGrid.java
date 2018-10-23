@@ -71,10 +71,10 @@ public class RealGrid implements Grid {
                     }
                     for (Player p : this.players) {
                             if (p.getX()==i%this.width && p.getY()==i/this.width) {
-                                    res.append(p.toString());
+                                    res.append(p.toString()+" ");
                                     break;
                             } else if (this.players[PlayerFactory.nb_instances-1]==p){
-                                    res.append(this.tiles[i]);
+                                    res.append(this.tiles[i]+" ");
                             }
                     }
             }

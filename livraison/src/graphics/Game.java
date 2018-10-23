@@ -117,40 +117,43 @@ public class Game extends AbstractListenableModel {
     }
     return res;
   }
-
-  public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l) {
-		Tile[] res = new Tile[l.get(0).get(0).size()*l.get(0).size()];
-    HashMap<Integer, ArrayList<Tile>> hashTile = new HashMap<Integer, ArrayList<Tile>>();
-    int indice = 0;
-    for (int i = 0; i < l.size() ; i++) {
-      ArrayList<ArrayList<Integer>> list = l.get(i);
-      ArrayList<Tile> tileList = new ArrayList<Tile>();
-      for (int j = 0; j < list.size() ; j++) {
-        for (int x = 0; x < list.get(j).size() ; x++) {
-          int index = list.get(j).get(x);
-            if (index != 0) {
-              if (index > 1) {
-                index--;
-              }
-              if(index == 1){
-                index = new Random().nextInt(4);
-              }
-              BufferedImage img = ImagesLoader.imageList.get(index);
-              Tile tile = null;
-              if(i ==2){
-                  tile = new Wall(x,j, img);
-              }else{
-                  tile = new FreeTile(x,j, img);
-              }
-              tileList.add(tile);
-							res[x+(j*this.grid.getWidth())]=tile;
-            }
-        }
+    
+    public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l) {
+        int size = l.get(0).get(0).size()*l.get(0).size();
+        Tile[] res = new Tile[l.get(0).get(0).size()*l.get(0).size()];
+        HashMap<Integer, ArrayList<Tile>> hashTile = new HashMap<Integer, ArrayList<Tile>>();
+        int indice = 0;
+        for (int i = 0; i < l.size() ; i++) {
+            ArrayList<ArrayList<Integer>> list = l.get(i);
+            ArrayList<Tile> tileList = new ArrayList<Tile>();
+            for (int j = 0; j < list.size() ; j++) {
+                for (int x = 0; x < list.get(j).size() ; x++) {
+                    int index = list.get(j).get(x);
+                    if (index != 0) {
+                            if (index > 1) {
+                            index--;
+                        }
+                        if(index == 1){
+                            index = new Random().nextInt(4);
+                        }
+                        BufferedImage img = ImagesLoader.imageList.get(index);
+                        Tile tile = null;
+                        if(i == 1){
+                            tile = new Wall(x,j, img);
+                        }else{
+                            tile = new FreeTile(x,j, img);
+                        }
+                        tileList.add(tile);
+                        if(i < 2){
+                            res[x+(j*this.grid.getWidth())]=tile;
+                        }
+                    }
+                }
       }
         hashTile.put(i, tileList);
     }
     this.tile_map = hashTile;
-		this.grid.setGrid(res);
+    this.grid.setGrid(res);
   }
 
   public void paint(Graphics g){

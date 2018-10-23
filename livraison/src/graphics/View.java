@@ -39,8 +39,6 @@ public class View extends JPanel implements ModelListener{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-
-        System.out.println("On repaint");
         for(int i = 0; i < game.getTileMap().size(); i++){
             ArrayList<Tile> list = game.getTileMap().get(i);
             for(Tile t : list){
