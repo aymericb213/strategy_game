@@ -59,7 +59,7 @@ public class View extends JPanel implements ModelListener{
             int y = 64 * p.getY() + baseY;
             g.drawImage(img,x ,y , this);
 
-            ArrayList<Direction> possibleMoves = p.possibleMoves(game.getGrid());
+            ArrayList<Direction> possibleMoves = p.possibleMoves();
 
             g.setColor(new Color(0,255,255, 200));
             for(Direction d : possibleMoves){

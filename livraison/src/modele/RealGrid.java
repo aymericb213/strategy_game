@@ -8,7 +8,6 @@ public class RealGrid implements Grid {
   private int width;
   public Tile[] tiles;
   private Player[] players;
-  private boolean alternate_string = false;
 
   public RealGrid(int width, int height, int nb_players) {
     this.width = width;
@@ -40,6 +39,7 @@ public class RealGrid implements Grid {
 		return cpt==1;
 	}
 
+	@Override
 	public Tile getTileAt(int x, int y) {
 		return this.tiles[x+(y*this.width)];
 	}
@@ -74,33 +74,22 @@ public class RealGrid implements Grid {
 
 	public void addPlayer(Player p){
     this.players[PlayerFactory.nb_instances-1]=p;
+		this.tiles[p.getX()+(p.getY()*this.width)]=p;
 	}
 
   public void displayGrid(){
     System.out.println(Arrays.toString(this.tiles));
   }
 
+	@Override
   public String toString() {
     StringBuilder res = new StringBuilder();
     for (int i=0 ; i<this.tiles.length ; i++) {
       if (i>0 && i%this.width == 0) {
         res.append("\n");
       }
-      for (Player p : this.players) {
-        if (p.getX()==i%this.width && p.getY()==i/this.width) {
-          res.append(p.toString());
-          break;
-        } else if (this.players[PlayerFactory.nb_instances-1]==p){
-          res.append(this.tiles[i]);
-        }
-      }
+      res.append(this.tiles[i]);
     }
-    StringBuilder res2 = new StringBuilder(res.toString());
-    for (Player p : this.players) {
-      int position = p.getX()+(p.getY()*(this.width+1));
-      res2.replace(position,position+1,this.tiles[position-p.getY()].toString());
-    }
-    this.alternate_string= !(this.alternate_string);
-    return (this.alternate_string) ? res.toString() : res2.toString();
+    return res.toString();
   }
 }

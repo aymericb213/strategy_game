@@ -26,6 +26,10 @@ public class Mine extends Tile implements Weapon {
 		this.owner = owner;
   }
 
+	public Player getOwner() {
+		return this.owner;
+	}
+	
 	/**
 		* Retourne la représentation de l'objectif.
 		* @return Un caractère représentant l'objectif.

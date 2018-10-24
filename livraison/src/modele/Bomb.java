@@ -24,6 +24,10 @@ public class Bomb extends Mine {
     super(owner,x,y);
   }
 
+	public Player getOwner() {
+		return this.owner;
+	}
+	
 	/**
 		* Retourne la représentation de l'objectif.
 		* @return Un caractère représentant l'objectif.

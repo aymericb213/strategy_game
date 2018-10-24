@@ -22,19 +22,21 @@ public class Player extends Tile {
   private HashMap<Weapon,Integer> loadout;
   private boolean shield_up = false;
 	private PlayerStrategy strategy;
+	private Grid view;
   private BufferedImage img;
 
-  public Player(int x, int y, int hp, int mp, String name) {
+  public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
     super(x,y);
 		this.life = hp;
     this.energy = mp;
     this.name = name;
     this.loadout = new HashMap<Weapon,Integer>();
 		this.strategy = new RandomStrategy(this);
+		this.view = new PlayerGrid(g,this);
   }
 
-  public Player() {
-    this(0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
+  public Player(RealGrid g) {
+    this(g,0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
   public void useShield() {
@@ -94,23 +96,32 @@ public class Player extends Tile {
     this.img = img;
   }
 
-	public void move(Direction d){
-		this.x += d.x();
-		this.y += d.y();
+	public void move(Direction d) {
+		try {
+			this.view.getGrid()[x+(y*this.view.getWidth())]=new FreeTile(x,y);
+			this.x += d.x();
+			this.y += d.y();
+			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			this.x -= d.x();
+			this.y -= d.y();
+			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
+			System.out.println("Mouvement non autorisé");
+		}
 	}
 
-  public ArrayList<Direction> possibleMoves(RealGrid grid){
+  public ArrayList<Direction> possibleMoves() {
     ArrayList<Direction> res = new ArrayList<Direction>();
-    if((this.y > 0) && !(grid.getTileAt(this.x,this.y-1) instanceof Wall || grid.getTileAt(this.x,this.y-1) instanceof Player)) {
+    if((this.y > 0) && !(view.getTileAt(this.x,this.y-1) instanceof Wall || view.getTileAt(this.x,this.y-1) instanceof Player)) {
       res.add(Direction.z);
     }
-    if((this.y < (grid.getGrid().length/grid.getWidth())-1) && !(grid.getTileAt(this.x,this.y+1) instanceof Wall || grid.getTileAt(this.x,this.y+1) instanceof Player)){
+    if((this.y < (view.getGrid().length/view.getWidth())-1) && !(view.getTileAt(this.x,this.y+1) instanceof Wall || view.getTileAt(this.x,this.y+1) instanceof Player)){
       res.add(Direction.s);
     }
-    if((this.x > 0) && !(grid.getTileAt(this.x-1,this.y) instanceof Wall || grid.getTileAt(this.x-1,this.y) instanceof Player)){
+    if((this.x > 0) && !(view.getTileAt(this.x-1,this.y) instanceof Wall || view.getTileAt(this.x-1,this.y) instanceof Player)){
       res.add(Direction.q);
     }
-    if((this.x < grid.getWidth() -1) && !(grid.getTileAt(this.x+1,this.y) instanceof Wall || grid.getTileAt(this.x+1,this.y) instanceof Player)){
+    if((this.x < view.getWidth() -1) && !(view.getTileAt(this.x+1,this.y) instanceof Wall || view.getTileAt(this.x+1,this.y) instanceof Player)){
       res.add(Direction.d);
     }
     return res;

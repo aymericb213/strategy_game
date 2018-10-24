@@ -11,7 +11,7 @@ public class RandomStrategy implements PlayerStrategy {
 	}
 
 	public void execute() {
-		int r = new Random().nextInt(4);
+		int r = new Random().nextInt(client.possibleMoves().size());
 		client.move(Direction.getDirections().get(r));
 	}
 }

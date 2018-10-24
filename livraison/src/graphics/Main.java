@@ -27,18 +27,17 @@ public class Main {
 
 				PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-				RealGrid grid = new RealGrid(0,0,1);
+				RealGrid grid = new RealGrid(10,10,1);
 
         File file = new File("Levels/level3.xml");
         try {
-            Player p = factory.buildBasic();
+            Player p = factory.buildBasic(grid);
             p.setImg(img);
             Game game = new Game(grid);
             game.addPlayer(p);
 						game.getGrid().addPlayer(p);
             game.loadGrid(file);
             GUI gui = new GUI(game);
-						System.out.println(game.getGrid());
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
         } catch (IOException ex) {

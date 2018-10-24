@@ -38,7 +38,7 @@ public class GUI extends JFrame{
         getContentPane().add(new JButton(new AbstractAction("MoveDown"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getListPlayers().keySet()){
-                    if(p.possibleMoves(game.getGrid()).contains(Direction.s)){
+                    if(p.possibleMoves().contains(Direction.s)){
                       p.move(Direction.s);
                       game.stateChange();
                     }
@@ -49,7 +49,7 @@ public class GUI extends JFrame{
         getContentPane().add(new JButton(new AbstractAction("MoveRight"){
             public void actionPerformed(ActionEvent e){
                 for(Player p : game.getListPlayers().keySet()){
-                  if(p.possibleMoves(game.getGrid()).contains(Direction.d)){
+                  if(p.possibleMoves().contains(Direction.d)){
                     p.move(Direction.d);
                     game.stateChange();
                   }

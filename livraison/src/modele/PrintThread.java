@@ -19,18 +19,6 @@ public class PrintThread implements Runnable {
     public void run() {
 			while(true) {
 				try {
-					System.out.println("\033[H\033[2J");
-					System.out.println("================ STRATEGY GAME =================\n");
-					System.out.println("Tour " + g.getTurnNumber());
-					System.out.println("Player " + (i+1) + "\n");
-					System.out.println(g + "\n");
-					System.out.println("# : mur");
-					System.out.println("; : mine");
-					System.out.println("! : bombe");
-					System.out.println(". : bonus");
-					System.out.println("@ : joueur");
-					System.out.println("\n" + p.printStats());
-					System.out.println("\nz,q,s,d : déplacer joueur    n : tour suivant     e : quitter");
 					Thread.sleep(750);
 				} catch (InterruptedException e) {
 					break;

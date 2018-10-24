@@ -4,5 +4,9 @@ public interface Grid {
 
 	public Tile getTileAt(int x, int y);
 
+	public Tile[] getGrid();
+	
+	public int getWidth();
+
 	public String toString();
 }
