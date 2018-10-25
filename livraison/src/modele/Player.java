@@ -24,6 +24,7 @@ public class Player extends Tile {
 	private PlayerStrategy strategy;
 	private Grid view;
   private BufferedImage img;
+  public Direction lastMove = Direction.z;
 
   public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
     super(x,y);
@@ -102,6 +103,7 @@ public class Player extends Tile {
 			this.x += d.x();
 			this.y += d.y();
 			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
+                        this.lastMove = d;
 		} catch (ArrayIndexOutOfBoundsException e) {
 			this.x -= d.x();
 			this.y -= d.y();

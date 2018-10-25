@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +59,8 @@ public class View extends JPanel implements ModelListener{
 
             int x = 64 * p.getX() + baseX;
             int y = 64 * p.getY() + baseY;
-            g.drawImage(img,x ,y , this);
+            displayPlayer(g, p);
+            //g.drawImage(img,x ,y , this);
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
 
@@ -69,6 +72,56 @@ public class View extends JPanel implements ModelListener{
         Grid grid = game.getGrid();
     }
 
+    public void displayPlayer(Graphics g, Player p){
+        
+        BufferedImage img = p.getImg();
+
+        int baseX = (int)(( 64 - sizeImg.getWidth())/2);
+        int baseY = (int)(( 64 - sizeImg.getHeight())/2);
+
+        int x = 64 * p.getX() + baseX;
+        int y = 64 * p.getY() + baseY;
+        
+        
+        // The required drawing location
+        int drawLocationX = 300;
+        int drawLocationY = 300;
+
+        // Rotation information
+
+        int angle = 0;
+        if(p.lastMove == Direction.z){
+            angle = 270;
+        }else if(p.lastMove == Direction.s){
+            angle = 90;
+        }else if(p.lastMove == Direction.q){
+            angle = 180;
+        }else if(p.lastMove == Direction.d){
+            angle = 0;
+        }
+        
+        double rotationRequired = Math.toRadians (angle);
+        double locationX = img.getWidth() / 2;
+        double locationY = img.getHeight() / 2;
+        /*
+        at.translate(width/2,height/2);
+        at.rotate(rads);
+        at.translate(-width/2,-height/2);
+        */
+        //AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+        //AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        AffineTransform tx = new AffineTransform();
+        tx.translate(locationX, locationY);
+        tx.rotate(Math.toRadians(angle));
+        tx.translate(-locationX, -locationY);
+        
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        
+        // Drawing the rotated image at the required drawing locations
+        g.drawImage(op.filter(img, null), x, y, null);
+        
+    }
+    
     public void setEntities(Tile[] l){
         this.entities = l;
     }
