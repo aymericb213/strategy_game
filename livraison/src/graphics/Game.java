@@ -77,7 +77,7 @@ public class Game extends AbstractListenableModel {
     } catch (SAXException ex) {
       Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
     }
-    this.grid.setWidth(lvlHandler.x);
+    this.grid=new RealGrid(lvlHandler.x,lvlHandler.y,1);
     System.out.println(lvlHandler.listCase.size());
     String myString = "";
   	for(int i = 0; i < lvlHandler.listCase.size() ; i++) {

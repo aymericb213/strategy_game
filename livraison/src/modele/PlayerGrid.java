@@ -2,27 +2,37 @@ package modele;
 
 public class PlayerGrid implements Grid {
 
-	private RealGrid g;
-	private Player p;
+	private RealGrid model;
+	private Player client;
 
 	public PlayerGrid(RealGrid g, Player p) {
-		this.g = g;
-		this.p = p;
+		this.model = g;
+		this.client = p;
+	}
+
+
+	public boolean isVisibleToPlayer(Tile t) {
+		return (t instanceof Bomb || t instanceof Mine) && (((Bomb)t).getOwner().equals(this.client) || ((Mine)t).getOwner().equals(this.client));
 	}
 
 	@Override
 	public Tile getTileAt(int x, int y) {
-		return g.getGrid()[x+(y*g.getWidth())];
+		Tile test = g.getGrid()[x+(y*g.getWidth())];
+		if (test.isVisibleToPlayer()) {
+			return test;
+		} else {
+			return new FreeTile(x,y);
+		}
 	}
 
 	@Override
 	public int getWidth() {
-		return g.getWidth();
+		return model.getWidth();
 	}
 
 	@Override
 	public Tile[] getGrid() {
-		return g.getGrid();
+		return model.getGrid();
 	}
 
 	@Override
@@ -32,10 +42,10 @@ public class PlayerGrid implements Grid {
       if (i>0 && i%this.getWidth() == 0) {
         res.append("\n");
       }
-			if (!(this.getGrid()[i] instanceof Bomb || this.getGrid()[i] instanceof Mine) && !(((Bomb)this.getGrid()[i]).getOwner().equals(p) || ((Mine)this.getGrid()[i]).getOwner().equals(p))) {
-      	res.append(this.getGrid()[i]);
+			if (this.getGrid[i].isVisibleToPlayer()) {
+				res.append(this.getGrid()[i]);
 			} else {
-				res.append("_");//affichage de FreeTile si la case est une bombe ou une mine adverse
+				res.append(new FreeTile(x,y).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
 			}
     }
     return res.toString();

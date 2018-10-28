@@ -19,24 +19,24 @@ public class Main {
         BufferedImage img = null;
         BufferedImage img2 = null;
         try {
-          img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
-          img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
+          img = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_hold.png"));
+          img2 = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_gun.png"));
         } catch(IOException e) {
           System.out.println(e);
         }
 
 				PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-				RealGrid grid = new RealGrid(10,10,1);
 
-        File file = new File("src/Levels/level3.xml");
+        File file = new File("Levels/level3.xml");
         try {
-            Player p = factory.buildBasic(grid);
+						Game game = new Game();
+						game.loadGrid(file);
+						System.out.println(game.getGrid());
+            Player p = factory.buildBasic(game.getGrid());
             p.setImg(img);
-            Game game = new Game(grid);
             game.addPlayer(p);
 						game.getGrid().addPlayer(p);
-            game.loadGrid(file);
             GUI gui = new GUI(game);
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);

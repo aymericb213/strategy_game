@@ -103,7 +103,7 @@ public class Player extends Tile {
 			this.x += d.x();
 			this.y += d.y();
 			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
-                        this.lastMove = d;
+      this.lastMove = d;
 		} catch (ArrayIndexOutOfBoundsException e) {
 			this.x -= d.x();
 			this.y -= d.y();
