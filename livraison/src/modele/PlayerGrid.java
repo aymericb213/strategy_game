@@ -12,7 +12,7 @@ public class PlayerGrid implements Grid {
 
 
 	public boolean playerCanSee(Tile t) {
-		return (t instanceof Bomb || t instanceof Mine) && (((Bomb)t).getOwner().equals(this.client) || ((Mine)t).getOwner().equals(this.client));
+		return ((!(t instanceof Bomb || t instanceof Mine)) || (t instanceof Bomb || t instanceof Mine) && (((Bomb)t).getOwner().equals(this.client) || ((Mine)t).getOwner().equals(this.client)));
 	}
 
 	@Override
