@@ -14,8 +14,6 @@ import java.util.*;
  */
 public class Player extends Tile {
 
-  private int x;
-  private int y;
   private final String name;
   private int energy;
   private int life;
@@ -23,7 +21,6 @@ public class Player extends Tile {
   private boolean shield_up = false;
 	private PlayerStrategy strategy;
 	private Grid view;
-  private BufferedImage img;
   public Direction lastMove = Direction.z;
 
   public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
@@ -56,22 +53,6 @@ public class Player extends Tile {
 		this.loadout.put(w,ammo);
 	}
 
-  public int getX() {
-    return this.x;
-  }
-
-  public int getY() {
-    return this.y;
-  }
-
-  public void setX(int x) {
-    this.x = x;
-  }
-
-  public void setY(int y) {
-    this.y = y;
-  }
-
   public void setPosition(int x,int y) {
     this.setX(x);
     this.setY(y);
@@ -89,14 +70,7 @@ public class Player extends Tile {
     return this.shield_up;
   }
 
-  public BufferedImage getImg() {
-    return img;
-  }
-
-  public void setImg(BufferedImage img) {
-    this.img = img;
-  }
-
+	/* Mouvement */
 	public void move(Direction d) {
 		try {
 			this.view.getGrid()[x+(y*this.view.getWidth())]=new FreeTile(x,y);
@@ -128,6 +102,12 @@ public class Player extends Tile {
     }
     return res;
   }
+
+	/* Explosifs */
+	public void plantBomb(Tile t) {
+		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]= new Mine(this, t.getX(), t.getY());
+		this.loadout.put(new Mine(this), this.loadout.get(new Mine(this))-1);
+	}
 
 	public String printStats() {
 		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;

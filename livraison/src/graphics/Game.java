@@ -43,7 +43,7 @@ public class Game extends AbstractListenableModel {
   }
 
   public void addPlayer(Player p) {
-    listPlayers.put(p, p.getImg());
+    listPlayers.put(p, p.getImgRepr());
   }
 
   public HashMap<Player, BufferedImage> getListPlayers() {

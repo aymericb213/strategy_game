@@ -52,7 +52,7 @@ public class View extends JPanel implements ModelListener{
 
         Set<Player> players = game.getListPlayers().keySet();
         for(Player p: players){
-            BufferedImage img = p.getImg();
+            BufferedImage img = p.getImgRepr();
 
             int baseX = (int)(( 64 - sizeImg.getWidth())/2);
             int baseY = (int)(( 64 - sizeImg.getHeight())/2);
@@ -73,16 +73,16 @@ public class View extends JPanel implements ModelListener{
     }
 
     public void displayPlayer(Graphics g, Player p){
-        
-        BufferedImage img = p.getImg();
+
+        BufferedImage img = p.getImgRepr();
 
         int baseX = (int)(( 64 - sizeImg.getWidth())/2);
         int baseY = (int)(( 64 - sizeImg.getHeight())/2);
 
         int x = 64 * p.getX() + baseX;
         int y = 64 * p.getY() + baseY;
-        
-        
+
+
         // The required drawing location
         int drawLocationX = 300;
         int drawLocationY = 300;
@@ -99,7 +99,7 @@ public class View extends JPanel implements ModelListener{
         }else if(p.lastMove == Direction.d){
             angle = 0;
         }
-        
+
         double rotationRequired = Math.toRadians (angle);
         double locationX = img.getWidth() / 2;
         double locationY = img.getHeight() / 2;
@@ -114,14 +114,14 @@ public class View extends JPanel implements ModelListener{
         tx.translate(locationX, locationY);
         tx.rotate(Math.toRadians(angle));
         tx.translate(-locationX, -locationY);
-        
+
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        
+
         // Drawing the rotated image at the required drawing locations
         g.drawImage(op.filter(img, null), x, y, null);
-        
+
     }
-    
+
     public void setEntities(Tile[] l){
         this.entities = l;
     }

@@ -34,7 +34,7 @@ public class Main {
 						game.loadGrid(file);
 						System.out.println(game.getGrid());
             Player p = factory.buildBasic(game.getGrid());
-            p.setImg(img);
+            p.setImgRepr(img);
             game.addPlayer(p);
 						game.getGrid().addPlayer(p);
             GUI gui = new GUI(game);

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 /**
  *  Class used for movements. We use it by add direction's value to the object position.
  *  This makes him move to right direction.
- * 
+ *
  */
 public enum Direction {
-    
+
     z("z",0,-1),
     s("s",0,1),
     q("q",-1,0),

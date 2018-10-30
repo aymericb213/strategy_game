@@ -39,6 +39,18 @@ public class RealGrid implements Grid {
 		return cpt==1;
 	}
 
+	public ArrayList<Tile> getNeighbouringFreeTiles(Tile t, int area_size) {
+		ArrayList<Tile> valids = new ArrayList<Tile>();
+		for (int i=-area_size; i<area_size; i++) {
+			for (int j=-area_size; j<area_size; j++) {
+				if ((i+t.getX()>=0 && j+t.getY()>=0) && this.getTileAt(i+t.getX(),j+t.getY()) instanceof FreeTile) {
+					valids.add(this.getTileAt(i+t.getX(),j+t.getY()));
+				}
+			}
+		}
+		return valids;
+	}
+
 	@Override
 	public Tile getTileAt(int x, int y) {
 		return this.tiles[x+(y*this.width)];
@@ -77,7 +89,7 @@ public class RealGrid implements Grid {
 		this.tiles[p.getX()+(p.getY()*this.width)]=p;
 	}
 
-  public void displayGrid(){
+  public void displayGrid() {
     System.out.println(Arrays.toString(this.tiles));
   }
 

@@ -11,14 +11,14 @@ public class PlayerGrid implements Grid {
 	}
 
 
-	public boolean isVisibleToPlayer(Tile t) {
+	public boolean playerCanSee(Tile t) {
 		return (t instanceof Bomb || t instanceof Mine) && (((Bomb)t).getOwner().equals(this.client) || ((Mine)t).getOwner().equals(this.client));
 	}
 
 	@Override
 	public Tile getTileAt(int x, int y) {
-		Tile test = g.getGrid()[x+(y*g.getWidth())];
-		if (test.isVisibleToPlayer()) {
+		Tile test = model.getTileAt(x,y);
+		if (playerCanSee(test)) {
 			return test;
 		} else {
 			return new FreeTile(x,y);
@@ -42,10 +42,10 @@ public class PlayerGrid implements Grid {
       if (i>0 && i%this.getWidth() == 0) {
         res.append("\n");
       }
-			if (this.getGrid[i].isVisibleToPlayer()) {
+			if (playerCanSee(this.getGrid()[i])) {
 				res.append(this.getGrid()[i]);
 			} else {
-				res.append(new FreeTile(x,y).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
+				res.append(new FreeTile(-1,-1).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
 			}
     }
     return res.toString();
