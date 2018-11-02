@@ -55,15 +55,15 @@ public class Player extends Tile {
 		this.loadout.put(w,ammo);
 	}
 
-        
+
     public boolean isSelected(){
         return this.selected;
     }
-    
+
     public void select(){
         this.selected = true;
     }
-    
+
     public void unselect(){
         this.selected = false;
     }
@@ -119,9 +119,41 @@ public class Player extends Tile {
   }
 
 	/* Explosifs */
-	public void plantBomb(Tile t) {
+	public void plantMine(Tile t) {
 		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]= new Mine(this, t.getX(), t.getY());
-		this.loadout.put(new Mine(this), this.loadout.get(new Mine(this))-1);
+		System.out.println(this.loadout);
+		this.loadout.put(new Mine(this), 42);
+	}
+
+	/**
+		* Surcharge de hashCode().
+		* Nécessaire au bon fonctionnement de la surcharge d'equals.
+		* @return Le hashcode de l'objet.
+	*/
+	@Override
+	public int hashCode() {
+		int code=13;
+		code+=33*code+this.name.length();
+		return code;
+	}
+
+	/**
+		* Surcharge de equals.
+		* Prend en compte l'égalité de coordonnées.
+		* @param o
+		* L'objet à comparer au noeud.
+		* @return Le résultat du test d'égalité.
+	*/
+	@Override
+	public boolean equals(Object o) {
+		if (o==this) {
+			return true;
+		}
+		if (!(o instanceof Mine)) {
+			return false;
+		}
+		Player p = (Player)o;
+		return this.name==p.name;
 	}
 
 	public String printStats() {

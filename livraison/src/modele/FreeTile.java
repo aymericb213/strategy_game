@@ -14,13 +14,13 @@ public class FreeTile extends Tile {
 		* Abscisse de la case.
 	*/
 
-    
+
     private BufferedImage imgRepr;
-    
+
     public FreeTile(int x, int y){
         super(x,y);
     }
-    
+
     public FreeTile(int x, int y, BufferedImage img){
         this(x,y);
         this.imgRepr = img;
@@ -38,4 +38,9 @@ public class FreeTile extends Tile {
   public String toString() {
     return "_";
   }
+
+	public String printCoords() {
+		return "(" + this.x + "," + this.y + ")";
+	}
+
 }

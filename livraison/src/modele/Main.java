@@ -37,17 +37,26 @@ public class Main {
 				System.out.println(". : bonus");
 				System.out.println("@ : joueur");
 				System.out.println("\n" + p.printStats());
-				System.out.println("\nz,q,s,d : déplacer joueur    n : tour suivant     e : quitter");
+				System.out.println("\nz,q,s,d : déplacer joueur    m : poser mine     n : tour suivant     e : quitter");
 				if (i!=0) {
 					p.act();
 					continue;
 				}
 				String input=sc.nextLine();
+				if (input.equals("E") || input.equals("e")) {
+					break end;
+				}
 				if (input.equals("N") || input.equals("n")) {
 					p.act();
 				}
-				if (input.equals("E") || input.equals("e")) {
-					break end;
+				if (input.equals("M") || input.equals("m")) {
+					ArrayList<FreeTile> sites = g.getNeighbouringFreeTiles(p);
+					String site_list = "";
+					for (FreeTile f : sites) {
+						site_list+=f.printCoords()+" ";
+					}
+					System.out.println(site_list+"\nChoisissez un emplacement :");
+					p.plantMine(sites.get(Integer.parseInt(sc.nextLine())));
 				}
 				if (input.equals("Z") || input.equals("z")) {
 					p.move(Direction.z);

@@ -16,17 +16,17 @@ public class RealGrid implements Grid {
   }
 
   public void generateRandomGrid() {
-      Random r = new Random();
-      for (int i=0 ; i<this.tiles.length ; i++) {
-      Tile n = new FreeTile(i%this.width,i/this.width);
-          double nr = 1;
-          if (nr < 0.1) {
-              n = new Bonus(i%this.width,i/this.width, 50);
-          } else if (nr >= 0.1 && nr < 0.3) {
-              n = new Wall(i%this.width,i/this.width);
-          }
-          this.tiles[i]=n;
+    Random r = new Random();
+    for (int i=0 ; i<this.tiles.length ; i++) {
+    	Tile n = new FreeTile(i%this.width,i/this.width);
+      double nr = 1;
+      if (nr < 0.1) {
+        n = new Bonus(i%this.width,i/this.width, 50);
+      } else if (nr >= 0.1 && nr < 0.3) {
+        n = new Wall(i%this.width,i/this.width);
       }
+      this.tiles[i]=n;
+    }
   }
 
 	public boolean gameIsOver() {
@@ -39,16 +39,41 @@ public class RealGrid implements Grid {
 		return cpt==1;
 	}
 
-	public ArrayList<Tile> getNeighbouringFreeTiles(Tile t, int area_size) {
-		ArrayList<Tile> valids = new ArrayList<Tile>();
-		for (int i=-area_size; i<area_size; i++) {
-			for (int j=-area_size; j<area_size; j++) {
-				if ((i+t.getX()>=0 && j+t.getY()>=0) && this.getTileAt(i+t.getX(),j+t.getY()) instanceof FreeTile) {
-					valids.add(this.getTileAt(i+t.getX(),j+t.getY()));
-				}
-			}
+	public boolean isFreeInBounds(Tile t) {
+		boolean check = false;
+		if (t instanceof FreeTile && t.getX() >= 0 && t.getX() <= this.width && t.getY() >= 0 && t.getY() <= this.tiles.length/this.width) {
+			check = true;
 		}
-		return valids;
+		return check;
+	}
+
+	public ArrayList<FreeTile> getNeighbouringFreeTiles(Tile t) {
+    ArrayList<FreeTile> valids = new ArrayList<FreeTile>();
+      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()))) {
+        valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()))) {
+				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX(),t.getY()+1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX(),t.getY()+1));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX(),t.getY()-1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX(),t.getY()-1));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()+1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()+1));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()-1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()-1));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()+1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()+1));
+			}
+      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()-1))) {
+				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()-1));
+			}
+    return valids;
 	}
 
 	@Override
