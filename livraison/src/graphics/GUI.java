@@ -9,6 +9,8 @@ import modele.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -67,18 +69,14 @@ public class GUI extends JFrame{
         addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {
-                System.out.println("Hello");
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println("Coucou");
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                System.out.println("Bonjour");
-                System.out.println(e.getKeyCode());
                 if(e.getKeyCode() == KeyEvent.VK_Z){
                     for(Player p : game.getListPlayers().keySet()){
                         if(p.possibleMoves().contains(Direction.z)){
@@ -113,6 +111,44 @@ public class GUI extends JFrame{
                 }
             }
             
+        });
+        
+        getContentPane().addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / 64;
+                int y = e.getY() / 64;
+                System.out.println(x+" "+y);
+                if(game.getGrid().getTileAt(x, y) instanceof Player){
+                    Player p = (Player) game.getGrid().getTileAt(x, y);
+                    if(!p.isSelected()){
+                        p.select();
+                    }else{
+                        p.unselect();
+                    }
+                }
+                game.stateChange();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
             
         });
         

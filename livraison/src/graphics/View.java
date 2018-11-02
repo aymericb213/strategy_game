@@ -65,9 +65,12 @@ public class View extends JPanel implements ModelListener{
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
 
-            g.setColor(new Color(0,255,255, 200));
-            for(Direction d : possibleMoves){
-                g.fillRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
+            if(p.isSelected()){
+                g.setColor(new Color(0,255,0));
+                for(Direction d : possibleMoves){
+                    //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
+                    g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                }
             }
         }
         Grid grid = game.getGrid();

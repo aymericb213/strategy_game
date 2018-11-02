@@ -22,6 +22,7 @@ public class Player extends Tile {
 	private PlayerStrategy strategy;
 	private Grid view;
   public Direction lastMove = Direction.z;
+  private boolean selected;
 
   public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
     super(x,y);
@@ -31,6 +32,7 @@ public class Player extends Tile {
     this.loadout = new HashMap<Weapon,Integer>();
 		this.strategy = new RandomStrategy(this);
 		this.view = new PlayerGrid(g,this);
+    this.selected = false;
   }
 
   public Player(RealGrid g) {
@@ -52,6 +54,19 @@ public class Player extends Tile {
 	public void addWeapon(Weapon w, int ammo) {
 		this.loadout.put(w,ammo);
 	}
+
+        
+    public boolean isSelected(){
+        return this.selected;
+    }
+    
+    public void select(){
+        this.selected = true;
+    }
+    
+    public void unselect(){
+        this.selected = false;
+    }
 
   public void setPosition(int x,int y) {
     this.setX(x);
