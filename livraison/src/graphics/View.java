@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
@@ -99,15 +100,38 @@ public class View extends JPanel implements ModelListener{
         }else if(p.lastMove == Direction.d){
             angle = 0;
         }
+        
+        AffineTransform at = new AffineTransform();
 
+        // 4. translate it to the center of the component
+        //at.translate(getWidth() / 2, getHeight() / 2);
+        at.translate(64 * p.getX() + 32, 63*p.getY() +32);
+
+        // 3. do the actual rotation
+        double secAngle = Math.toRadians(angle);
+        at.rotate(secAngle);//Math.PI/4);
+
+        // 2. just a scale because this image is big
+        //at.scale(0.5, 0.5);
+
+        // 1. translate the object so that you rotate it around the 
+        //    center (easier :))
+        at.translate(-img.getWidth()/2, -img.getHeight()/2);
+        
+
+
+        // draw the image
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(img, at, null);
+        /*
         double rotationRequired = Math.toRadians (angle);
         double locationX = img.getWidth() / 2;
         double locationY = img.getHeight() / 2;
-        /*
+        
         at.translate(width/2,height/2);
         at.rotate(rads);
         at.translate(-width/2,-height/2);
-        */
+        
         //AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
         //AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         AffineTransform tx = new AffineTransform();
@@ -119,7 +143,7 @@ public class View extends JPanel implements ModelListener{
 
         // Drawing the rotated image at the required drawing locations
         g.drawImage(op.filter(img, null), x, y, null);
-
+        */
     }
 
     public void setEntities(Tile[] l){
