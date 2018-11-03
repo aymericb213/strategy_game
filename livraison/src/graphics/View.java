@@ -61,6 +61,7 @@ public class View extends JPanel implements ModelListener{
             int x = 64 * p.getX() + baseX;
             int y = 64 * p.getY() + baseY;
             displayPlayer(g, p);
+            drawLife(p,g);
             //g.drawImage(img,x ,y , this);
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
@@ -121,34 +122,35 @@ public class View extends JPanel implements ModelListener{
         //    center (easier :))
         at.translate(-img.getWidth()/2, -img.getHeight()/2);
         
-
-
         // draw the image
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, at, null);
-        /*
-        double rotationRequired = Math.toRadians (angle);
-        double locationX = img.getWidth() / 2;
-        double locationY = img.getHeight() / 2;
         
-        at.translate(width/2,height/2);
-        at.rotate(rads);
-        at.translate(-width/2,-height/2);
-        
-        //AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-        //AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        AffineTransform tx = new AffineTransform();
-        tx.translate(locationX, locationY);
-        tx.rotate(Math.toRadians(angle));
-        tx.translate(-locationX, -locationY);
-
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-
-        // Drawing the rotated image at the required drawing locations
-        g.drawImage(op.filter(img, null), x, y, null);
-        */
     }
-
+    
+    public void drawLife(Player p, Graphics g){
+        int life = 2;//p.getLife();
+        
+        int size = 64 - 20;
+        int x = 64 * p.getX();
+        int y = 64 * p.getY();
+        
+        double percentLife = life / (double)10;// * 100;
+        int hpSize = (int) (size * percentLife);
+        g.drawRect(x+10,y+2,size, 5);
+        
+        if(life >= 7){
+            g.setColor(new Color(0,255,0));
+        }else if(life >= 4){
+            g.setColor(new Color(229,133,61));
+        }else{
+            g.setColor(new Color(255,0,0));
+        }
+        
+        //g.setColor(new Color(0,255,0));
+        g.fillRect(x+10+1,y+2+1,hpSize-2, 5-2);
+    }
+    
     public void setEntities(Tile[] l){
         this.entities = l;
     }
