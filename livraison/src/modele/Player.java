@@ -121,8 +121,17 @@ public class Player extends Tile {
 	/* Explosifs */
 	public void plantMine(Tile t) {
 		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]= new Mine(this, t.getX(), t.getY());
-		System.out.println(this.loadout);
 		this.loadout.put(new Mine(this), 42);
+	}
+
+	public void plantBomb(Tile t) {
+		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]= new Bomb(this, t.getX(), t.getY());
+		this.loadout.put(new Bomb(this), 51);
+	}
+
+	/* Tir */
+	public void fire(Direction d) {
+
 	}
 
 	/**
@@ -149,7 +158,7 @@ public class Player extends Tile {
 		if (o==this) {
 			return true;
 		}
-		if (!(o instanceof Mine)) {
+		if (!(o instanceof Player)) {
 			return false;
 		}
 		Player p = (Player)o;

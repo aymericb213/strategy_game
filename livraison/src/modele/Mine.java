@@ -5,8 +5,8 @@ package modele;
 */
 public class Mine extends Tile implements Weapon {
 
-	private Player owner;
-	private int damage = 10;
+	protected Player owner;
+	protected int damage = 10;
 
 	/**
 		* Constructeur de la classe.
@@ -31,7 +31,7 @@ public class Mine extends Tile implements Weapon {
 	}
 
 	@Override
-	public void fire(RealGrid g, Direction d) {
+	public void fire(Grid g, Direction d) {
 		throw new UnsupportedOperationException("Not supported.");
 	}
 
@@ -39,7 +39,6 @@ public class Mine extends Tile implements Weapon {
 	public void explode(RealGrid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX()==this.x && p.getY()==this.y) {
-				g.getGrid()[(this.y*g.getWidth())+this.x]=new FreeTile(x,y);
 				if (!(p.shieldIsUp())) {
 					p.setLife(p.getLife()-this.damage);
 				}

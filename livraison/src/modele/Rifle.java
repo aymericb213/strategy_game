@@ -11,7 +11,7 @@ public class Rifle implements Weapon {
 	}
 
 	@Override
-	public void fire(RealGrid g, Direction d) {
+	public void fire(Grid g, Direction d) {
 
 	}
 

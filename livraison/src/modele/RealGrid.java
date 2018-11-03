@@ -39,41 +39,51 @@ public class RealGrid implements Grid {
 		return cpt==1;
 	}
 
-	public boolean isFreeInBounds(Tile t) {
+	public boolean isInBounds(Tile t) {
 		boolean check = false;
-		if (t instanceof FreeTile && t.getX() >= 0 && t.getX() <= this.width && t.getY() >= 0 && t.getY() <= this.tiles.length/this.width) {
+		if (t.getX() >= 0 && t.getX() <= this.width && t.getY() >= 0 && t.getY() <= this.tiles.length/this.width) {
 			check = true;
 		}
 		return check;
 	}
 
+	public ArrayList<Tile> getNeighbouringTiles(Tile t) {
+    ArrayList<Tile> neighbours = new ArrayList<Tile>();
+      if (isInBounds(this.getTileAt(t.getX()+1,t.getY()))) {
+        neighbours.add(this.getTileAt(t.getX()+1,t.getY()));
+			}
+      if (isInBounds(this.getTileAt(t.getX()-1,t.getY()))) {
+				neighbours.add(this.getTileAt(t.getX()-1,t.getY()));
+			}
+      if (isInBounds(this.getTileAt(t.getX(),t.getY()+1))) {
+				neighbours.add(this.getTileAt(t.getX(),t.getY()+1));
+			}
+      if (isInBounds(this.getTileAt(t.getX(),t.getY()-1))) {
+				neighbours.add(this.getTileAt(t.getX(),t.getY()-1));
+			}
+      if (isInBounds(this.getTileAt(t.getX()-1,t.getY()+1))) {
+				neighbours.add(this.getTileAt(t.getX()-1,t.getY()+1));
+			}
+      if (isInBounds(this.getTileAt(t.getX()+1,t.getY()-1))) {
+				neighbours.add(this.getTileAt(t.getX()+1,t.getY()-1));
+			}
+      if (isInBounds(this.getTileAt(t.getX()+1,t.getY()+1))) {
+				neighbours.add(this.getTileAt(t.getX()+1,t.getY()+1));
+			}
+      if (isInBounds(this.getTileAt(t.getX()-1,t.getY()-1))) {
+				neighbours.add(this.getTileAt(t.getX()-1,t.getY()-1));
+			}
+    return neighbours;
+	}
+
 	public ArrayList<FreeTile> getNeighbouringFreeTiles(Tile t) {
-    ArrayList<FreeTile> valids = new ArrayList<FreeTile>();
-      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()))) {
-        valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()));
+		ArrayList<FreeTile> valids = new ArrayList<FreeTile>();
+		for (Tile d : getNeighbouringTiles(t)) {
+			if (d instanceof FreeTile) {
+				valids.add((FreeTile)d);
 			}
-      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()))) {
-				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX(),t.getY()+1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX(),t.getY()+1));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX(),t.getY()-1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX(),t.getY()-1));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()+1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()+1));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()-1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()-1));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX()+1,t.getY()+1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX()+1,t.getY()+1));
-			}
-      if (isFreeInBounds(this.getTileAt(t.getX()-1,t.getY()-1))) {
-				valids.add((FreeTile)this.getTileAt(t.getX()-1,t.getY()-1));
-			}
-    return valids;
+		}
+		return valids;
 	}
 
 	@Override
