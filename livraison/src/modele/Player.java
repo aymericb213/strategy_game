@@ -131,7 +131,12 @@ public class Player extends Tile {
 
 	/* Tir */
 	public void fire(Direction d) {
-
+		for (Weapon w : this.loadout.keySet()) {
+			if (w.equals(new Rifle(this))) {
+				w.fire(this.view,d);
+				this.loadout.put(new Rifle(this), 23);
+			}
+		}
 	}
 
 	/**
