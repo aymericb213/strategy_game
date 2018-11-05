@@ -5,6 +5,7 @@
  */
 package graphics;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -72,7 +73,7 @@ public class ImagesLoader {
             System.out.println(index);
             BufferedImage temp = spritesheet.getSubimage(x,y,width, height);
             imagePlayers.get(index).add(temp);
-            
+            /*
             for(int a = 0 ; a < 3 ; a++){
                 int angle;
                 if(a == 0){
@@ -84,7 +85,7 @@ public class ImagesLoader {
                 }
                 
                 BufferedImage img = rotateImageByDegrees(temp, angle);
-            }  
+            }  */
             
             acc++;
             if(acc > 5){
@@ -97,31 +98,20 @@ public class ImagesLoader {
         System.out.println("Taille ==> "+imagePlayers.get(0).size());
     }   
     
-    public static BufferedImage rotateImageByDegrees(BufferedImage img, double degrees) {
-        double rads = Math.toRadians(degrees);
-        double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));
-        int w = img.getWidth();
-        int h = img.getHeight();
-        int newWidth = (int) Math.floor(w * cos + h * sin);
-        int newHeight = (int) Math.floor(h * cos + w * sin);
-
-        BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = rotated.createGraphics();
-        AffineTransform at = new AffineTransform();
-        at.translate((newWidth - w) / 2, (newHeight - h) / 2);
-
-//        int x = clickPoint == null ? w / 2 : clickPoint.x;
-//        int y = clickPoint == null ? h / 2 : clickPoint.y;
-
-        at.rotate(rads);
-        g2d.setTransform(at);
-//        g2d.drawImage(img, 0, 0, null);
-//        g2d.setColor(Color.RED);
-//        g2d.drawRect(0, 0, newWidth - 1, newHeight - 1);
-//        g2d.dispose();
-
+    public static BufferedImage rotateImage90(BufferedImage img) {
+        
+        int height = img.getHeight();
+        int width = img.getWidth();
+        
+        BufferedImage rotated = new BufferedImage(height, width, img.getType());
+        
+        for(int y = 0; y < height ; y++){
+            for(int x = 0; x < width; x++){
+                rotated.setRGB(y, (width-1)-x, img.getRGB(x,y));
+            }
+        }
         return rotated;
-  }
+    }
     
     //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
     public static ArrayList<BufferedImage> loadImages(){

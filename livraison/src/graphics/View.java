@@ -126,7 +126,8 @@ public class View extends JPanel implements ModelListener{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, at, null);
         */
-        g.drawImage(ImagesLoader.rotateImageByDegrees(img, 180), x, y, this);
+        g.drawImage(ImagesLoader.rotateImage90(img), x, y, this);
+        
     }
     
     public void drawLife(Player p, Graphics g){
