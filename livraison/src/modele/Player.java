@@ -20,7 +20,7 @@ public class Player extends Tile {
   private HashMap<Weapon,Integer> loadout;
   private boolean shield_up = false;
 	private PlayerStrategy strategy;
-	private Grid view;
+	private PlayerGrid view;
   public Direction lastMove = Direction.z;
   private boolean selected;
 
@@ -39,10 +39,6 @@ public class Player extends Tile {
     this(g,0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
-  public void useShield() {
-    this.shield_up=true;
-  }
-
 	public void act() {
 		this.strategy.execute();
 	}
@@ -55,18 +51,21 @@ public class Player extends Tile {
 		this.loadout.put(w,ammo);
 	}
 
+	public PlayerGrid getView() {
+		return this.view;
+	}
 
-    public boolean isSelected(){
-        return this.selected;
-    }
+  public boolean isSelected(){
+    return this.selected;
+  }
 
-    public void select(){
-        this.selected = true;
-    }
+  public void select(){
+    this.selected = true;
+  }
 
-    public void unselect(){
-        this.selected = false;
-    }
+  public void unselect(){
+    this.selected = false;
+  }
 
   public void setPosition(int x,int y) {
     this.setX(x);
@@ -80,6 +79,10 @@ public class Player extends Tile {
   public void setLife(int new_life) {
     this.life=new_life;
   }
+
+	public void useShield() {
+		this.shield_up=true;
+	}
 
   public boolean shieldIsUp() {
     return this.shield_up;

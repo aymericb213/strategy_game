@@ -30,14 +30,14 @@ public class Main {
 				System.out.println("================ STRATEGY GAME =================\n");
 				System.out.println("Tour " + g.getTurnNumber());
 				System.out.println("Player " + (i+1) + "\n");
-				System.out.println(g + "\n");
+				System.out.println(p.getView() + "\n");
 				System.out.println("# : mur");
 				System.out.println("; : mine");
 				System.out.println("! : bombe");
 				System.out.println(". : bonus");
 				System.out.println("@ : joueur");
 				System.out.println("\n" + p.printStats());
-				System.out.println("\nz,q,s,d : déplacer joueur    m : poser mine     n : tour suivant     e : quitter");
+				System.out.println("\nz,q,s,d : déplacer joueur\nm : poser mine     b : poser bombe      t : tirer\nn : tour suivant     e : quitter");
 				if (i!=0) {
 					p.act();
 					continue;
@@ -49,14 +49,29 @@ public class Main {
 				if (input.equals("N") || input.equals("n")) {
 					p.act();
 				}
-				if (input.equals("M") || input.equals("m")) {
+				if (input.equals("M") || input.equals("m") || input.equals("B") || input.equals("b")) {
 					ArrayList<FreeTile> sites = g.getNeighbouringFreeTiles(p);
 					String site_list = "";
 					for (FreeTile f : sites) {
 						site_list+=f.printCoords()+" ";
 					}
 					System.out.println(site_list+"\nChoisissez un emplacement :");
-					p.plantMine(sites.get(Integer.parseInt(sc.nextLine())));
+					if (input.equals("M") || input.equals("m")) {
+						p.plantMine(sites.get(Integer.parseInt(sc.nextLine())));
+					}
+					if (input.equals("B") || input.equals("b")) {
+						p.plantBomb(sites.get(Integer.parseInt(sc.nextLine())));
+					}
+				}
+				if (input.equals("T") || input.equals("t")) {
+					System.out.println("\nChoisissez une direction :");
+					switch (sc.nextLine()) {
+						case "z" : p.fire(Direction.z);
+						case "q" : p.fire(Direction.q);
+						case "s" : p.fire(Direction.s);
+						case "d" : p.fire(Direction.d);
+						default : System.out.println("Non");
+					}
 				}
 				if (input.equals("Z") || input.equals("z")) {
 					p.move(Direction.z);
