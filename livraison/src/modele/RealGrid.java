@@ -8,11 +8,13 @@ public class RealGrid implements Grid {
   private int width;
   public Tile[] tiles;
   private Player[] players;
+	private ArrayList<Bomb> bombs;
 
   public RealGrid(int width, int height, int nb_players) {
     this.width = width;
     this.tiles = new Tile[width*height];
     this.players = new Player[nb_players];
+		this.bombs = new ArrayList<Bomb>();
   }
 
   public void generateRandomGrid() {
@@ -91,12 +93,17 @@ public class RealGrid implements Grid {
 		return this.tiles[x+(y*this.width)];
 	}
 
-	public int getTurnNumber() {
-		return this.turn_number;
-	}
 
 	public void nextTurn() {
+		for (Bomb b : bombs) {
+			b.tick();
+			b.explode(this);
+		}
 		this.turn_number++;
+	}
+
+	public int getTurnNumber() {
+		return this.turn_number;
 	}
 
   public Tile[] getGrid() {
@@ -122,6 +129,10 @@ public class RealGrid implements Grid {
 	public void addPlayer(Player p){
     this.players[PlayerFactory.nb_instances-1]=p;
 		this.tiles[p.getX()+(p.getY()*this.width)]=p;
+	}
+
+	public void addBomb(Bomb b){
+		this.bombs.add(b);
 	}
 
   public void displayGrid() {

@@ -23,6 +23,10 @@ public class Bomb extends Mine {
     super(owner,x,y);
   }
 
+	public void tick() {
+		this.delay--;
+	}
+
 	@Override
 	public void explode(RealGrid g) {
 		if (this.delay==0) {
@@ -35,6 +39,7 @@ public class Bomb extends Mine {
 					}
 				}
 			}
+			g.getGrid()[this.x+this.y*g.getWidth()]=new FreeTile(this.x,this.y);
 		} else {
 			super.explode(g);
 		}
