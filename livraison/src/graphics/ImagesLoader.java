@@ -5,6 +5,8 @@
  */
 package graphics;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -68,29 +70,21 @@ public class ImagesLoader {
             int width = list.get(2);
             int height = list.get(3);
             System.out.println(index);
-            imagePlayers.get(index).add(spritesheet.getSubimage(x,y,width, height));
+            BufferedImage temp = spritesheet.getSubimage(x,y,width, height);
+            imagePlayers.get(index).add(temp);
             
             for(int a = 0 ; a < 3 ; a++){
-                if(p.lastMove == Direction.z){
+                int angle;
+                if(a == 0){
                     angle = 270;
-                }else if(p.lastMove == Direction.s){
+                }else if(a == 1){
                     angle = 90;
-                }else if(p.lastMove == Direction.q){
+                }else{
                     angle = 180;
-                }else if(p.lastMove == Direction.d){
-                    angle = 0;
                 }
-
-                AffineTransform at = new AffineTransform();
-
-                at.translate(64 * 0 + 32, 63*0 +32);
-                double secAngle = Math.toRadians(angle);
-                at.rotate(secAngle);
-                at.translate(-img.getWidth()/2, -img.getHeight()/2);
-
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.drawImage(img, at, null);
-            }
+                
+                BufferedImage img = rotateImageByDegrees(temp, angle);
+            }  
             
             acc++;
             if(acc > 5){
@@ -103,7 +97,7 @@ public class ImagesLoader {
         System.out.println("Taille ==> "+imagePlayers.get(0).size());
     }   
     
-    public BufferedImage rotateImageByDegrees(BufferedImage img, double degrees) {
+    public static BufferedImage rotateImageByDegrees(BufferedImage img, double degrees) {
         double rads = Math.toRadians(degrees);
         double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));
         int w = img.getWidth();
@@ -116,15 +110,15 @@ public class ImagesLoader {
         AffineTransform at = new AffineTransform();
         at.translate((newWidth - w) / 2, (newHeight - h) / 2);
 
-        int x = clickPoint == null ? w / 2 : clickPoint.x;
-        int y = clickPoint == null ? h / 2 : clickPoint.y;
+//        int x = clickPoint == null ? w / 2 : clickPoint.x;
+//        int y = clickPoint == null ? h / 2 : clickPoint.y;
 
-        at.rotate(rads, x, y);
+        at.rotate(rads);
         g2d.setTransform(at);
-        g2d.drawImage(img, 0, 0, this);
-        g2d.setColor(Color.RED);
-        g2d.drawRect(0, 0, newWidth - 1, newHeight - 1);
-        g2d.dispose();
+//        g2d.drawImage(img, 0, 0, null);
+//        g2d.setColor(Color.RED);
+//        g2d.drawRect(0, 0, newWidth - 1, newHeight - 1);
+//        g2d.dispose();
 
         return rotated;
   }

@@ -104,7 +104,7 @@ public class View extends JPanel implements ModelListener{
         }else if(p.lastMove == Direction.d){
             angle = 0;
         }
-        
+        /*
         AffineTransform at = new AffineTransform();
 
         // 4. translate it to the center of the component
@@ -125,7 +125,8 @@ public class View extends JPanel implements ModelListener{
         // draw the image
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, at, null);
-        
+        */
+        g.drawImage(ImagesLoader.rotateImageByDegrees(img, 180), x, y, this);
     }
     
     public void drawLife(Player p, Graphics g){
