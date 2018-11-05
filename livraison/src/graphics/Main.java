@@ -11,7 +11,7 @@ import org.xml.sax.SAXException;
 
 public class Main {
 
-    public static void main(String[] args) throws ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 
         System.out.println(System.getProperty("user.dir"));
 
@@ -25,18 +25,30 @@ public class Main {
           System.out.println(e);
         }
 
-				PlayerFactory factory = PlayerFactory.getInstance();
+        File file2 = new File("src/Images/Spritesheet/spritesheet_characters.xml");
+        ImagesLoader il = new ImagesLoader(file2);
+        il.loadPlayerImages();
+        
+	PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
+        
+        try {
+            il.loadPlayerImages();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         File file = new File("src/Levels/level3.xml");
+      
         try {
-						Game game = new Game();
-						game.loadGrid(file);
-						System.out.println(game.getGrid());
+            Game game = new Game();
+            game.loadGrid(file);
+            System.out.println(game.getGrid());
             Player p = factory.buildBasic(game.getGrid());
-            p.setImgRepr(img);
+            //p.setImgRepr(img);
+            p.setImgRepr(il.imagePlayers.get(3).get(0));
             game.addPlayer(p);
-						game.getGrid().addPlayer(p);
+            game.getGrid().addPlayer(p);
             GUI gui = new GUI(game);
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
