@@ -24,6 +24,10 @@ public class PlayerGrid implements Grid {
 		}
 	}
 
+	public void addBomb(Bomb b) {
+		model.addBomb(b);
+	}
+
 	@Override
 	public int getWidth() {
 		return model.getWidth();

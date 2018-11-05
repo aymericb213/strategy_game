@@ -23,6 +23,10 @@ public class Bomb extends Mine {
     super(owner,x,y);
   }
 
+	public void tick() {
+		this.delay--;
+	}
+
 	@Override
 	public void explode(RealGrid g) {
 		if (this.delay==0) {
