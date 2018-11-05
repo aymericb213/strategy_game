@@ -94,15 +94,14 @@ public class View extends JPanel implements ModelListener{
 
         // Rotation information
 
-        int angle = 0;
         if(p.lastMove == Direction.z){
-            angle = 270;
+            g.drawImage(ImagesLoader.lookUp(img), x, y, this);
         }else if(p.lastMove == Direction.s){
-            angle = 90;
+            g.drawImage(ImagesLoader.lookDown(img), x, y, this);
         }else if(p.lastMove == Direction.q){
-            angle = 180;
+            g.drawImage(ImagesLoader.lookLeft(img), x, y, this);
         }else if(p.lastMove == Direction.d){
-            angle = 0;
+            g.drawImage(ImagesLoader.lookRight(img), x, y, this);
         }
         /*
         AffineTransform at = new AffineTransform();
@@ -118,29 +117,28 @@ public class View extends JPanel implements ModelListener{
         // 2. just a scale because this image is big
         //at.scale(0.5, 0.5);
 
-        // 1. translate the object so that you rotate it around the 
+        // 1. translate the object so that you rotate it around the
         //    center (easier :))
         at.translate(-img.getWidth()/2, -img.getHeight()/2);
-        
+
         // draw the image
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, at, null);
         */
-        g.drawImage(ImagesLoader.rotateImage90(img), x, y, this);
-        
+
     }
-    
+
     public void drawLife(Player p, Graphics g){
         int life = 2;//p.getLife();
-        
+
         int size = 64 - 20;
         int x = 64 * p.getX();
         int y = 64 * p.getY();
-        
+
         double percentLife = life / (double)10;// * 100;
         int hpSize = (int) (size * percentLife);
         g.drawRect(x+10,y+2,size, 5);
-        
+
         if(life >= 7){
             g.setColor(new Color(0,255,0));
         }else if(life >= 4){
@@ -148,11 +146,11 @@ public class View extends JPanel implements ModelListener{
         }else{
             g.setColor(new Color(255,0,0));
         }
-        
+
         //g.setColor(new Color(0,255,0));
         g.fillRect(x+10+1,y+2+1,hpSize-2, 5-2);
     }
-    
+
     public void setEntities(Tile[] l){
         this.entities = l;
     }

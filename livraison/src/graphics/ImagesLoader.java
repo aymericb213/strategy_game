@@ -27,27 +27,27 @@ import org.xml.sax.SAXException;
  * @author quentindeme
  */
 public class ImagesLoader {
-    
+
     public static ArrayList<BufferedImage> imageList;
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
     private File file;
-    
+
     public ImagesLoader(File file){
         this.file = file;
     }
-    
+
     public void loadPlayerImages() throws ParserConfigurationException, IOException, SAXException{
-        
+
         imagePlayers = new HashMap<Integer,ArrayList<BufferedImage>>();
-        
+
         BufferedImage spritesheet = null;
-        
+
         try{
             spritesheet = ImageIO.read(new File("src/Images/Spritesheet/spritesheet_characters.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }
-        
+
         PlayerImageParser playerHandler = new PlayerImageParser();
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
@@ -56,11 +56,11 @@ public class ImagesLoader {
         } catch (SAXException ex) {
           Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         for(int i = 0; i < 9; i++){
             imagePlayers.put(i, new ArrayList<BufferedImage>());
         }
-        
+
         int acc = 0;
         int index = 0;
         for(String name: playerHandler.playerNames){
@@ -83,28 +83,28 @@ public class ImagesLoader {
                 }else{
                     angle = 180;
                 }
-                
+
                 BufferedImage img = rotateImageByDegrees(temp, angle);
             }  */
-            
+
             acc++;
             if(acc > 5){
                 acc = 0;
                 index++;
             }
-            
-            
+
+
         }
         System.out.println("Taille ==> "+imagePlayers.get(0).size());
-    }   
-    
-    public static BufferedImage rotateImage90(BufferedImage img) {
-        
+    }
+
+    public static BufferedImage lookUp(BufferedImage img) {
+
         int height = img.getHeight();
         int width = img.getWidth();
-        
+
         BufferedImage rotated = new BufferedImage(height, width, img.getType());
-        
+
         for(int y = 0; y < height ; y++){
             for(int x = 0; x < width; x++){
                 rotated.setRGB(y, (width-1)-x, img.getRGB(x,y));
@@ -112,7 +112,52 @@ public class ImagesLoader {
         }
         return rotated;
     }
+
+    public static BufferedImage lookDown(BufferedImage img) {
+
+        int height = img.getHeight();
+        int width = img.getWidth();
+
+        BufferedImage rotated = new BufferedImage(height, width, img.getType());
+        
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height ; y++){            
+                rotated.setRGB(y, x, img.getRGB(x,y));
+            }
+        }
+        return rotated;
+    }
     
+    public static BufferedImage lookRight(BufferedImage img) {
+
+        int height = img.getHeight();
+        int width = img.getWidth();
+
+        BufferedImage rotated = new BufferedImage(width, height, img.getType());
+        
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height ; y++){            
+                rotated.setRGB(x, y, img.getRGB(x,y));
+            }
+        }
+        return rotated;
+    }
+    
+    public static BufferedImage lookLeft(BufferedImage img) {
+
+        int height = img.getHeight();
+        int width = img.getWidth();
+
+        BufferedImage rotated = new BufferedImage(width, height, img.getType());
+        
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height ; y++){            
+                rotated.setRGB((width-1)-x, y, img.getRGB(x,y));
+            }
+        }
+        return rotated;
+    }
+
     //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
     public static ArrayList<BufferedImage> loadImages(){
         imageList = new ArrayList<BufferedImage>();
