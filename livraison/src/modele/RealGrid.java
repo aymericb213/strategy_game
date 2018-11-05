@@ -97,6 +97,7 @@ public class RealGrid implements Grid {
 	public void nextTurn() {
 		for (Bomb b : bombs) {
 			b.tick();
+			b.explode(this);
 		}
 		this.turn_number++;
 	}
