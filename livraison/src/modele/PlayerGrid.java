@@ -24,29 +24,27 @@ public class PlayerGrid implements Grid {
 		}
 	}
 
+	public void setTileAt(int x, int y, Tile t) {
+		model.setTileAt(x,y,t);
+	}
+
 	public void addBomb(Bomb b) {
 		model.addBomb(b);
 	}
 
-	@Override
-	public int getWidth() {
-		return model.getWidth();
-	}
-
-	@Override
-	public Tile[] getGrid() {
-		return model.getGrid();
+	public RealGrid getModel() {
+		return this.model;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder res = new StringBuilder();
-    for (int i=0 ; i<this.getGrid().length ; i++) {
-      if (i>0 && i%this.getWidth() == 0) {
+    for (int i=0 ; i<model.getGrid().length ; i++) {
+      if (i>0 && i%model.getWidth() == 0) {
         res.append("\n");
       }
-			if (playerCanSee(this.getGrid()[i])) {
-				res.append(this.getGrid()[i]);
+			if (playerCanSee(model.getGrid()[i])) {
+				res.append(model.getGrid()[i]);
 			} else {
 				res.append(new FreeTile(-1,-1).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
 			}

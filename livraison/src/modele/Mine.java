@@ -26,6 +26,7 @@ public class Mine extends Tile implements Weapon {
 		this.owner = owner;
   }
 
+	@Override
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -39,9 +40,8 @@ public class Mine extends Tile implements Weapon {
 	public void explode(RealGrid g) {
 		for (Player p : g.getPlayers()) {
 			if (p.getX()==this.x && p.getY()==this.y) {
-				if (!(p.shieldIsUp())) {
-					p.setLife(p.getLife()-this.damage);
-				}
+				p.takeDamage(this.damage);
+				g.getGrid()[this.x+this.y*g.getWidth()]=new FreeTile(this.x,this.y);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class Mine extends Tile implements Weapon {
 			return false;
 		}
 		Mine m = (Mine)o;
-		return this.owner==m.getOwner();
+		return this.owner.equals(m.getOwner());
 	}
 
 	/**

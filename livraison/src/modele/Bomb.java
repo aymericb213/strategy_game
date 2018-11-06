@@ -33,9 +33,7 @@ public class Bomb extends Mine {
 			for (Tile t : g.getNeighbouringTiles(this)) {
 				for (Player p : g.getPlayers()) {
 					if (p.getX()==t.getX() && p.getY()==t.getY()) {
-						if (!(p.shieldIsUp())) {
-							p.setLife(p.getLife()-this.damage);
-						}
+						p.takeDamage(this.damage);
 					}
 				}
 			}

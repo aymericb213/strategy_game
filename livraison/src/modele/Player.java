@@ -36,7 +36,7 @@ public class Player extends Tile {
   }
 
   public Player(RealGrid g) {
-    this(g,0,0,10,3,new String("Player " + (PlayerFactory.nb_instances)));
+    this(g,0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
 	public void act() {
@@ -80,27 +80,33 @@ public class Player extends Tile {
     this.life=new_life;
   }
 
-	public void useShield() {
+	public int getEnergy() {
+		return this.energy;
+	}
+
+	public void setEnergy(int new_energy) {
+    this.energy=new_energy;
+  }
+
+	public void enableShield() {
 		this.shield_up=true;
 	}
 
-  public boolean shieldIsUp() {
-    return this.shield_up;
+  public void disableShield() {
+    this.shield_up = false;
   }
 
 	/* Mouvement */
 	public void move(Direction d) {
-		try {
-			this.view.getGrid()[x+(y*this.view.getWidth())]=new FreeTile(x,y);
+		if (this.possibleMoves().contains(d)) {
+			this.view.setTileAt(this.x,this.y,new FreeTile(x,y));
 			this.x += d.x();
 			this.y += d.y();
-			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
-      this.lastMove = d;
-		} catch (ArrayIndexOutOfBoundsException e) {
-			this.x -= d.x();
-			this.y -= d.y();
-			this.view.getGrid()[x+(y*this.view.getWidth())]=this;
-			System.out.println("Mouvement non autorisé");
+			if (this.view.getTileAt(this.x,this.y) instanceof Bonus) {
+				this.energy+=((Bonus)this.view.getTileAt(x,y)).getValue();
+			}
+			this.view.setTileAt(this.x,this.y,this);
+	    this.lastMove = d;
 		}
 	}
 
@@ -109,28 +115,34 @@ public class Player extends Tile {
     if((this.y > 0) && !(view.getTileAt(this.x,this.y-1) instanceof Wall || view.getTileAt(this.x,this.y-1) instanceof Player)) {
       res.add(Direction.z);
     }
-    if((this.y < (view.getGrid().length/view.getWidth())-1) && !(view.getTileAt(this.x,this.y+1) instanceof Wall || view.getTileAt(this.x,this.y+1) instanceof Player)){
+    if((this.y < (view.getModel().getGrid().length/view.getModel().getWidth())-1) && !(view.getTileAt(this.x,this.y+1) instanceof Wall || view.getTileAt(this.x,this.y+1) instanceof Player)){
       res.add(Direction.s);
     }
     if((this.x > 0) && !(view.getTileAt(this.x-1,this.y) instanceof Wall || view.getTileAt(this.x-1,this.y) instanceof Player)){
       res.add(Direction.q);
     }
-    if((this.x < view.getWidth() -1) && !(view.getTileAt(this.x+1,this.y) instanceof Wall || view.getTileAt(this.x+1,this.y) instanceof Player)){
+    if((this.x < view.getModel().getWidth() -1) && !(view.getTileAt(this.x+1,this.y) instanceof Wall || view.getTileAt(this.x+1,this.y) instanceof Player)){
       res.add(Direction.d);
     }
     return res;
   }
 
+	public void takeDamage(int damage) {
+		if (!(this.shield_up)) {
+			this.life -= damage;
+		}
+	}
+
 	/* Explosifs */
 	public void plantMine(Tile t) {
-		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]= new Mine(this, t.getX(), t.getY());
-		this.loadout.put(new Mine(this), 42);
+		this.view.setTileAt(t.getX(),t.getY(),new Mine(this, t.getX(), t.getY()));
+	//	this.loadout.put(new Mine(this), this.loadout.get(new Mine(this))-1);
 	}
 
 	public void plantBomb(Tile t) {
 		Bomb b = new Bomb(this, t.getX(), t.getY());
-		this.view.getGrid()[t.getX()+t.getY()*this.view.getWidth()]=b;
-		this.loadout.put(new Bomb(this), 51);
+		this.view.setTileAt(t.getX(),t.getY(),b);
+		//this.loadout.put(new Bomb(this), this.loadout.get(new Bomb(this))-1);
 		this.view.addBomb(b);
 	}
 
@@ -139,7 +151,7 @@ public class Player extends Tile {
 		for (Weapon w : this.loadout.keySet()) {
 			if (w.equals(new Rifle(this))) {
 				w.fire(this.view,d);
-				this.loadout.put(new Rifle(this), 23);
+		//	this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
 			}
 		}
 	}
@@ -172,19 +184,14 @@ public class Player extends Tile {
 			return false;
 		}
 		Player p = (Player)o;
-		return this.name==p.name;
+		return this.name.equals(p.name);
 	}
 
 	public String printStats() {
 		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
 	}
 
-    public int getEnergy() {
-        return energy;
-    }
-
-        
   public String toString() {
-    return "@";
+    return this.shield_up ? "€" : "@";
   }
 }

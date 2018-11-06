@@ -20,6 +20,9 @@ public class Bonus extends Tile {
 		this.value=value;
   }
 
+	public int getValue() {
+		return this.value;
+	}
 	/**
 		* Retourne la représentation de l'objectif.
 		* @return Un caractère représentant l'objectif.

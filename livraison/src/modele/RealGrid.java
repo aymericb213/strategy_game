@@ -6,29 +6,25 @@ public class RealGrid implements Grid {
 
 	private int turn_number = 1;
   private int width;
-  public Tile[] tiles;
+  private Tile[] tiles;
   private Player[] players;
 	private ArrayList<Bomb> bombs;
+	private GridStrategy generator;
 
   public RealGrid(int width, int height, int nb_players) {
     this.width = width;
     this.tiles = new Tile[width*height];
     this.players = new Player[nb_players];
 		this.bombs = new ArrayList<Bomb>();
+		this.generator = new RandomGeneration();
   }
 
-  public void generateRandomGrid() {
-    Random r = new Random();
-    for (int i=0 ; i<this.tiles.length ; i++) {
-    	Tile n = new FreeTile(i%this.width,i/this.width);
-      double nr = 1;
-      if (nr < 0.1) {
-        n = new Bonus(i%this.width,i/this.width, 50);
-      } else if (nr >= 0.1 && nr < 0.3) {
-        n = new Wall(i%this.width,i/this.width);
-      }
-      this.tiles[i]=n;
-    }
+	public RealGrid() {
+		this(0,0,0);
+	}
+
+  public void createGrid() {
+    generator.generate(this);
   }
 
 	public boolean gameIsOver() {
@@ -93,11 +89,18 @@ public class RealGrid implements Grid {
 		return this.tiles[x+(y*this.width)];
 	}
 
+	@Override
+	public void setTileAt(int x, int y, Tile t) {
+		this.tiles[x+(y*this.width)]=t;
+	}
 
 	public void nextTurn() {
-		for (Bomb b : bombs) {
+		for (Bomb b : this.bombs) {
 			b.tick();
 			b.explode(this);
+		}
+		for (Player p : this.players) {
+			p.disableShield();
 		}
 		this.turn_number++;
 	}
@@ -107,7 +110,7 @@ public class RealGrid implements Grid {
 	}
 
   public Tile[] getGrid() {
-    return tiles;
+    return this.tiles;
   }
 
 	public void setGrid(Tile[] new_grid) {

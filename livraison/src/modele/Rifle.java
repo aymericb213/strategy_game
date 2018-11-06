@@ -10,6 +10,7 @@ public class Rifle implements Weapon {
 		this.owner = owner;
 	}
 
+	@Override
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -19,7 +20,7 @@ public class Rifle implements Weapon {
 		for (int i=1 ; i<=this.range ; i++) {
 			Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));
 			if (lof instanceof Player) {
-				((Player)lof).setLife(((Player)lof).getLife()-this.damage);
+				((Player)lof).takeDamage(this.damage);
 			}
 		}
 	}
@@ -57,7 +58,7 @@ public class Rifle implements Weapon {
 			return false;
 		}
 		Rifle r = (Rifle)o;
-		return this.owner==r.getOwner();
+		return this.owner.equals(r.getOwner());
 	}
 
 }
