@@ -62,6 +62,7 @@ public class View extends JPanel implements ModelListener{
             int y = 64 * p.getY() + baseY;
             displayPlayer(g, p);
             drawLife(p,g);
+            drawActionPoint(p,g);
             //g.drawImage(img,x ,y , this);
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
@@ -128,8 +129,20 @@ public class View extends JPanel implements ModelListener{
 
     }
 
+    public void drawActionPoint(Player p, Graphics g){
+        int nbAction = p.getEnergy();
+        
+        int x = 64 * (p.getX());
+        int y = 64 * (p.getY()+1);
+        
+        g.setColor(new Color(0,255,255));
+        g.drawString(Integer.toString(nbAction), x+10, y-10);
+        //g.fillOval(x+10, y-10, 5, 5);
+        
+    }
+    
     public void drawLife(Player p, Graphics g){
-        int life = 2;//p.getLife();
+        int life = p.getLife();
 
         int size = 64 - 20;
         int x = 64 * p.getX();

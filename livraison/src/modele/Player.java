@@ -36,7 +36,7 @@ public class Player extends Tile {
   }
 
   public Player(RealGrid g) {
-    this(g,0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
+    this(g,0,0,10,3,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
 	public void act() {
@@ -179,6 +179,11 @@ public class Player extends Tile {
 		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
 	}
 
+    public int getEnergy() {
+        return energy;
+    }
+
+        
   public String toString() {
     return "@";
   }
