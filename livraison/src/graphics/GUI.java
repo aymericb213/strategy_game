@@ -23,6 +23,8 @@ public class GUI extends JFrame{
 
     private View view;
     private Game game;
+    
+    private Integer[] coordPlayer = new Integer[2];
 
     public GUI(){
         this(new Game());
@@ -41,29 +43,6 @@ public class GUI extends JFrame{
         //Pour lire les entrées claviers
         setFocusable(true);
         requestFocus();
-
-
-        getContentPane().add(new JButton(new AbstractAction("MoveDown"){
-            public void actionPerformed(ActionEvent e){
-                for(Player p : game.getListPlayers().keySet()){
-                    if(p.possibleMoves().contains(Direction.s)){
-                      p.move(Direction.s);
-                      game.stateChange();
-                    }
-                }
-            }
-        }));
-
-        getContentPane().add(new JButton(new AbstractAction("MoveRight"){
-            public void actionPerformed(ActionEvent e){
-                for(Player p : game.getListPlayers().keySet()){
-                  if(p.possibleMoves().contains(Direction.d)){
-                    p.move(Direction.d);
-                    game.stateChange();
-                  }
-                }
-            }
-        }));
         
         //Je mets ça juste pour les tests, on verra ce qu'on en fait
         addKeyListener(new KeyListener(){
@@ -126,6 +105,8 @@ public class GUI extends JFrame{
                 System.out.println(x+" "+y);
                 if(game.getGrid().getTileAt(x, y) instanceof Player){
                     Player p = (Player) game.getGrid().getTileAt(x, y);
+                    coordPlayer[0] = x;
+                    coordPlayer[1] = y;
                     if(!p.isSelected()){
                         p.select();
                     }else{
@@ -137,7 +118,40 @@ public class GUI extends JFrame{
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                int x = e.getX() / 64;
+                int y = e.getY() / 64;
+                
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
 
+                    int depX = x - p.getX();
+                    int depY = y - p.getY();
+                    
+                    System.out.println("Le joueur: "+p.getX()+", "+p.getY());
+                    System.out.println("La nouvelle case: "+x+", "+y);
+                    
+                    Direction d = null;
+
+                    if(depX == 0 && depY == -1){
+                        d = Direction.z;
+                    }else if(depX == 0 && depY == 1){
+                        d = Direction.s;
+                    }else if(depX == -1 && depY == 0){
+                        d = Direction.q;
+                    }else if(depX == 1 && depY == 0){
+                        d = Direction.d;
+                    }
+                    System.out.println(d);
+                    if(p.possibleMoves().contains(d)){
+                        System.out.println("Le déplacement est possible");
+                        p.move(d);
+                        coordPlayer[0] = null;
+                        coordPlayer[1] = null;
+                        p.unselect();
+                        game.stateChange();
+                    }
+                }
+                
             }
 
             @Override

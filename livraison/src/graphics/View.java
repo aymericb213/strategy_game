@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -136,6 +137,7 @@ public class View extends JPanel implements ModelListener{
         int y = 64 * (p.getY()+1);
         
         g.setColor(new Color(0,255,255));
+        g.setFont(new Font("default", Font.BOLD, 14));
         g.drawString(Integer.toString(nbAction), x+10, y-10);
         //g.fillOval(x+10, y-10, 5, 5);
         
