@@ -69,10 +69,16 @@ public class View extends JPanel implements ModelListener{
             ArrayList<Direction> possibleMoves = p.possibleMoves();
 
             if(p.isSelected()){
-                g.setColor(new Color(0,255,0));
-                for(Direction d : possibleMoves){
-                    //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
-                    g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                if(p.getEnergy() == 0){
+                    g.setColor(new Color(255,0,0));
+                    
+                    g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
+                }else{
+                    g.setColor(new Color(0,255,0));
+                    for(Direction d : possibleMoves){
+                        //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
+                        g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                    }
                 }
             }
         }

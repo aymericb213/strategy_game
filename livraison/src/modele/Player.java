@@ -36,7 +36,7 @@ public class Player extends Tile {
   }
 
   public Player(RealGrid g) {
-    this(g,0,0,10,10,new String("Player " + (PlayerFactory.nb_instances)));
+    this(g,0,0,10,3,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
 	public void act() {
