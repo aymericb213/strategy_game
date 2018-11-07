@@ -7,13 +7,19 @@ package graphics;
 
 import modele.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 
 /**
  *
@@ -44,8 +50,58 @@ public class GUI extends JFrame{
         setFocusable(true);
         requestFocus();
         
+        //Création de menu
+        final JPopupMenu popup = new JPopupMenu();
+        JMenuItem depItem = new JMenuItem("Déplacement", new ImageIcon("src/Images/moveIcon.png"));
+        depItem.getAccessibleContext().setAccessibleDescription("Déplacer le personnage");
+        depItem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    p.select();
+                    game.stateChange();
+                }
+            }
+            
+        });
+        /*
+        depItem.addMenuKeyListener(new MenuKeyListener(){
+            @Override
+            public void menuKeyTyped(MenuKeyEvent e) {
+                System.out.println("Key Typed");
+            }
+
+            @Override
+            public void menuKeyPressed(MenuKeyEvent e) {
+                System.out.println("Menu de déplacement");
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    p.select();
+                }
+            }
+
+            @Override
+            public void menuKeyReleased(MenuKeyEvent e) {
+                System.out.println("Key Released");
+            }
+            
+        });
+        */
+        popup.add(depItem);
+        
+        JMenuItem shieldItem = new JMenuItem("Activer bouclier", new ImageIcon("src/Images/shieldIcon.png"));
+        shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
+        popup.add(shieldItem);
+        
+        JMenuItem shootItem = new JMenuItem("Tirer", new ImageIcon("src/Images/target.png"));
+        shootItem.getAccessibleContext().setAccessibleDescription("Tirer dans une direction");
+        popup.add(shootItem);
+        
+        
         //Je mets ça juste pour les tests, on verra ce qu'on en fait
         addKeyListener(new KeyListener(){
+            
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -93,9 +149,15 @@ public class GUI extends JFrame{
         });
         
         getContentPane().addMouseListener(new MouseListener(){
+            public void showPopup(MouseEvent e){
+                //if(e.isPopupTrigger())
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+            
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                int x = e.getX() / 64;
+                int y = e.getY() / 64;
             }
 
             @Override
@@ -108,7 +170,10 @@ public class GUI extends JFrame{
                     coordPlayer[0] = x;
                     coordPlayer[1] = y;
                     if(!p.isSelected()){
-                        p.select();
+                        //p.select();
+                        if(p.getEnergy() > 0){
+                            showPopup(e);
+                        }
                     }else{
                         p.unselect();
                     }

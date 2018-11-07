@@ -62,18 +62,24 @@ public class View extends JPanel implements ModelListener{
             int x = 64 * p.getX() + baseX;
             int y = 64 * p.getY() + baseY;
             displayPlayer(g, p);
+            
+            //Draw shield
+            g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+            
             drawLife(p,g);
             drawActionPoint(p,g);
             //g.drawImage(img,x ,y , this);
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
 
+            if(p.getEnergy() == 0){
+                g.setColor(new Color(255,0,0));
+
+                g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
+            }
+            
             if(p.isSelected()){
-                if(p.getEnergy() == 0){
-                    g.setColor(new Color(255,0,0));
-                    
-                    g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
-                }else{
+                if(p.getEnergy() != 0){
                     g.setColor(new Color(0,255,0));
                     for(Direction d : possibleMoves){
                         //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);

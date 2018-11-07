@@ -31,6 +31,7 @@ public class ImagesLoader {
     public static ArrayList<BufferedImage> imageList;
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
     private File file;
+    public static BufferedImage shield;
 
     public ImagesLoader(File file){
         this.file = file;
@@ -170,6 +171,11 @@ public class ImagesLoader {
             System.out.println("Loader"+e);
         }
 
+        try{
+            shield = ImageIO.read(new File("src/Images/shield.png"));
+        }catch(IOException e){
+            System.out.println("Loader"+e);
+        }
         int width = tilesheet.getWidth();
         int height = tilesheet.getHeight();
         int size = 64;
