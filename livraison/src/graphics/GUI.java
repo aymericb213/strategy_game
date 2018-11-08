@@ -65,33 +65,21 @@ public class GUI extends JFrame{
             }
             
         });
-        /*
-        depItem.addMenuKeyListener(new MenuKeyListener(){
-            @Override
-            public void menuKeyTyped(MenuKeyEvent e) {
-                System.out.println("Key Typed");
-            }
-
-            @Override
-            public void menuKeyPressed(MenuKeyEvent e) {
-                System.out.println("Menu de déplacement");
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    p.select();
-                }
-            }
-
-            @Override
-            public void menuKeyReleased(MenuKeyEvent e) {
-                System.out.println("Key Released");
-            }
-            
-        });
-        */
         popup.add(depItem);
         
         JMenuItem shieldItem = new JMenuItem("Activer bouclier", new ImageIcon("src/Images/shieldIcon.png"));
         shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
+        shieldItem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    p.enableShield();
+                    game.stateChange();
+                }
+            }
+            
+        });
         popup.add(shieldItem);
         
         JMenuItem shootItem = new JMenuItem("Tirer", new ImageIcon("src/Images/target.png"));

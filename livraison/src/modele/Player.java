@@ -88,8 +88,14 @@ public class Player extends Tile {
     this.energy=new_energy;
   }
 
+    public boolean isShield_up() {
+        return shield_up;
+    }
+
+        
 	public void enableShield() {
 		this.shield_up=true;
+                this.energy--;
 	}
 
   public void disableShield() {

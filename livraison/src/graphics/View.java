@@ -64,7 +64,9 @@ public class View extends JPanel implements ModelListener{
             displayPlayer(g, p);
             
             //Draw shield
-            g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+            if(p.isShield_up()){
+                g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+            }
             
             drawLife(p,g);
             drawActionPoint(p,g);
