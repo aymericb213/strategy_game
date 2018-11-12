@@ -77,8 +77,10 @@ private boolean isShooting = false;
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    p.enableShield();
-                    game.stateChange();
+                    if(!p.isShield_up()){
+                        p.enableShield();
+                        game.stateChange();
+                    }
                 }
             }
             

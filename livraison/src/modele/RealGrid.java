@@ -11,31 +11,32 @@ public class RealGrid implements Grid {
 	private ArrayList<Bomb> bombs;
 	private GridStrategy generator;
 
-  public RealGrid(int width, int height, int nb_players) {
+public RealGrid(int width, int height, int nb_players) {
     this.width = width;
     this.tiles = new Tile[width*height];
     this.players = new Player[nb_players];
-		this.bombs = new ArrayList<Bomb>();
-		this.generator = new RandomGeneration();
+    this.bombs = new ArrayList<Bomb>();
+    this.generator = new RandomGeneration();
+    System.out.println("Nombre de joueurs: "+nb_players);
   }
 
 	public RealGrid() {
-		this(0,0,0);
+		this(0,0,5);
 	}
 
-  public void createGrid() {
+public void createGrid() {
     generator.generate(this);
-  }
+}
 
-	public boolean gameIsOver() {
-		int cpt = 0;
-		for (Player p : players) {
-			if (p.getLife() > 0) {
-				cpt++;
-			}
-		}
-		return cpt==1;
-	}
+public boolean gameIsOver() {
+    int cpt = 0;
+    for (Player p : players) {
+        if (p.getLife() > 0) {
+            cpt++;
+        }
+    }
+    return cpt==1;
+}
 
 	public boolean isInBounds(Tile t) {
 		boolean check = false;
@@ -115,6 +116,7 @@ public class RealGrid implements Grid {
 
 	public void setGrid(Tile[] new_grid) {
 		this.tiles = new_grid;
+                
 	}
 
 	public Player[] getPlayers() {
@@ -130,8 +132,8 @@ public class RealGrid implements Grid {
 	}
 
 	public void addPlayer(Player p){
-    this.players[PlayerFactory.nb_instances-1]=p;
-		this.tiles[p.getX()+(p.getY()*this.width)]=p;
+            this.players[PlayerFactory.nb_instances-1]=p;
+            this.tiles[p.getX()+(p.getY()*this.width)]=p;
 	}
 
 	public void addBomb(Bomb b){

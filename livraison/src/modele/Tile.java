@@ -35,7 +35,7 @@ public abstract class Tile {
     this(x,y);
     this.imgRepr = img;
   }
-
+ 
   public int getX() {
     return this.x;
   }

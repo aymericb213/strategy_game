@@ -31,7 +31,7 @@ public class Game extends AbstractListenableModel {
   protected HashMap<Player, BufferedImage> listPlayers = new HashMap<>();
 
   public Game() {
-      this(null);
+      this(new RealGrid());
   }
 
   public Game(RealGrid grid) {
@@ -78,7 +78,7 @@ public class Game extends AbstractListenableModel {
     } catch (SAXException ex) {
       Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
     }
-    this.grid=new RealGrid(lvlHandler.x,lvlHandler.y,1);
+    this.grid=new RealGrid(lvlHandler.x,lvlHandler.y,5);
     System.out.println(lvlHandler.listCase.size());
     String myString = "";
   	for(int i = 0; i < lvlHandler.listCase.size() ; i++) {

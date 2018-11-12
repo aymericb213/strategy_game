@@ -90,7 +90,8 @@ public class View extends JPanel implements ModelListener{
                     }
                 }
             }
-			ArrayList<ArrayList> viewableTiles = p.visibleTiles();
+            /*
+            ArrayList<ArrayList> viewableTiles = p.visibleTiles();
             System.out.print(viewableTiles);
             
             if(p.isSelected()){
@@ -103,6 +104,7 @@ public class View extends JPanel implements ModelListener{
                     g.fillOval(64*tx+22, 64*ty+22, 20, 20);
                 }
             }
+            */
         }
         Grid grid = game.getGrid();
     }

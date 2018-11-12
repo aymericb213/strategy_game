@@ -271,6 +271,15 @@ public class Player extends Tile {
 		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
 	}
 
+        
+    public void setX(int x){
+        super.setX(x);
+    }
+    
+    public void setY(int y){
+        super.setY(y);
+    }
+    
   public String toString() {
     return this.shield_up ? "€" : "@";
   }
