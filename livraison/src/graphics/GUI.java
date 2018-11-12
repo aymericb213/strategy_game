@@ -31,6 +31,8 @@ public class GUI extends JFrame{
     private Game game;
     
     private Integer[] coordPlayer = new Integer[2];
+private boolean isShooting = false;
+    private boolean isMoving = false;
 
     public GUI(){
         this(new Game());
@@ -60,6 +62,7 @@ public class GUI extends JFrame{
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
                     p.select();
+                    isMoving = true;
                     game.stateChange();
                 }
             }
@@ -84,6 +87,17 @@ public class GUI extends JFrame{
         
         JMenuItem shootItem = new JMenuItem("Tirer", new ImageIcon("src/Images/target.png"));
         shootItem.getAccessibleContext().setAccessibleDescription("Tirer dans une direction");
+        shootItem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    isShooting = true;
+                    System.out.println("Is shooting est mis à true");
+                }
+            }
+            
+        });
         popup.add(shootItem);
         
         
@@ -146,6 +160,7 @@ public class GUI extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
+                
             }
 
             @Override
@@ -173,36 +188,59 @@ public class GUI extends JFrame{
             public void mouseReleased(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
-                
+                System.out.println("Etat du tir : "+isShooting);
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
                     
                     if(p.getEnergy() > 0){
-                        int depX = x - p.getX();
-                        int depY = y - p.getY();
+                        if(isMoving){
+                            int depX = x - p.getX();
+                            int depY = y - p.getY();
 
-                        System.out.println("Le joueur: "+p.getX()+", "+p.getY());
-                        System.out.println("La nouvelle case: "+x+", "+y);
+                            //System.out.println("Le joueur: "+p.getX()+", "+p.getY());
+                            //System.out.println("La nouvelle case: "+x+", "+y);
 
-                        Direction d = null;
+                            Direction d = null;
 
-                        if(depX == 0 && depY == -1){
-                            d = Direction.z;
-                        }else if(depX == 0 && depY == 1){
-                            d = Direction.s;
-                        }else if(depX == -1 && depY == 0){
-                            d = Direction.q;
-                        }else if(depX == 1 && depY == 0){
-                            d = Direction.d;
-                        }
-                        System.out.println(d);
-                        if(p.possibleMoves().contains(d)){
-                            System.out.println("Le déplacement est possible");
-                            p.move(d);
-                            coordPlayer[0] = null;
-                            coordPlayer[1] = null;
-                            p.unselect();
-                            p.setEnergy(p.getEnergy()-1);
+                            if(depX == 0 && depY == -1){
+                                d = Direction.z;
+                            }else if(depX == 0 && depY == 1){
+                                d = Direction.s;
+                            }else if(depX == -1 && depY == 0){
+                                d = Direction.q;
+                            }else if(depX == 1 && depY == 0){
+                                d = Direction.d;
+                            }
+                            System.out.println(d);
+                            if(p.possibleMoves().contains(d)){
+                                //System.out.println("Le déplacement est possible");
+                                p.move(d);
+                                isMoving = false;
+                                coordPlayer[0] = null;
+                                coordPlayer[1] = null;
+                                p.unselect();
+                                p.setEnergy(p.getEnergy()-1);
+                                game.stateChange();
+                            }
+                        }else if(isShooting){
+                            System.out.println("Bonjour le monde");
+                            Direction d = null;
+                            //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+
+                            int depX = x - p.getX();
+                            int depY = y - p.getY();
+
+                            if(depX == 0 && depY == -1){
+                                d = Direction.z;
+                            }else if(depX == 0 && depY == 1){
+                                d = Direction.s;
+                            }else if(depX == -1 && depY == 0){
+                                d = Direction.q;
+                            }else if(depX == 1 && depY == 0){
+                                d = Direction.d;
+                            }
+                            System.out.println("Je m'appréte à tirer");
+                            p.fire(d);
                             game.stateChange();
                         }
                     }
@@ -233,5 +271,4 @@ public class GUI extends JFrame{
     public Game getGame(){
         return this.game;
     }
-
 }

@@ -7,4 +7,5 @@ public interface Weapon {
     public void explode(RealGrid g);
 
 		public Player getOwner();
+	public int getRange();
 }

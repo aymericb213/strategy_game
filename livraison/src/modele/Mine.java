@@ -46,6 +46,11 @@ public class Mine extends Tile implements Weapon {
 		}
 	}
 
+	@Override
+	public int getRange(){
+		return 1;
+	}
+
 	/**
 		* Surcharge de hashCode().
 		* Nécessaire au bon fonctionnement de la surcharge d'equals.

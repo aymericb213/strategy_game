@@ -61,6 +61,7 @@ public class View extends JPanel implements ModelListener{
 
             int x = 64 * p.getX() + baseX;
             int y = 64 * p.getY() + baseY;
+            displayBullet(g, p);
             displayPlayer(g, p);
             
             //Draw shield
@@ -104,6 +105,14 @@ public class View extends JPanel implements ModelListener{
             }
         }
         Grid grid = game.getGrid();
+    }
+
+    public void displayBullet(Graphics g, Player p){
+        if(p.isShooting()){
+            int x = p.getThreadShoot().getX() * 64;
+            int y = p.getThreadShoot().getY() * 64;
+            g.fillRect(x, y, 20, 20);
+        }
     }
 
     public void displayPlayer(Graphics g, Player p){

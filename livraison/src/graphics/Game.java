@@ -43,6 +43,7 @@ public class Game extends AbstractListenableModel {
   }
 
   public void addPlayer(Player p) {
+    p.getThreadShoot().setGame(this);
     listPlayers.put(p, p.getImgRepr());
   }
 

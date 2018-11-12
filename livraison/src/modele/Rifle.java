@@ -61,4 +61,8 @@ public class Rifle implements Weapon {
 		return this.owner.equals(r.getOwner());
 	}
 
+	@Override
+	public int getRange(){
+		return this.range;
+	}
 }

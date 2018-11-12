@@ -25,6 +25,9 @@ public class Player extends Tile {
   private boolean selected;
 	private int visionSize = 3;
 
+  private BulletThread threadShoot;
+  private boolean isShooting = false;
+
   public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
     super(x,y);
 		this.life = hp;
@@ -34,6 +37,7 @@ public class Player extends Tile {
 		this.strategy = new RandomStrategy(this);
 		this.view = new PlayerGrid(g,this);
     this.selected = false;
+    this.threadShoot = new BulletThread(0,0,0,lastMove,this);
   }
 
   public Player(RealGrid g) {
@@ -206,13 +210,31 @@ public class Player extends Tile {
 
 	/* Tir */
 	public void fire(Direction d) {
-		for (Weapon w : this.loadout.keySet()) {
-			if (w.equals(new Rifle(this))) {
-				w.fire(this.view,d);
-		//	this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
-			}
-		}
-	}
+            this.isShooting = true;
+            System.out.println("Je tir");
+            this.lastMove = d;
+    for (Weapon w : this.loadout.keySet()) {
+                    if (w.equals(new Rifle(this))) {
+                        //w.fire(this.view,d);
+                        System.out.println("Portée: "+w.getRange());
+                        threadShoot.ResetThread(this.x, this.y, w.getRange(), d);
+                        threadShoot.start();
+    //  this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
+      }
+    }
+  }
+
+  public boolean isShooting() {
+      return isShooting;
+  }
+
+  public void notShooting(){
+      this.isShooting = false;
+  }
+  
+  public BulletThread getThreadShoot() {
+      return threadShoot;
+  }
 
 	/**
 		* Surcharge de hashCode().
