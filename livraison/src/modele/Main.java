@@ -10,37 +10,33 @@ public class Main {
     PlayerFactory factory = PlayerFactory.getInstance();
 		RealGrid g = new RealGrid();
 		if (args.length>0) {
-			if (args[0].equals("-p0") || args[0].equals("-p1")) {
+			if (args[0].equals("-p0") || args[0].equals("-p1")) {//p0 config simple, p1 config avancée
 				System.out.println("\033[H\033[2J");
-				System.out.println("Dimensions de la grille :");
+				System.out.println("Dimensions de la grille (nxm) :");
 				String[] dim = sc.nextLine().split("x");
 				System.out.println("Nombre de joueurs :");
 				String nb_players = sc.nextLine();
 				g = new RealGrid(Integer.parseInt(dim[0]),Integer.parseInt(dim[1]),Integer.parseInt(nb_players));
-				if (args[0].equals("-p1")) {
+				if (args[0].equals("-p1")) {//classe de chaque joueur
 					for (int i=1 ; i<=Integer.parseInt(nb_players) ; i++) {
 						System.out.println("Classe du joueur " + i);
 						switch (sc.nextLine()) {
-							case "basic" : g.addPlayer(factory.buildBasic(g));
-							case "tank" : g.addPlayer(factory.buildTank(g));
+							case "basic" : g.addPlayer(factory.buildBasic(g)); break;
+							case "tank" : g.addPlayer(factory.buildTank(g)); break;
+							default : System.out.println(PlayerFactory.nb_instances);
 						}
+					}
+				} else {//p0 : tous les joueurs sont basic
+					for (int i=1 ; i<=Integer.parseInt(nb_players) ; i++) {
+							g.addPlayer(factory.buildBasic(g));
 					}
 				}
 			}
-		} else {
+		} else {//setup standard
     g = new RealGrid(10,10,4);
-    Player p1 = factory.buildBasic(g);
-    p1.setPosition(4,5);
-    g.addPlayer(p1);
-    Player p2 = factory.buildBasic(g);
-    p2.setPosition(5,5);
-    g.addPlayer(p2);
-    Player p3 = factory.buildBasic(g);
-    p3.setPosition(6,6);
-    g.addPlayer(p3);
-    Player p4 = factory.buildBasic(g);
-    p4.setPosition(7,7);
-    g.addPlayer(p4);
+			for (int i=1 ; i<=4 ; i++) {
+					g.addPlayer(factory.buildBasic(g));
+			}
 		}
 		g.createGrid();
     end :

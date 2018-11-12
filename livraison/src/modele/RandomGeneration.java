@@ -17,6 +17,12 @@ public class RandomGeneration implements GridStrategy {
 			}
 			random_grid[i]=n;
 		}
+		for (Player p : g.getPlayers()) {
+			int rx = r.nextInt(g.getWidth());
+			int ry = r.nextInt(g.getGrid().length/g.getWidth());
+			p.setPosition(rx,ry);
+			g.setTileAt(rx,ry,p);
+		}
 		g.setGrid(random_grid);
-	} 
+	}
 }
