@@ -132,6 +132,57 @@ public class Player extends Tile {
     }
     return res;
   }
+  
+	public ArrayList<ArrayList> visibleTiles(){
+        ArrayList<ArrayList> t = new ArrayList<>();
+        System.out.print(view.getTileAt(this.x, this.y));
+        int c=1;
+        while(c<this.visionSize){
+            if(this.x+c>view.getWidth()){
+                break;
+            }else{
+                if(!"_".equals(view.getModel().getTileAt(this.x+c, this.y).toString())){break;}
+                else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x+c); pos.add(1,this.y); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
+            }
+            c++;
+        }
+        c=1;
+        while(c<this.visionSize){
+            if(this.x-c<0){
+                break;
+            }else{
+                if(!"_".equals(view.getModel().getTileAt(this.x-c, this.y).toString())){break;}
+                else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x-c); pos.add(1,this.y); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
+            }
+            c++;
+        }
+        c=1;
+        while(c<this.visionSize){
+            if(this.y+c>view.getWidth()){
+                break;
+            }else{
+                if(!"_".equals(view.getModel().getTileAt(this.x, this.y+c).toString())){break;}
+                else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y+c); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
+            }
+            c++;
+        }
+        c=1;
+        while(c<this.visionSize){
+            if(this.y-c<0){
+                break;
+            }else{
+                if(!"_".equals(view.getModel().getTileAt(this.x, this.y-c).toString())){break;}
+                else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y-c); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
+            }
+            c++;
+        }
+        ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y); t.add(pos);
+        
+        
+        //System.out.print(t.toString());
+        
+        return t;
+    }
 
 	public void takeDamage(int damage) {
 		if (!(this.shield_up)) {

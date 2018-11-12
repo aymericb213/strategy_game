@@ -35,7 +35,7 @@ public class PlayerGrid implements Grid {
 	public RealGrid getModel() {
 		return this.model;
 	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder res = new StringBuilder();

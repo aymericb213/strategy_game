@@ -89,6 +89,19 @@ public class View extends JPanel implements ModelListener{
                     }
                 }
             }
+			ArrayList<ArrayList> viewableTiles = p.visibleTiles();
+            System.out.print(viewableTiles);
+            
+            if(p.isSelected()){
+                g.setColor(new Color(25,125,255));
+                int counter=0;
+                for(ArrayList t : viewableTiles){
+                    System.out.print("nik"+counter+"\n"); counter++;
+                    Integer tx = Integer.parseInt(t.get(0).toString());
+                    Integer ty = Integer.parseInt(t.get(1).toString());
+                    g.fillOval(64*tx+22, 64*ty+22, 20, 20);
+                }
+            }
         }
         Grid grid = game.getGrid();
     }
