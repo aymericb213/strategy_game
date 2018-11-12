@@ -3,8 +3,8 @@ package modele;
 public class Rifle implements Weapon {
 
 	private Player owner;
-	private int damage = 5;
-	private int range = 3;
+	private int damage = GameConfig.RIFLE_DAMAGE;
+	private int range = GameConfig.RIFLE_RANGE;
 
 	public Rifle(Player owner) {
 		this.owner = owner;

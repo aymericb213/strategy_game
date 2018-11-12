@@ -6,7 +6,7 @@ package modele;
 public class Mine extends Tile implements Weapon {
 
 	protected Player owner;
-	protected int damage = 10;
+	protected int damage = GameConfig.MINE_DAMAGE;
 
 	/**
 		* Constructeur de la classe.

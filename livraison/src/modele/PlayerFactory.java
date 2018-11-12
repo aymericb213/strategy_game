@@ -19,9 +19,9 @@ public final class PlayerFactory {
 	public Player buildBasic(RealGrid g) {
 		PlayerFactory.nb_instances++;
 		Player p = new Player(g);
-		p.addWeapon(new Rifle(p), 15);
-		p.addWeapon(new Bomb(p), 5);
-		p.addWeapon(new Mine(p), 3);
+		p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO);
+		p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT);
+		p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT);
 		return p;
 	}
 

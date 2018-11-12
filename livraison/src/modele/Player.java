@@ -41,7 +41,7 @@ public class Player extends Tile {
   }
 
   public Player(RealGrid g) {
-    this(g,0,0,10,3,new String("Player " + (PlayerFactory.nb_instances)));
+    this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP,new String("Player " + (PlayerFactory.nb_instances)));
   }
 
 	public void act() {
@@ -100,7 +100,7 @@ public class Player extends Tile {
 
 	public void enableShield() {
 		this.shield_up=true;
-                this.energy--;
+                this.energy-=GameConfig.SHIELD_COST;
 	}
 
   public void disableShield() {
@@ -118,6 +118,7 @@ public class Player extends Tile {
 			}
 			this.view.setTileAt(this.x,this.y,this);
 	    this.lastMove = d;
+			this.energy-=GameConfig.MOVE_COST;
 		}
 	}
 
@@ -199,6 +200,7 @@ public class Player extends Tile {
 	public void plantMine(Tile t) {
 		this.view.setTileAt(t.getX(),t.getY(),new Mine(this, t.getX(), t.getY()));
 	//	this.loadout.put(new Mine(this), this.loadout.get(new Mine(this))-1);
+		this.energy-=GameConfig.MINE_PLANT_COST;
 	}
 
 	public void plantBomb(Tile t) {
@@ -206,6 +208,7 @@ public class Player extends Tile {
 		this.view.setTileAt(t.getX(),t.getY(),b);
 		//this.loadout.put(new Bomb(this), this.loadout.get(new Bomb(this))-1);
 		this.view.addBomb(b);
+		this.energy-=GameConfig.BOMB_PLANT_COST;
 	}
 
 	/* Tir */
@@ -220,6 +223,7 @@ public class Player extends Tile {
                         threadShoot.ResetThread(this.x, this.y, w.getRange(), d);
                         threadShoot.start();
     //  this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
+		this.energy-=GameConfig.RIFLE_FIRE_COST;
       }
     }
   }
@@ -231,7 +235,7 @@ public class Player extends Tile {
   public void notShooting(){
       this.isShooting = false;
   }
-  
+
   public BulletThread getThreadShoot() {
       return threadShoot;
   }
@@ -271,15 +275,15 @@ public class Player extends Tile {
 		return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
 	}
 
-        
+
     public void setX(int x){
         super.setX(x);
     }
-    
+
     public void setY(int y){
         super.setY(y);
     }
-    
+
   public String toString() {
     return this.shield_up ? "€" : "@";
   }

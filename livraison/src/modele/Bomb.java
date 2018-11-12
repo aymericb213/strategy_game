@@ -6,7 +6,7 @@ package modele;
 public class Bomb extends Mine {
 
 	//Nombre de tours avant explosion
-	private int delay = 3;
+	private int delay = GameConfig.BOMB_DELAY;
 	/**
 		* Constructeur de la classe.
 		* @param x
@@ -17,10 +17,12 @@ public class Bomb extends Mine {
 
 	public Bomb(Player owner) {
 		super(owner);
+		this.damage=GameConfig.BOMB_DAMAGE;
 	}
 
   public Bomb(Player owner, int x, int y) {
     super(owner,x,y);
+		this.damage=GameConfig.BOMB_DAMAGE;
   }
 
 	public void tick() {
