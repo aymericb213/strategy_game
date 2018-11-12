@@ -23,6 +23,7 @@ public class Player extends Tile {
 	private PlayerGrid view;
   public Direction lastMove = Direction.z;
   private boolean selected;
+	private int visionSize = 3;
 
   public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
     super(x,y);
@@ -92,7 +93,7 @@ public class Player extends Tile {
         return shield_up;
     }
 
-        
+
 	public void enableShield() {
 		this.shield_up=true;
                 this.energy--;
@@ -132,16 +133,16 @@ public class Player extends Tile {
     }
     return res;
   }
-  
+
 	public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
         System.out.print(view.getTileAt(this.x, this.y));
         int c=1;
         while(c<this.visionSize){
-            if(this.x+c>view.getWidth()){
+            if(this.x+c>view.getModel().getWidth()){
                 break;
             }else{
-                if(!"_".equals(view.getModel().getTileAt(this.x+c, this.y).toString())){break;}
+                if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){break;}
                 else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x+c); pos.add(1,this.y); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
             }
             c++;
@@ -151,17 +152,17 @@ public class Player extends Tile {
             if(this.x-c<0){
                 break;
             }else{
-                if(!"_".equals(view.getModel().getTileAt(this.x-c, this.y).toString())){break;}
+                if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){break;}
                 else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x-c); pos.add(1,this.y); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
             }
             c++;
         }
         c=1;
         while(c<this.visionSize){
-            if(this.y+c>view.getWidth()){
+            if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
                 break;
             }else{
-                if(!"_".equals(view.getModel().getTileAt(this.x, this.y+c).toString())){break;}
+                if(!(view.getModel().getTileAt(this.x, this.y+c) instanceof FreeTile)){break;}
                 else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y+c); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
             }
             c++;
@@ -171,16 +172,16 @@ public class Player extends Tile {
             if(this.y-c<0){
                 break;
             }else{
-                if(!"_".equals(view.getModel().getTileAt(this.x, this.y-c).toString())){break;}
+                if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){break;}
                 else{ ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y-c); t.add(pos); System.out.print("pos"+pos.toString()+"\n");}
             }
             c++;
         }
         ArrayList<Integer> pos = new ArrayList(2); pos.add(0,this.x); pos.add(1,this.y); t.add(pos);
-        
-        
+
+
         //System.out.print(t.toString());
-        
+
         return t;
     }
 
