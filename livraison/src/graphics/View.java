@@ -99,10 +99,11 @@ public class View extends JPanel implements ModelListener{
     }
 
     public void displayBullet(Graphics g, Player p){
+        g.setColor(Color.BLACK);
         if(p.isShooting()){
-            int x = p.getThreadShoot().getX() * 64;
-            int y = p.getThreadShoot().getY() * 64;
-            g.fillRect(x, y, 20, 20);
+            int x = p.getThreadShoot().getX();//* 64;
+            int y = p.getThreadShoot().getY();// * 64;
+            g.fillOval(x, y, 10, 10);
         }
     }
 
