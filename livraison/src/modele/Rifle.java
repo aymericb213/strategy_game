@@ -1,33 +1,33 @@
 package modele;
 
 public class Rifle implements Weapon {
-    
+
     private final Player owner;
     private final int damage = GameConfig.RIFLE_DAMAGE;
     private final int range = GameConfig.RIFLE_RANGE;
 
     public Rifle(Player owner) {
-        this.owner = owner;	
+        this.owner = owner;
     }
-    
+
     @Override
     public Player getOwner() {
-        return this.owner;	
+        return this.owner;
     }
 
     @Override
     public void fire(Grid g, Direction d) {
-        for (int i=1 ; i<=this.range ; i++) {	
-            Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));	
-            if (lof instanceof Player) {	
-                ((Player)lof).takeDamage(this.damage);		
-            }	
-        }	
+        for (int i=1 ; i<=this.range ; i++) {
+            Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));
+            if (lof instanceof Player) {
+                ((Player)lof).takeDamage(this.damage);
+            }
+        }
     }
 
     @Override
     public void explode(RealGrid g) {
-        throw new UnsupportedOperationException("Not supported.");	
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     /**
@@ -38,14 +38,14 @@ public class Rifle implements Weapon {
     */
     @Override
     public int hashCode() {
-        int code=17;	
-        code+=31*code+this.owner.getX();	
-        code+=31*code+this.owner.getY();	
-        return code;	
-    }    
+        int code=17;
+        code+=31*code+this.owner.getX();
+        code+=31*code+this.owner.getY();
+        return code;
+    }
 
     /**
-    * Surcharge de equals.    
+    * Surcharge de equals.
     * Prend en compte l'égalité de coordonnées.
     * @param o
     * L'objet à comparer au noeud.
@@ -53,18 +53,17 @@ public class Rifle implements Weapon {
     */
     @Override
     public boolean equals(Object o) {
-        if (o==this) {	
-            return true;	
-        }	
-        if (!(o instanceof Rifle)) {	
-            return false;	
-        }	
-        Rifle r = (Rifle)o;	
-        return this.owner.equals(r.getOwner());	
-    }    
+        if (o==this) {
+            return true;
+        }
+        if (!(o instanceof Rifle)) {
+            return false;
+        }
+        Rifle r = (Rifle)o;
+        return this.owner.equals(r.getOwner());
+    }
 
-    @Override
     public int getRange(){
-        return this.range;	
+        return this.range;
     }
 }
