@@ -10,28 +10,29 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 public class Main {
-    
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {    
-        System.out.println(System.getProperty("user.dir"));   
-        
+
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+				new GameConfig();
+        System.out.println(System.getProperty("user.dir"));
+
         //Chargement de l'image qui représentera le joueur
         BufferedImage img = null;
         BufferedImage img2 = null;
-        
+
         try {
-            img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));          
-            img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));        
-        } catch(IOException e) {        
-            System.out.println(e);        
+            img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
+            img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
+        } catch(IOException e) {
+            System.out.println(e);
         }
-        
+
         File file2 = new File("src/Images/Spritesheet/spritesheet_characters.xml");
         ImagesLoader il = new ImagesLoader(file2);
         il.loadPlayerImages();
-        
+
 	PlayerFactory factory = PlayerFactory.getInstance();
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();
-        
+
         try {
             il.loadPlayerImages();
         } catch (IOException ex) {
@@ -39,7 +40,7 @@ public class Main {
         }
 
         File file = new File("src/Levels/level3.xml");
-      
+
         try {
             Game game = new Game();
             game.loadGrid(file);
