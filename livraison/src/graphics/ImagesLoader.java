@@ -1,13 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,15 +14,12 @@ import javax.xml.parsers.SAXParserFactory;
 import modele.Grid;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author quentindeme
- */
-public class ImagesLoader {
 
+public class ImagesLoader {
+    
     public static ArrayList<BufferedImage> imageList;
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
-    private File file;
+    private final File file;
     public static BufferedImage shield;
 
     public ImagesLoader(File file){
@@ -38,11 +27,8 @@ public class ImagesLoader {
     }
 
     public void loadPlayerImages() throws ParserConfigurationException, IOException, SAXException{
-
-        imagePlayers = new HashMap<Integer,ArrayList<BufferedImage>>();
-
+        imagePlayers = new HashMap<>();
         BufferedImage spritesheet = null;
-
         try{
             spritesheet = ImageIO.read(new File("src/Images/Spritesheet/spritesheet_characters.png"));
         }catch(IOException e){
@@ -51,15 +37,16 @@ public class ImagesLoader {
 
         PlayerImageParser playerHandler = new PlayerImageParser();
         SAXParserFactory factory = SAXParserFactory.newInstance();
+        
         try {
-          SAXParser saxParser = factory.newSAXParser();
-          saxParser.parse(file,playerHandler);
+            SAXParser saxParser = factory.newSAXParser();          
+            saxParser.parse(file,playerHandler);
         } catch (SAXException ex) {
-          Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         for(int i = 0; i < 9; i++){
-            imagePlayers.put(i, new ArrayList<BufferedImage>());
+            imagePlayers.put(i, new ArrayList<>());
         }
 
         int acc = 0;
@@ -74,8 +61,9 @@ public class ImagesLoader {
             System.out.println(index);
             BufferedImage temp = spritesheet.getSubimage(x,y,width, height);
             imagePlayers.get(index).add(temp);
-            /*
-            for(int a = 0 ; a < 3 ; a++){
+            
+            
+            /*for(int a = 0 ; a < 3 ; a++){
                 int angle;
                 if(a == 0){
                     angle = 270;
@@ -86,21 +74,19 @@ public class ImagesLoader {
                 }
 
                 BufferedImage img = rotateImageByDegrees(temp, angle);
-            }  */
+            } */ 
 
             acc++;
             if(acc > 5){
                 acc = 0;
                 index++;
             }
-
-
-        }
+        }        
         System.out.println("Taille ==> "+imagePlayers.get(0).size());
     }
 
     public static BufferedImage lookUp(BufferedImage img) {
-
+        
         int height = img.getHeight();
         int width = img.getWidth();
 
@@ -161,7 +147,7 @@ public class ImagesLoader {
 
     //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
     public static ArrayList<BufferedImage> loadImages(){
-        imageList = new ArrayList<BufferedImage>();
+        imageList = new ArrayList<>();
 
         BufferedImage tilesheet = null;
 
@@ -198,7 +184,6 @@ public class ImagesLoader {
         for(int y = 0 ; y < nbImagesHeight ; y++){
             for(int x = 0 ; x < nbImagesWidth ; x++){
                 BufferedImage temp = tilesheet.getSubimage(x*size , y*size, size, size);
-
                 imageList.add(temp);
             }
         }

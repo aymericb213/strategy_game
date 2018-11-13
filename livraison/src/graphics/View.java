@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics;
 
 import modele.*;
@@ -11,29 +6,22 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import javax.swing.JPanel;
 
-/**
- *
- * @author quentindeme
- */
 public class View extends JPanel implements ModelListener{
     private Tile[] entities;
-    private Game game;
-    private Dimension sizeImg;
+    private final Game game;
+    private final Dimension sizeImg;
 
-    public View(Tile[] entities, Game game) {
+    public View(Tile[] entities, Game game) {    
         this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
         game.addListener(this);
     }
+    
     /*
     public void addEntity(Tile entity){
         entities.add(entity);
@@ -46,8 +34,8 @@ public class View extends JPanel implements ModelListener{
         for(int i = 0; i < game.getTileMap().size(); i++){
             ArrayList<Tile> list = game.getTileMap().get(i);
             for(Tile t : list){
-                int x = (int)(64 * t.getX());
-                int y = (int)(64 * t.getY());
+                int x = 64 * t.getX();
+                int y = 64 * t.getY();
                 g.drawImage(t.getImgRepr(), x , y, this);
             }
         }
@@ -90,6 +78,7 @@ public class View extends JPanel implements ModelListener{
                     }
                 }
             }
+            
             /*
             ArrayList<ArrayList> viewableTiles = p.visibleTiles();
             System.out.print(viewableTiles);

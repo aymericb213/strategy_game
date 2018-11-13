@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics;
 
 import modele.*;
@@ -12,29 +7,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
 
-/**
- *
- * @author quentindeme
- */
+
 public class GUI extends JFrame{
-
-    private View view;
-    private Game game;
     
+    private View view;
+    private Game game;    
     private Integer[] coordPlayer = new Integer[2];
-private boolean isShooting = false;
+    private boolean isShooting = false;
     private boolean isMoving = false;
 
-    public GUI(){
+    
+    public GUI(){    
         this(new Game());
     }
 
@@ -54,6 +42,7 @@ private boolean isShooting = false;
         
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
+        
         JMenuItem depItem = new JMenuItem("Déplacement", new ImageIcon("src/Images/moveIcon.png"));
         depItem.getAccessibleContext().setAccessibleDescription("Déplacer le personnage");
         depItem.addActionListener(new ActionListener(){
@@ -65,14 +54,13 @@ private boolean isShooting = false;
                     isMoving = true;
                     game.stateChange();
                 }
-            }
-            
-        });
-        popup.add(depItem);
+            }            
+        });        
+        popup.add(depItem);  
         
         JMenuItem shieldItem = new JMenuItem("Activer bouclier", new ImageIcon("src/Images/shieldIcon.png"));
         shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
-        shieldItem.addActionListener(new ActionListener(){
+        shieldItem.addActionListener(new ActionListener(){           
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
@@ -104,8 +92,7 @@ private boolean isShooting = false;
         
         
         //Je mets ça juste pour les tests, on verra ce qu'on en fait
-        addKeyListener(new KeyListener(){
-            
+        addKeyListener(new KeyListener(){            
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -161,8 +148,7 @@ private boolean isShooting = false;
             @Override
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX() / 64;
-                int y = e.getY() / 64;
-                
+                int y = e.getY() / 64;                
             }
 
             @Override
@@ -251,19 +237,13 @@ private boolean isShooting = false;
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-
-            }
-            
-        });
-        
-
+            }            
+        });   
         setVisible(true);
-
     }
 
     public View getView(){

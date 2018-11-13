@@ -5,16 +5,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BulletThread extends Thread{
-
-	private int x;
-	private int y;
+    private int x;	
+    private int y;
     private int range;
-    private int speed = 2;
-    private int distance = 0;
+    private final int speed = 2;
+    private final int distance = 0;
     private Direction d;
     private Game game = null;
-    private Player owner;
-    private boolean running = false;
+    private final Player owner;
+    private final boolean running = false;
     
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x;
@@ -63,8 +62,5 @@ public class BulletThread extends Thread{
     
     public void setGame(Game g){
         this.game =g;
-    }
-    
-    
-    
+    }   
 }

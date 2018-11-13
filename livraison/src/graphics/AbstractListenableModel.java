@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author quentindeme
- */
 public abstract class AbstractListenableModel implements ListenableModel{
 
-    private ArrayList<ModelListener> listeners;
+    private final ArrayList<ModelListener> listeners;
 
     public AbstractListenableModel(){
-        this.listeners = new ArrayList<ModelListener>();
+        this.listeners = new ArrayList<>();
     }
 
     @Override
@@ -24,6 +15,7 @@ public abstract class AbstractListenableModel implements ListenableModel{
         listeners.add(listener);
     }
 
+    @Override
     public void removeListener(ModelListener listener){
         listeners.remove(listener);
     }

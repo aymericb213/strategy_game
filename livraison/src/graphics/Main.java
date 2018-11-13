@@ -10,21 +10,21 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 public class Main {
-
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-
-        System.out.println(System.getProperty("user.dir"));
-
+    
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {    
+        System.out.println(System.getProperty("user.dir"));   
+        
         //Chargement de l'image qui représentera le joueur
         BufferedImage img = null;
         BufferedImage img2 = null;
+        
         try {
-          img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
-          img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
-        } catch(IOException e) {
-          System.out.println(e);
+            img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));          
+            img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));        
+        } catch(IOException e) {        
+            System.out.println(e);        
         }
-
+        
         File file2 = new File("src/Images/Spritesheet/spritesheet_characters.xml");
         ImagesLoader il = new ImagesLoader(file2);
         il.loadPlayerImages();
@@ -47,8 +47,8 @@ public class Main {
             Player p = factory.buildBasic(game.getGrid());
             Player p2 = factory.buildBasic(game.getGrid());
             //p.setImgRepr(img);
-            p.setImgRepr(il.imagePlayers.get(3).get(0));
-            p2.setImgRepr(il.imagePlayers.get(5).get(0));
+            p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
+            p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
             p2.setX(12);
             p2.setY(0);
             p.setX(0);
@@ -60,11 +60,8 @@ public class Main {
             GUI gui = new GUI(game);
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
-        } catch (IOException ex) {
-          Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-          Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ParserConfigurationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }

@@ -1,8 +1,7 @@
 package modele;
 
 public class XMLGeneration implements GridStrategy {
-
-	public void generate(RealGrid g) {
-	}
-
+    
+    @Override	
+    public void generate(RealGrid g) {}
 }

@@ -5,10 +5,8 @@ import java.util.ArrayList;
 /**
  *  Class used for movements. We use it by add direction's value to the object position.
  *  This makes him move to right direction.
- *
  */
 public enum Direction {
-
     z("z",0,-1),
     s("s",0,1),
     q("q",-1,0),
@@ -16,18 +14,18 @@ public enum Direction {
     int x;
     int y;
     String repr;
-
     /**
-     * Construct a new vector Direction
-     * @param repr Representation of the direction
-     * @param xx x value
-     * @param yy y value
-     */
+    * Construct a new vector Direction
+    * @param repr Representation of the direction
+    * @param xx x value
+    * @param yy y value
+    */
     Direction(String repr, int xx, int yy){
-            this.repr = repr;
-            this.x = xx;
-            this.y = yy;
+        this.repr = repr;        
+        this.x = xx;        
+        this.y = yy;    
     }
+    
     /**
     * Get x value
     * @return x int value of the direction
@@ -49,7 +47,7 @@ public enum Direction {
      * @return ArrayList of the Directions
      */
     public static ArrayList<Direction> getDirections(){
-        ArrayList<Direction> listDir = new ArrayList<Direction>();
+        ArrayList<Direction> listDir = new ArrayList<>();
         listDir.add(z);
         listDir.add(q);
         listDir.add(s);
@@ -64,21 +62,22 @@ public enum Direction {
      */
     public static Direction getOpposite(Direction dir) {
         if(dir.x == 0 && dir.y == -1) {
-                return s;
+            return s;
         }else if(dir.x == 0 && dir.y == 1) {
-                return z;
+            return z;
         }else if(dir.x == -1 && dir.y == 0) {
-                return d;
+            return d;
         }else {
-                return q;
+            return q;
         }
     }
 
     /**
      * String representation of a Direction
+     * @return 
      */
     @Override
     public String toString() {
-            return "Le deplacement est : "+x+","+y;
+        return "Le deplacement est : "+x+","+y;
     }
 }
