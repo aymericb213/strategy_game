@@ -37,7 +37,8 @@ public class Bomb extends Mine {
                     }
                 }
             }
-            g.getGrid()[this.x+this.y*g.getWidth()]=new FreeTile(this.x,this.y);
+            g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+						g.removeBomb(this);
         } else {
             super.explode(g);
         }

@@ -48,12 +48,9 @@ public class Main {
           next :
           for (int i=0 ; i<g.getPlayers().length ; i++) {
               Player p = g.getPlayers()[i];
-              /*jeu automatique
-              p.act();
-              continue;*/
-              while (p.getEnergy()!=0) {
+              while (p.getEnergy()>0) {
                   System.out.println("\033[H\033[2J");
-                  System.err.println("================ STRATEGY GAME =================\n");
+                  System.out.println("================ STRATEGY GAME =================\n");
                   System.out.println("Tour " + g.getTurnNumber());
                   System.out.println("Player " + (i+1) + "\n");
                   System.out.println(g + "\n");//vue globale
@@ -65,7 +62,9 @@ public class Main {
                   System.out.println("@ : joueur (€ si bouclier actif)");
                   System.out.println("\n" + p.printStats());
                   System.out.println("\nz,q,s,d : déplacer joueur\nm : poser mine     b : poser bombe      t : tirer     a : activer bouclier\nn : tour auto     p : fin de tour     e : quitter");
-                  String input=sc.nextLine();
+									p.act();//jeu automatique
+									continue;
+                  /*String input=sc.nextLine();
                   switch (input) {
                       case "E"://quitter
                       case "e":
@@ -92,10 +91,10 @@ public class Main {
                           }
                           System.out.println(site_list+"\nChoisissez un emplacement :");
                           if (input.equals("M") || input.equals("m")) {
-                            p.plantMine(sites.get(Integer.parseInt(sc.nextLine())));
+                            p.plant(new Mine(p), sites.get(Integer.parseInt(sc.nextLine())));
                           }
                           if (input.equals("B") || input.equals("b")) {
-                            p.plantBomb(sites.get(Integer.parseInt(sc.nextLine())));
+                            p.plant(new Bomb(p), sites.get(Integer.parseInt(sc.nextLine())));
                           }
                           break;
                       case "T"://tir
@@ -142,7 +141,7 @@ public class Main {
                       default:
                           System.out.println("Entrez une commande valide.");
                           break;
-                  }
+                  }*/
              }
           }
           g.nextTurn();

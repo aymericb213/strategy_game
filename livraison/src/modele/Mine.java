@@ -38,7 +38,7 @@ public class Mine extends Tile implements Weapon {
         for (Player p : g.getPlayers()) {
             if (p.getX()==this.x && p.getY()==this.y) {
                 p.takeDamage(this.damage);
-                g.getGrid()[this.x+this.y*g.getWidth()]=new FreeTile(this.x,this.y);
+								g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
             }
         }
     }

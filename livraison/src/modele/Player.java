@@ -64,11 +64,6 @@ public class Player extends Tile {
         this.selected = false;
     }
 
-    public void setPosition(int x,int y) {
-        this.setX(x);
-        this.setY(y);
-    }
-
     public int getLife() {
         return this.life;
     }
@@ -211,18 +206,16 @@ public class Player extends Tile {
     }
 
     /* Explosifs */
-    public void plantMine(Tile t) {
-        this.view.setTileAt(t.getX(),t.getY(),new Mine(this, t.getX(), t.getY()));
-        //this.loadout.put(new Mine(this), this.loadout.get(new Mine(this))-1);
-        this.energy-=GameConfig.MINE_PLANT_COST;
-    }
-
-    public void plantBomb(Tile t) {
-        Bomb b = new Bomb(this, t.getX(), t.getY());
-        this.view.setTileAt(t.getX(),t.getY(),b);
-        //this.loadout.put(new Bomb(this), this.loadout.get(new Bomb(this))-1);
-        this.view.addBomb(b);
-        this.energy-=GameConfig.BOMB_PLANT_COST;
+    public void plant(Mine m, Tile t) {
+				if (t!=null) {
+						m.setPosition(t.getX(),t.getY());
+        		this.view.setTileAt(t.getX(),t.getY(),m);
+        		//this.loadout.put(m, this.loadout.get(m)-1);
+        		this.energy-=GameConfig.PLANT_COST;
+						if (m instanceof Bomb) {
+							this.view.addBomb((Bomb)m);
+						}
+				}
     }
 
     /* Tir */
@@ -237,7 +230,7 @@ public class Player extends Tile {
                 threadShoot.ResetThread(this.x, this.y, ((Rifle)w).getRange(), d);
                 threadShoot.start();
                 //this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
-                this.energy-=GameConfig.RIFLE_FIRE_COST;
+                this.energy-=GameConfig.FIRE_COST;
             }
         }
     }
@@ -284,19 +277,9 @@ public class Player extends Tile {
         return this.name.equals(p.name);
     }
 
-    public String printStats() {
-        return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
-    }
-
-    @Override
-    public void setX(int x){
-        super.setX(x);
-    }
-
-    @Override
-    public void setY(int y){
-        super.setY(y);
-    }
+		public String printStats() {
+			return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+		}
 
     @Override
     public String toString() {

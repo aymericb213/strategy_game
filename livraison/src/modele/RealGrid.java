@@ -38,48 +38,24 @@ public class RealGrid implements Grid {
         return cpt==1;
     }
 
-    public boolean isInBounds(Tile t) {
+    public boolean isInBounds(int x, int y) {
         boolean check = false;
-        if (t.getX() >= 0 && t.getX() <= this.width && t.getY() >= 0 && t.getY() <= this.tiles.length/this.width) {
+        if (x>=0 && x<this.width && y>=0 && y<this.tiles.length/this.width) {
             check = true;
         }
         return check;
     }
 
     public ArrayList<Tile> getNeighbouringTiles(Tile t) {
-        ArrayList<Tile> neighbours = new ArrayList<>();
-
-        if (isInBounds(this.getTileAt(t.getX()+1,t.getY()))) {
-            neighbours.add(this.getTileAt(t.getX()+1,t.getY()));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX()-1,t.getY()))) {
-            neighbours.add(this.getTileAt(t.getX()-1,t.getY()));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX(),t.getY()+1))) {
-            neighbours.add(this.getTileAt(t.getX(),t.getY()+1));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX(),t.getY()-1))) {
-            neighbours.add(this.getTileAt(t.getX(),t.getY()-1));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX()-1,t.getY()+1))) {
-            neighbours.add(this.getTileAt(t.getX()-1,t.getY()+1));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX()+1,t.getY()-1))) {
-            neighbours.add(this.getTileAt(t.getX()+1,t.getY()-1));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX()+1,t.getY()+1))) {
-            neighbours.add(this.getTileAt(t.getX()+1,t.getY()+1));
-        }
-
-        if (isInBounds(this.getTileAt(t.getX()-1,t.getY()-1))) {
-            neighbours.add(this.getTileAt(t.getX()-1,t.getY()-1));
-        }
+        ArrayList<Tile> neighbours = new ArrayList<Tile>();
+        neighbours.add(this.getTileAt(t.getX()+1,t.getY()));
+        neighbours.add(this.getTileAt(t.getX()-1,t.getY()));
+        neighbours.add(this.getTileAt(t.getX(),t.getY()+1));
+        neighbours.add(this.getTileAt(t.getX(),t.getY()-1));
+        neighbours.add(this.getTileAt(t.getX()-1,t.getY()+1));
+        neighbours.add(this.getTileAt(t.getX()+1,t.getY()-1));
+        neighbours.add(this.getTileAt(t.getX()+1,t.getY()+1));
+        neighbours.add(this.getTileAt(t.getX()-1,t.getY()-1));
         return neighbours;
     }
 
@@ -93,11 +69,9 @@ public class RealGrid implements Grid {
         return valids;
     }
 
-
-
     @Override
     public Tile getTileAt(int x, int y) {
-        return this.tiles[x+(y*this.width)];
+        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : null;
     }
 
     @Override
@@ -151,6 +125,10 @@ public class RealGrid implements Grid {
     public void addBomb(Bomb b){
         this.bombs.add(b);
     }
+
+		public void removeBomb(Bomb b) {
+				this.bombs.remove(b);
+		}
 
     public void displayGrid() {
         System.out.println(Arrays.toString(this.tiles));
