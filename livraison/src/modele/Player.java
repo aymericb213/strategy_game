@@ -1,5 +1,6 @@
 package modele;
 
+import graphics.Game;
 import java.util.*;
 
 public class Player extends Tile {
@@ -11,15 +12,19 @@ public class Player extends Tile {
     private boolean shield_up = false;
     private PlayerStrategy strategy;
     private PlayerGrid view;
+    private RealGrid grid;
     public Direction lastMove = Direction.z;
     private boolean selected;
     private int visionSize;
     private BulletThread threadShoot;
     private boolean isShooting = false;
+    
+    /////////////ATTTETION
+    public Game game;
 
     public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
         super(x,y);
-        this.visionSize = 3;
+        this.visionSize = GameConfig.PLAYER_FOV+1;
         this.life = hp;
         this.energy = mp;
         this.name = name;
@@ -27,13 +32,13 @@ public class Player extends Tile {
         this.strategy = new RandomStrategy(this);
         this.view = new PlayerGrid(g,this);
         this.selected = false;
-        this.threadShoot = new BulletThread(0,0,0,lastMove,this);
+        //this.threadShoot = new BulletThread(0,0,0,lastMove,this);
     }
 
 
     public Player(RealGrid g) {
         this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
-        this.visionSize = 3;
+        //this.visionSize = 3;
     }
 
     public void act() {
@@ -92,6 +97,10 @@ public class Player extends Tile {
     public void disableShield() {
         this.shield_up = false;
     }
+    
+    public void setGame(Game game){
+        this.game = game;
+    }
 
     /* Mouvement */
     public void move(Direction d) {
@@ -107,6 +116,13 @@ public class Player extends Tile {
             this.lastMove = d;
             this.energy-=GameConfig.MOVE_COST;
         }
+    }
+    
+    public void shootIsOver(){
+        System.out.println("AH BAH BRAVO MORET");
+        threadShoot.interrupt();
+        System.out.println("Fini ==>"+threadShoot.isInterrupted());
+        this.threadShoot = null;
     }
 
     public ArrayList<Direction> possibleMoves() {
@@ -133,7 +149,7 @@ public class Player extends Tile {
 
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
-        System.out.print(view.getTileAt(this.x, this.y));
+        //System.out.print(view.getTileAt(this.x, this.y));
         int c=1;
 
         while(c<this.visionSize){
@@ -144,7 +160,7 @@ public class Player extends Tile {
                     break;
                 }
                 else{
-                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x+c); pos.add(1,this.y); t.add(pos); System.out.println("pos"+pos.toString()+"\n");
+                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x+c); pos.add(1,this.y); t.add(pos); //System.out.println("pos"+pos.toString()+"\n");
                 }
             }
             c++;
@@ -159,7 +175,7 @@ public class Player extends Tile {
                     break;
                 }
                 else{
-                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x-c); pos.add(1,this.y); t.add(pos); System.out.println("pos"+pos.toString()+"\n");
+                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x-c); pos.add(1,this.y); t.add(pos); //System.out.println("pos"+pos.toString()+"\n");
                 }
             }
             c++;
@@ -174,7 +190,7 @@ public class Player extends Tile {
                     break;
                 }
                 else{
-                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y+c); t.add(pos); System.out.println("pos"+pos.toString()+"\n");
+                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y+c); t.add(pos); //System.out.println("pos"+pos.toString()+"\n");
                 }
             }
             c++;
@@ -189,7 +205,7 @@ public class Player extends Tile {
                     break;
                 }
                 else{
-                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y-c); t.add(pos); System.out.println("pos"+pos.toString()+"\n");
+                    ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y-c); t.add(pos); //System.out.println("pos"+pos.toString()+"\n");
                 }
             }
             c++;
@@ -206,21 +222,23 @@ public class Player extends Tile {
     }
 
     /* Explosifs */
-    public void plant(Mine m, Tile t) {
-				if (t!=null) {
-						m.setPosition(t.getX(),t.getY());
-        		this.view.setTileAt(t.getX(),t.getY(),m);
-        		//this.loadout.put(m, this.loadout.get(m)-1);
-        		this.energy-=GameConfig.PLANT_COST;
-						if (m instanceof Bomb) {
-							this.view.addBomb((Bomb)m);
-						}
-				}
+    public void plant(Mine m, Tile t) {	
+        if (t!=null) {	
+            m.setPosition(t.getX(),t.getY());        
+            this.view.setTileAt(t.getX(),t.getY(),m);        
+            //this.loadout.put(m, this.loadout.get(m)-1);        
+            this.energy-=GameConfig.PLANT_COST;	
+            if (m instanceof Bomb) {	
+                this.view.addBomb((Bomb)m);		
+            }	
+        }
     }
 
     /* Tir */
     public void fire(Direction d) {
         this.isShooting = true;
+        this.threadShoot = new BulletThread(0,0,0,lastMove,this);
+        threadShoot.setGame(this.game);
         System.out.println("Je tir");
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
@@ -245,6 +263,12 @@ public class Player extends Tile {
 
     public BulletThread getThreadShoot() {
         return threadShoot;
+    }
+    
+    public void endTurn(){
+        if (energy == 0){
+            grid.nextTurn();
+        }
     }
 
     /**
@@ -277,9 +301,10 @@ public class Player extends Tile {
         return this.name.equals(p.name);
     }
 
-		public String printStats() {
-			return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
-		}
+		
+    public String printStats() {
+        return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;	
+    }
 
     @Override
     public String toString() {

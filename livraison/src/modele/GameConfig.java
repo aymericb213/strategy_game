@@ -12,8 +12,8 @@ public final class GameConfig {
     public static int PLAYER_FOV;
     public static int MOVE_COST;
     public static int SHIELD_COST;
-		public static int PLANT_COST;
-		public static int FIRE_COST;
+    public static int PLANT_COST;
+    public static int FIRE_COST;
     public static int BOMB_BASE_COUNT;
     public static int BOMB_DAMAGE;
     public static int BOMB_DELAY;
@@ -32,7 +32,7 @@ public final class GameConfig {
     public void assignParameters() {
         ArrayList<Integer> parameters = new ArrayList<>();
         try {
-            Path file_path = FileSystems.getDefault().getPath("config.txt");
+            Path file_path = FileSystems.getDefault().getPath("src/config.txt");
             List<String> d = Files.readAllLines(file_path, StandardCharsets.UTF_8);
             for (String line : d) {
                 String[] s = line.split("=");
@@ -46,9 +46,9 @@ public final class GameConfig {
         GameConfig.PLAYER_BASE_AP=parameters.get(1);
         GameConfig.PLAYER_FOV=parameters.get(2);
         GameConfig.MOVE_COST=parameters.get(3);
-        GameConfig.SHIELD_COST=parameters.get(4);
-				GameConfig.PLANT_COST=parameters.get(5);
-				GameConfig.FIRE_COST=parameters.get(6);
+        GameConfig.SHIELD_COST=parameters.get(4);				
+        GameConfig.PLANT_COST=parameters.get(5);	
+        GameConfig.FIRE_COST=parameters.get(6);
         GameConfig.BOMB_BASE_COUNT=parameters.get(7);
         GameConfig.BOMB_DAMAGE=parameters.get(8);
         GameConfig.BOMB_DELAY=parameters.get(9);

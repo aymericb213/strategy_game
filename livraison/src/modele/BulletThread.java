@@ -42,6 +42,7 @@ public class BulletThread extends Thread{
             }
             owner.notShooting();
             game.stateChange();
+            owner.shootIsOver();
         //}
     }
 

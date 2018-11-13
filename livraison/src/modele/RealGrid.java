@@ -47,7 +47,7 @@ public class RealGrid implements Grid {
     }
 
     public ArrayList<Tile> getNeighbouringTiles(Tile t) {
-        ArrayList<Tile> neighbours = new ArrayList<Tile>();
+        ArrayList<Tile> neighbours = new ArrayList<>();
         neighbours.add(this.getTileAt(t.getX()+1,t.getY()));
         neighbours.add(this.getTileAt(t.getX()-1,t.getY()));
         neighbours.add(this.getTileAt(t.getX(),t.getY()+1));
@@ -86,8 +86,8 @@ public class RealGrid implements Grid {
             b.tick();
             b.explode(this);
         }
-        for (Player p : this.players) {
-						p.setEnergy(GameConfig.PLAYER_BASE_AP);
+        for (Player p : this.players) {						
+            p.setEnergy(GameConfig.PLAYER_BASE_AP);
             p.disableShield();
         }
         this.turn_number++;
@@ -126,9 +126,10 @@ public class RealGrid implements Grid {
         this.bombs.add(b);
     }
 
-		public void removeBomb(Bomb b) {
-				this.bombs.remove(b);
-		}
+		
+    public void removeBomb(Bomb b) {
+        this.bombs.remove(b);	
+    }
 
     public void displayGrid() {
         System.out.println(Arrays.toString(this.tiles));

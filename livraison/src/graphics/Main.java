@@ -12,7 +12,8 @@ import org.xml.sax.SAXException;
 public class Main {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-				new GameConfig();
+				
+        new GameConfig();
         System.out.println(System.getProperty("user.dir"));
 
         //Chargement de l'image qui représentera le joueur
@@ -52,6 +53,7 @@ public class Main {
             p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
             p2.setX(12);
             p2.setY(0);
+            p2.lastMove = Direction.s;
             p.setX(0);
             p.setY(12);
             game.addPlayer(p);

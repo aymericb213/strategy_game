@@ -79,9 +79,9 @@ public class View extends JPanel implements ModelListener{
                 }
             }
             
-            /*
+            
             ArrayList<ArrayList> viewableTiles = p.visibleTiles();
-            System.out.print(viewableTiles);
+            //System.out.print(viewableTiles);
             
             if(p.isSelected()){
                 g.setColor(new Color(25,125,255));
@@ -93,7 +93,7 @@ public class View extends JPanel implements ModelListener{
                     g.fillOval(64*tx+22, 64*ty+22, 20, 20);
                 }
             }
-            */
+            
         }
         Grid grid = game.getGrid();
     }
@@ -171,6 +171,7 @@ public class View extends JPanel implements ModelListener{
     }
     
     public void drawLife(Player p, Graphics g){
+        g.setColor(Color.BLACK);
         int life = p.getLife();
 
         int size = 64 - 20;

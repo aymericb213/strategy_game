@@ -65,7 +65,7 @@ public class GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    if(!p.isShield_up()){
+                    if(!p.isShield_up() && p.getEnergy() >= GameConfig.SHIELD_COST){
                         p.enableShield();
                         game.stateChange();
                     }
@@ -89,6 +89,20 @@ public class GUI extends JFrame{
             
         });
         popup.add(shootItem);
+        
+        JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("src/Images/pass.png"));
+        shootItem.getAccessibleContext().setAccessibleDescription("Passer son tour");
+        shootItem.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(coordPlayer[0] != null){
+                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    p.endTurn();
+                }
+            }
+            
+        });
+        popup.add(passTurn);
         
         
         //Je mets ça juste pour les tests, on verra ce qu'on en fait
@@ -207,7 +221,6 @@ public class GUI extends JFrame{
                                 coordPlayer[0] = null;
                                 coordPlayer[1] = null;
                                 p.unselect();
-                                p.setEnergy(p.getEnergy()-1);
                                 game.stateChange();
                             }
                         }else if(isShooting){
@@ -229,6 +242,7 @@ public class GUI extends JFrame{
                             }
                             System.out.println("Je m'appréte à tirer");
                             p.fire(d);
+                            isShooting = false;
                             game.stateChange();
                         }
                     }
