@@ -1,5 +1,8 @@
-package graphics;
+package modele;
 
+import graphics.AbstractListenableModel;
+import graphics.ImagesLoader;
+import graphics.LevelHandlerParser;
 import modele.*;
 import java.awt.Graphics;
 import java.util.*;
@@ -35,7 +38,8 @@ public class Game extends AbstractListenableModel {
     public void addPlayer(Player p) {    
         //p.getThreadShoot().setGame(this);    
         p.setGame(this);
-        listPlayers.put(p, p.getImgRepr());  
+        listPlayers.put(p, p.getImgRepr());
+        grid.addPlayer(p);
     }
 
   

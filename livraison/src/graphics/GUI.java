@@ -1,5 +1,6 @@
 package graphics;
 
+import modele.Game;
 import modele.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ public class GUI extends JFrame{
     private View view;
     private Game game;    
     private Integer[] coordPlayer = new Integer[2];
+    private Player playerToPlay = null;
     private boolean isShooting = false;
     private boolean isMoving = false;
 
@@ -39,6 +41,10 @@ public class GUI extends JFrame{
         //Pour lire les entrées claviers
         setFocusable(true);
         requestFocus();
+        
+        int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+        playerToPlay = game.getGrid().getPlayers()[index];
+        playerToPlay.setAsTurn(true);
         
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
@@ -82,12 +88,15 @@ public class GUI extends JFrame{
         shootItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    if(p.getEnergy() >= GameConfig.FIRE_COST){
-                        isShooting = true;
-                        System.out.println("Is shooting est mis à true");
-                    }
+//                if(coordPlayer[0] != null){
+//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+//                    if(p.getEnergy() >= GameConfig.FIRE_COST){
+//                        isShooting = true;
+//                        System.out.println("Is shooting est mis à true");
+//                    }
+//                }
+                if(playerToPlay.getEnergy() >= GameConfig.FIRE_COST){
+                    isShooting = true;
                 }
             }
             
@@ -99,11 +108,21 @@ public class GUI extends JFrame{
         passTurn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    p.nextTurn();
-                    game.stateChange();
-                }
+//                if(coordPlayer[0] != null){
+//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+//                    p.nextTurn();
+//                    playerToPlay.setAsTurn(false);
+//                    int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+//                    playerToPlay = game.getGrid().getPlayers()[index];
+//                    playerToPlay.setAsTurn(true);
+//                    game.stateChange();
+//                }
+                playerToPlay.nextTurn();
+                playerToPlay.setAsTurn(false);
+                int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+                playerToPlay = game.getGrid().getPlayers()[index];
+                playerToPlay.setAsTurn(true);
+                game.stateChange();
             }
             
         });
@@ -174,42 +193,45 @@ public class GUI extends JFrame{
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
-                System.out.println(x+" "+y);
-                if(game.getGrid().getTileAt(x, y) instanceof Player){
+                System.out.println(game.getGrid().getTileAt(x, y));
+                if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
-                    coordPlayer[0] = x;
-                    coordPlayer[1] = y;                    
+                    System.out.println("C'est un joueur");
+                    if(p.getAsTurn()){
+                        //coordPlayer[0] = x;
+                        //coordPlayer[1] = y;                    
 
-                    if(!p.isSelected()){
-                        //p.select();
-                        showPopup(e);
-                        if(p.getEnergy() >= GameConfig.MOVE_COST){                            
-                            depItem.setText("Déplacement");
+                        if(!p.isSelected()){
+                            //p.select();
+                            showPopup(e);
+                            if(p.getEnergy() >= GameConfig.MOVE_COST){                            
+                                depItem.setText("Déplacement");
+                            }else{
+                                depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶");
+                            }
+                            if(p.getEnergy() >= GameConfig.SHIELD_COST && !p.isShield_up()){                            
+                                shieldItem.setText("Activer bouclier");
+                            }else{
+                                shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶");
+                            }
+                            if(p.getEnergy() >= GameConfig.FIRE_COST){ 
+                                shootItem.setText("Tirer");
+                            }else{
+                                shootItem.setText("T̶i̶r̶e̶r̶");
+                            }
                         }else{
-                            depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶");
+                            p.unselect();
                         }
-                        if(p.getEnergy() >= GameConfig.SHIELD_COST && !p.isShield_up()){                            
-                            shieldItem.setText("Activer bouclier");
-                        }else{
-                            shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶");
-                        }
-                        if(p.getEnergy() >= GameConfig.FIRE_COST){ 
-                            shootItem.setText("Tirer");
-                        }else{
-                            shootItem.setText("T̶i̶r̶e̶r̶");
-                        }
-                    }else{
-                        p.unselect();
                     }
+                    game.stateChange();
                 }
-                game.stateChange();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
-                System.out.println("Etat du tir : "+isShooting);
+                //System.out.println("Etat du tir : "+isShooting);
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
                     
@@ -243,7 +265,6 @@ public class GUI extends JFrame{
                                 game.stateChange();
                             }
                         }else if(isShooting){
-                            System.out.println("Bonjour le monde");
                             Direction d = null;
                             //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
 
@@ -259,7 +280,6 @@ public class GUI extends JFrame{
                             }else if(depX == 1 && depY == 0){
                                 d = Direction.d;
                             }
-                            System.out.println("Je m'appréte à tirer");
                             p.fire(d);
                             isShooting = false;
                             game.stateChange();

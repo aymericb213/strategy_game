@@ -1,6 +1,5 @@
 package modele;
 
-import graphics.Game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

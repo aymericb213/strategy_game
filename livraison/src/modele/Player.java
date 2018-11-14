@@ -1,6 +1,5 @@
 package modele;
 
-import graphics.Game;
 import java.util.*;
 
 public class Player extends Tile {
@@ -21,6 +20,7 @@ public class Player extends Tile {
     private int index;
     private int nb_turn;
     private int nb_player;
+    private boolean asTurn = false;
     
     /////////////ATTTETION
     public Game game;
@@ -63,6 +63,14 @@ public class Player extends Tile {
         return this.view;
     }
 
+    public void setAsTurn(boolean asTurn) {
+        this.asTurn = asTurn;
+    }
+
+    public boolean getAsTurn() {
+        return asTurn;
+    }
+        
     public boolean isSelected(){
         return this.selected;
     }

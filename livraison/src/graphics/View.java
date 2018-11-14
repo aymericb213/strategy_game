@@ -1,5 +1,6 @@
 package graphics;
 
+import modele.Game;
 import modele.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -63,7 +64,7 @@ public class View extends JPanel implements ModelListener{
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
 
-            if(p.getEnergy() == 0){
+            if(p.getEnergy() == 0 || !p.getAsTurn()){
                 g.setColor(new Color(255,0,0));
                 g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
             }
