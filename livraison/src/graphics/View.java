@@ -65,7 +65,6 @@ public class View extends JPanel implements ModelListener{
 
             if(p.getEnergy() == 0){
                 g.setColor(new Color(255,0,0));
-
                 g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
             }
             

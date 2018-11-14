@@ -23,7 +23,6 @@ public class Game extends AbstractListenableModel {
     public Game() {           
         this(new RealGrid());  
     }
-
  
     public Game(RealGrid grid) {        
         this.grid = grid;  
@@ -32,7 +31,6 @@ public class Game extends AbstractListenableModel {
     public RealGrid getGrid() {   
         return this.grid;  
     }
-
  
     public void addPlayer(Player p) {    
         //p.getThreadShoot().setGame(this);    
@@ -44,12 +42,10 @@ public class Game extends AbstractListenableModel {
     public HashMap<Player, BufferedImage> getListPlayers() {    
         return listPlayers;  
     }
-
  
     public HashMap<Integer, ArrayList<Tile>> getTileMap() {    
         return tile_map;  
     }
-
   
     public ArrayList<Tile> loadSimpleGrid() {    
         ArrayList<BufferedImage> images = ImagesLoader.loadImages();    
@@ -63,7 +59,6 @@ public class Game extends AbstractListenableModel {
         }    
         return res;  
     }
-
  
     public void loadGrid(File file) throws IOException, ParserConfigurationException, SAXException {
     
@@ -108,7 +103,6 @@ public class Game extends AbstractListenableModel {
         System.out.println(layers);    
         computeTileGrid(layers);	
     }
-
  
     public ArrayList<ArrayList<Integer>> copyList(ArrayList<ArrayList<Integer>> l) {    
         ArrayList<ArrayList<Integer>> res = new ArrayList<>();    
@@ -158,7 +152,6 @@ public class Game extends AbstractListenableModel {
         this.tile_map = hashTile;    
         this.grid.setGrid(res);  
     }
-
  
     public void paint(Graphics g){  
         //g.drawImage(imageRepr, super.x, super.y, null);  

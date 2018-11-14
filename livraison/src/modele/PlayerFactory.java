@@ -1,6 +1,7 @@
 package modele;
 
 public final class PlayerFactory {
+    
     private static PlayerFactory instance = null;
     public static int nb_instances = 0;
 

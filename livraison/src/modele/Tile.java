@@ -60,11 +60,11 @@ public abstract class Tile {
     public void setImgRepr(BufferedImage img) {
         this.imgRepr = img;
     }
-
-		public void setPosition(int x,int y) {
-				this.setX(x);
-				this.setY(y);
-		}
+	
+    public void setPosition(int x,int y) {
+        this.setX(x);	
+        this.setY(y);	
+    }
 		
     /**
     * Retourne la représentation de la case.

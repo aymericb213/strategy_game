@@ -14,8 +14,8 @@ public class Bomb extends Mine {
     */
     public Bomb(Player owner) {
         super(owner);
-        this.damage=GameConfig.BOMB_DAMAGE;
-				this.visible=(GameConfig.BOMB_VISIBILITY == 1);
+        this.damage=GameConfig.BOMB_DAMAGE;				
+        this.visible=(GameConfig.BOMB_VISIBILITY == 1);
     }
 
     public Bomb(Player owner, int x, int y) {
@@ -37,8 +37,8 @@ public class Bomb extends Mine {
                     }
                 }
             }
-            g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
-						g.removeBomb(this);
+            g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));						
+            g.removeBomb(this);
         } else {
             super.explode(g);
         }

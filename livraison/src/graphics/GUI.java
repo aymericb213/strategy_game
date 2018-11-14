@@ -50,9 +50,11 @@ public class GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    p.select();
-                    isMoving = true;
-                    game.stateChange();
+                    if(p.getEnergy() >= GameConfig.MOVE_COST){
+                        p.select();
+                        isMoving = true;
+                        game.stateChange();
+                    }
                 }
             }            
         });        
@@ -82,8 +84,10 @@ public class GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    isShooting = true;
-                    System.out.println("Is shooting est mis à true");
+                    if(p.getEnergy() >= GameConfig.FIRE_COST){
+                        isShooting = true;
+                        System.out.println("Is shooting est mis à true");
+                    }
                 }
             }
             
@@ -91,13 +95,14 @@ public class GUI extends JFrame{
         popup.add(shootItem);
         
         JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("src/Images/pass.png"));
-        shootItem.getAccessibleContext().setAccessibleDescription("Passer son tour");
-        shootItem.addActionListener(new ActionListener(){
+        passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
+        passTurn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(coordPlayer[0] != null){
                     Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    p.endTurn();
+                    p.nextTurn();
+                    game.stateChange();
                 }
             }
             
@@ -173,11 +178,25 @@ public class GUI extends JFrame{
                 if(game.getGrid().getTileAt(x, y) instanceof Player){
                     Player p = (Player) game.getGrid().getTileAt(x, y);
                     coordPlayer[0] = x;
-                    coordPlayer[1] = y;
+                    coordPlayer[1] = y;                    
+
                     if(!p.isSelected()){
                         //p.select();
-                        if(p.getEnergy() > 0){
-                            showPopup(e);
+                        showPopup(e);
+                        if(p.getEnergy() >= GameConfig.MOVE_COST){                            
+                            depItem.setText("Déplacement");
+                        }else{
+                            depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶");
+                        }
+                        if(p.getEnergy() >= GameConfig.SHIELD_COST && !p.isShield_up()){                            
+                            shieldItem.setText("Activer bouclier");
+                        }else{
+                            shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶");
+                        }
+                        if(p.getEnergy() >= GameConfig.FIRE_COST){ 
+                            shootItem.setText("Tirer");
+                        }else{
+                            shootItem.setText("T̶i̶r̶e̶r̶");
                         }
                     }else{
                         p.unselect();

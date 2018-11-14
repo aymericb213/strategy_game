@@ -18,27 +18,33 @@ public class Player extends Tile {
     private int visionSize;
     private BulletThread threadShoot;
     private boolean isShooting = false;
+    private int index;
+    private int nb_turn;
+    private int nb_player;
     
     /////////////ATTTETION
     public Game game;
 
     public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
         super(x,y);
-        this.visionSize = GameConfig.PLAYER_FOV+1;
+        this.nb_player = PlayerFactory.nb_instances;
+        this.visionSize = GameConfig.PLAYER_FOV;
         this.life = hp;
         this.energy = mp;
         this.name = name;
         this.loadout = new HashMap<>();
         this.strategy = new RandomStrategy(this);
         this.view = new PlayerGrid(g,this);
+        this.grid = new RealGrid();
         this.selected = false;
+        this.nb_turn = grid.getTurnNumber();
+        this.nb_player = PlayerFactory.nb_instances;
         //this.threadShoot = new BulletThread(0,0,0,lastMove,this);
     }
 
 
     public Player(RealGrid g) {
-        this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
-        //this.visionSize = 3;
+        this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));       
     }
 
     public void act() {
@@ -265,10 +271,11 @@ public class Player extends Tile {
         return threadShoot;
     }
     
-    public void endTurn(){
-        if (energy == 0){
-            grid.nextTurn();
-        }
+    public void nextTurn(){    
+        index = (nb_turn % nb_player);
+        energy = GameConfig.PLAYER_BASE_AP;
+        game.getListPlayers().get(index);     
+        nb_turn++;
     }
 
     /**

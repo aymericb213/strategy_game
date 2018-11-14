@@ -46,18 +46,23 @@ public class Main {
             Game game = new Game();
             game.loadGrid(file);
             System.out.println(game.getGrid());
+            
             Player p = factory.buildBasic(game.getGrid());
             Player p2 = factory.buildBasic(game.getGrid());
             //p.setImgRepr(img);
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
-            p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
+            p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));  
+            
+            p.setX(0);
+            p.setY(12);
+            
             p2.setX(12);
             p2.setY(0);
             p2.lastMove = Direction.s;
-            p.setX(0);
-            p.setY(12);
+            
             game.addPlayer(p);
             game.addPlayer(p2);
+            
             game.getGrid().addPlayer(p);
             game.getGrid().addPlayer(p2);
             GUI gui = new GUI(game);
