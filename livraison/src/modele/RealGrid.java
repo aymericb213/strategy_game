@@ -86,11 +86,13 @@ public class RealGrid implements Grid {
             b.tick();
             b.explode(this);
         }
+        /*
         for (Player p : this.players) {						
             //A voir si le joueur récupère vraiment toute son énergie.
             p.setEnergy(GameConfig.PLAYER_BASE_AP);
             p.disableShield();
         }
+        */
         this.turn_number++;
     }
 

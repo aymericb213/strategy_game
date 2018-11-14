@@ -54,15 +54,20 @@ public class GUI extends JFrame{
         depItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    if(p.getEnergy() >= GameConfig.MOVE_COST){
-                        p.select();
+//                if(coordPlayer[0] != null){
+//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+//                    if(p.getEnergy() >= GameConfig.MOVE_COST){
+//                        p.select();
+//                        isMoving = true;
+//                        game.stateChange();
+//                    }
+//                }
+                if(playerToPlay.getEnergy() >= GameConfig.MOVE_COST){
+                        playerToPlay.select();
                         isMoving = true;
                         game.stateChange();
                     }
-                }
-            }            
+                }           
         });        
         popup.add(depItem);  
         
@@ -119,7 +124,12 @@ public class GUI extends JFrame{
 //                }
                 playerToPlay.nextTurn();
                 playerToPlay.setAsTurn(false);
-                int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+                //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+                //Dans les tests on a 2 jours donc : 
+                int index = (game.getGrid().getTurnNumber() % 2) ;
+                System.out.println(index);
+                System.out.println(game.getGrid().getTurnNumber());
+                game.getGrid().nextTurn();
                 playerToPlay = game.getGrid().getPlayers()[index];
                 playerToPlay.setAsTurn(true);
                 game.stateChange();
@@ -193,10 +203,8 @@ public class GUI extends JFrame{
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
-                System.out.println(game.getGrid().getTileAt(x, y));
                 if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
-                    System.out.println("C'est un joueur");
                     if(p.getAsTurn()){
                         //coordPlayer[0] = x;
                         //coordPlayer[1] = y;                    
@@ -232,9 +240,9 @@ public class GUI extends JFrame{
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
                 //System.out.println("Etat du tir : "+isShooting);
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-                    
+                //if(coordPlayer[0] != null){
+                //    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                    Player p = playerToPlay;
                     if(p.getEnergy() > 0){
                         if(isMoving){
                             int depX = x - p.getX();
@@ -259,8 +267,8 @@ public class GUI extends JFrame{
                                 //System.out.println("Le déplacement est possible");
                                 p.move(d);
                                 isMoving = false;
-                                coordPlayer[0] = null;
-                                coordPlayer[1] = null;
+                                //coordPlayer[0] = null;
+                                //coordPlayer[1] = null;
                                 p.unselect();
                                 game.stateChange();
                             }
@@ -285,7 +293,7 @@ public class GUI extends JFrame{
                             game.stateChange();
                         }
                     }
-                }
+                //}
             }
 
             @Override

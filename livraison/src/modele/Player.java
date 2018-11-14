@@ -282,8 +282,8 @@ public class Player extends Tile {
     public void nextTurn(){    
         index = (nb_turn % nb_player);
         energy = GameConfig.PLAYER_BASE_AP;
-        game.getListPlayers().get(index);     
-        nb_turn++;
+        //game.getListPlayers().get(index);     
+        //nb_turn++;
     }
 
     /**
