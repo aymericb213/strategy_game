@@ -63,8 +63,8 @@ public class Main {
                     System.out.println("================ STRATEGY GAME =================\n");
                     System.out.println("Tour " + g.getTurnNumber());
                     System.out.println("Player " + (i+1) + "\n");
-                    System.out.println(g + "\n");//vue globale
-                    //System.out.println(p.getView() + "\n");//vues joueur
+                    //System.out.println(g + "\n");//vue globale
+                    System.out.println(p.getView() + "\n");//vues joueur
                     System.out.println("# : mur");
                     System.out.println("; : mine");
                     System.out.println("3 : bombe");

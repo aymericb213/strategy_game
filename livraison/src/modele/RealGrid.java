@@ -79,8 +79,6 @@ public class RealGrid implements Grid {
         this.tiles[x+(y*this.width)]=t;
     }
 
-
-
     public void nextTurn() {
         ArrayList<Bomb> copy_bombs = new ArrayList<Bomb>(this.bombs);
         for (Bomb b : copy_bombs) {
@@ -129,7 +127,6 @@ public class RealGrid implements Grid {
     public void addBomb(Bomb b){
         this.bombs.add(b);
     }
-
 
     public void removeBomb(Bomb b) {
         this.bombs.remove(b);
