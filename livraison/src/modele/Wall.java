@@ -15,18 +15,20 @@ public class Wall extends Tile {
     */
     public Wall(int x, int y) {
         super(x,y);
+        this.walkable = false;
     }
-  
+
     public Wall(int x, int y, BufferedImage img){
         super(x,y,img);
+        this.walkable = false;
     }
 
     /**
     * Retourne la représentation du mur.
     * @return Un caractère représentant le mur.
-    */  
-    @Override  
-    public String toString() {    
-        return "#";  
+    */
+    @Override
+    public String toString() {
+        return "#";
     }
 }

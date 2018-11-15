@@ -9,6 +9,8 @@ public abstract class Tile {
 
     protected int x;
     protected int y;
+    protected boolean visible = true;
+    protected boolean walkable = true;
     protected BufferedImage imgRepr;
 
     /**
@@ -45,6 +47,14 @@ public abstract class Tile {
         return this.y;
     }
 
+    public boolean isVisible() {
+        return this.visible;
+    }
+
+    public boolean isWalkable() {
+        return this.walkable;
+    }
+    
     public BufferedImage getImgRepr() {
         return imgRepr;
     }
@@ -60,12 +70,12 @@ public abstract class Tile {
     public void setImgRepr(BufferedImage img) {
         this.imgRepr = img;
     }
-	
+
     public void setPosition(int x,int y) {
-        this.setX(x);	
-        this.setY(y);	
+        this.setX(x);
+        this.setY(y);
     }
-		
+
     /**
     * Retourne la représentation de la case.
     * @return Un caractère représentant le type de la case.

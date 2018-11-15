@@ -4,7 +4,7 @@ import java.util.*;
 
 public class RealGrid implements Grid {
 
-    private int turn_number = 0;
+    private int turn_number = 1;
     private int width;
     private Tile[] tiles;
     private Player[] players;
@@ -71,7 +71,7 @@ public class RealGrid implements Grid {
 
     @Override
     public Tile getTileAt(int x, int y) {
-        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : null;
+        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : new FreeTile(-1,-1);
     }
 
     @Override
@@ -82,17 +82,18 @@ public class RealGrid implements Grid {
 
 
     public void nextTurn() {
-        for (Bomb b : this.bombs) {
+        ArrayList<Bomb> copy_bombs = new ArrayList<Bomb>(this.bombs);
+        for (Bomb b : copy_bombs) {
             b.tick();
             b.explode(this);
         }
-        /*
-        for (Player p : this.players) {						
+
+        for (Player p : this.players) {
             //A voir si le joueur récupère vraiment toute son énergie.
             p.setEnergy(GameConfig.PLAYER_BASE_AP);
             p.disableShield();
         }
-        */
+
         this.turn_number++;
     }
 
@@ -129,9 +130,9 @@ public class RealGrid implements Grid {
         this.bombs.add(b);
     }
 
-		
+
     public void removeBomb(Bomb b) {
-        this.bombs.remove(b);	
+        this.bombs.remove(b);
     }
 
     public void displayGrid() {

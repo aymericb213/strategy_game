@@ -21,7 +21,7 @@ public class Player extends Tile {
     private int nb_turn;
     private int nb_player;
     private boolean asTurn = false;
-    
+
     /////////////ATTTETION
     public Game game;
 
@@ -39,12 +39,14 @@ public class Player extends Tile {
         this.selected = false;
         this.nb_turn = grid.getTurnNumber();
         this.nb_player = PlayerFactory.nb_instances;
+        this.walkable=false;
         //this.threadShoot = new BulletThread(0,0,0,lastMove,this);
     }
 
 
     public Player(RealGrid g) {
-        this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));       
+        this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
+        this.walkable=false;
     }
 
     public void act() {
@@ -70,7 +72,7 @@ public class Player extends Tile {
     public boolean getAsTurn() {
         return asTurn;
     }
-        
+
     public boolean isSelected(){
         return this.selected;
     }
@@ -111,7 +113,7 @@ public class Player extends Tile {
     public void disableShield() {
         this.shield_up = false;
     }
-    
+
     public void setGame(Game game){
         this.game = game;
     }
@@ -131,7 +133,7 @@ public class Player extends Tile {
             this.energy-=GameConfig.MOVE_COST;
         }
     }
-    
+
     public void shootIsOver(){
         //System.out.println("AH BAH BRAVO MORET");
         threadShoot.interrupt();
@@ -142,19 +144,19 @@ public class Player extends Tile {
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
 
-        if((this.y > 0) && !(view.getTileAt(this.x,this.y-1) instanceof Wall || view.getTileAt(this.x,this.y-1) instanceof Player)) {
+        if((this.y > 0) && view.getTileAt(this.x,this.y-1).isWalkable()) {
             res.add(Direction.z);
         }
 
-        if((this.y < (view.getModel().getGrid().length/view.getModel().getWidth())-1) && !(view.getTileAt(this.x,this.y+1) instanceof Wall || view.getTileAt(this.x,this.y+1) instanceof Player)){
+        if((this.y < (view.getModel().getGrid().length/view.getModel().getWidth())-1) && view.getTileAt(this.x,this.y+1).isWalkable()){
             res.add(Direction.s);
         }
 
-        if((this.x > 0) && !(view.getTileAt(this.x-1,this.y) instanceof Wall || view.getTileAt(this.x-1,this.y) instanceof Player)){
+        if((this.x > 0) && view.getTileAt(this.x-1,this.y).isWalkable()){
             res.add(Direction.q);
         }
 
-        if((this.x < view.getModel().getWidth() -1) && !(view.getTileAt(this.x+1,this.y) instanceof Wall || view.getTileAt(this.x+1,this.y) instanceof Player)){
+        if((this.x < view.getModel().getWidth() -1) && view.getTileAt(this.x+1,this.y).isWalkable()){
             res.add(Direction.d);
         }
         return res;
@@ -236,15 +238,15 @@ public class Player extends Tile {
     }
 
     /* Explosifs */
-    public void plant(Mine m, Tile t) {	
-        if (t!=null) {	
-            m.setPosition(t.getX(),t.getY());        
-            this.view.setTileAt(t.getX(),t.getY(),m);        
-            //this.loadout.put(m, this.loadout.get(m)-1);        
-            this.energy-=GameConfig.PLANT_COST;	
-            if (m instanceof Bomb) {	
-                this.view.addBomb((Bomb)m);		
-            }	
+    public void plant(Mine m, Tile t) {
+        if (t!=null) {
+            m.setPosition(t.getX(),t.getY());
+            this.view.setTileAt(t.getX(),t.getY(),m);
+            //this.loadout.put(m, this.loadout.get(m)-1);
+            this.energy-=GameConfig.PLANT_COST;
+            if (m instanceof Bomb) {
+                this.view.addBomb((Bomb)m);
+            }
         }
     }
 
@@ -278,11 +280,11 @@ public class Player extends Tile {
     public BulletThread getThreadShoot() {
         return threadShoot;
     }
-    
-    public void nextTurn(){    
+
+    public void nextTurn(){
         index = (nb_turn % nb_player);
         energy = GameConfig.PLAYER_BASE_AP;
-        //game.getListPlayers().get(index);     
+        //game.getListPlayers().get(index);
         //nb_turn++;
     }
 
@@ -316,9 +318,9 @@ public class Player extends Tile {
         return this.name.equals(p.name);
     }
 
-		
+
     public String printStats() {
-        return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;	
+        return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
     }
 
     @Override
