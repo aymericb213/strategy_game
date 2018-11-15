@@ -71,7 +71,7 @@ public class RealGrid implements Grid {
 
     @Override
     public Tile getTileAt(int x, int y) {
-        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : new FreeTile(-1,-1);
+        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : null;
     }
 
     @Override
