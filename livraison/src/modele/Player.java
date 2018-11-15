@@ -133,9 +133,9 @@ public class Player extends Tile {
     }
     
     public void shootIsOver(){
-        System.out.println("AH BAH BRAVO MORET");
+        //System.out.println("AH BAH BRAVO MORET");
         threadShoot.interrupt();
-        System.out.println("Fini ==>"+threadShoot.isInterrupted());
+        //System.out.println("Fini ==>"+threadShoot.isInterrupted());
         this.threadShoot = null;
     }
 

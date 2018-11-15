@@ -42,7 +42,8 @@ public class GUI extends JFrame{
         setFocusable(true);
         requestFocus();
         
-        int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+        System.out.println("INIT");
+        int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
         playerToPlay = game.getGrid().getPlayers()[index];
         playerToPlay.setAsTurn(true);
         
@@ -76,13 +77,16 @@ public class GUI extends JFrame{
         shieldItem.addActionListener(new ActionListener(){           
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(coordPlayer[0] != null){
-                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                Player p = playerToPlay;
                     if(!p.isShield_up() && p.getEnergy() >= GameConfig.SHIELD_COST){
                         p.enableShield();
-                        game.stateChange();
+                        if(p.getEnergy() == 0){
+                            changeTurn();
+                        }else{
+                            game.stateChange();
+                        }
                     }
-                }
+                
             }
             
         });
@@ -122,17 +126,8 @@ public class GUI extends JFrame{
 //                    playerToPlay.setAsTurn(true);
 //                    game.stateChange();
 //                }
-                playerToPlay.nextTurn();
-                playerToPlay.setAsTurn(false);
-                //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
-                //Dans les tests on a 2 jours donc : 
-                int index = (game.getGrid().getTurnNumber() % 2) ;
-                System.out.println(index);
-                System.out.println(game.getGrid().getTurnNumber());
-                game.getGrid().nextTurn();
-                playerToPlay = game.getGrid().getPlayers()[index];
-                playerToPlay.setAsTurn(true);
-                game.stateChange();
+                //playerToPlay.nextTurn();
+                changeTurn();
             }
             
         });
@@ -262,7 +257,6 @@ public class GUI extends JFrame{
                             }else if(depX == 1 && depY == 0){
                                 d = Direction.d;
                             }
-                            System.out.println(d);
                             if(p.possibleMoves().contains(d)){
                                 //System.out.println("Le déplacement est possible");
                                 p.move(d);
@@ -270,6 +264,9 @@ public class GUI extends JFrame{
                                 //coordPlayer[0] = null;
                                 //coordPlayer[1] = null;
                                 p.unselect();
+                                if(p.getEnergy()==0){
+                                    changeTurn();
+                                }
                                 game.stateChange();
                             }
                         }else if(isShooting){
@@ -279,17 +276,21 @@ public class GUI extends JFrame{
                             int depX = x - p.getX();
                             int depY = y - p.getY();
 
-                            if(depX == 0 && depY == -1){
-                                d = Direction.z;
-                            }else if(depX == 0 && depY == 1){
-                                d = Direction.s;
-                            }else if(depX == -1 && depY == 0){
-                                d = Direction.q;
-                            }else if(depX == 1 && depY == 0){
-                                d = Direction.d;
-                            }
+                            d = block2dir(x,y);
+//                            if(depX == 0 && depY == -1){
+//                                d = Direction.z;
+//                            }else if(depX == 0 && depY == 1){
+//                                d = Direction.s;
+//                            }else if(depX == -1 && depY == 0){
+//                                d = Direction.q;
+//                            }else if(depX == 1 && depY == 0){
+//                                d = Direction.d;
+//                            }
                             p.fire(d);
                             isShooting = false;
+                            if(p.getEnergy()==0){
+                                changeTurn();
+                            }
                             game.stateChange();
                         }
                     }
@@ -313,5 +314,40 @@ public class GUI extends JFrame{
 
     public Game getGame(){
         return this.game;
+    }
+    
+    public void changeTurn(){
+        //Le joueur actuel ne joues plus
+        playerToPlay.setAsTurn(false);
+        //On incrémente le tour
+        game.getGrid().nextTurn();
+        //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
+        //Dans les tests on a 2 jours donc : 
+        int index = (game.getGrid().getTurnNumber() % 2) ;
+        System.out.println("index= "+index);
+        System.out.println(game.getGrid().getTurnNumber());
+        playerToPlay = game.getGrid().getPlayers()[index];
+        playerToPlay.setAsTurn(true);
+        game.stateChange();
+    }
+    
+    public Direction block2dir(int x, int y){
+        int varX = playerToPlay.getX() - x;
+        int varY = playerToPlay.getY() - y;
+        
+        if(varX == 0){
+            if(varY<0){
+                return Direction.s;
+            }else if(varY > 0){
+                return Direction.z;
+            }
+        }else{
+            if(varX<0){
+                return Direction.d;
+            }else{
+                return Direction.q;
+            }
+        }
+        return null;
     }
 }

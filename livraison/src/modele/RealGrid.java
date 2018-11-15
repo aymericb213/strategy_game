@@ -4,7 +4,7 @@ import java.util.*;
 
 public class RealGrid implements Grid {
 
-    private int turn_number = 1;
+    private int turn_number = 0;
     private int width;
     private Tile[] tiles;
     private Player[] players;
