@@ -3,14 +3,16 @@ package modele;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BulletThread extends Thread{
+public class BulletThread extends Thread {
     private int x;	
     private int y;
     private int range;
+    private final int rifle_range;
+    private final int rifle_damage;
     private final int speed = 10;
     private final int distance = 0;
     private Direction d;
-    private Game game = null;
+    private Game game = null;;
     private final Player owner;
     private final boolean running = false;
     
@@ -19,7 +21,9 @@ public class BulletThread extends Thread{
         this.y = y *64;
         //this.range = range;
         this.range = range * 64;
-        this.d = d;
+        this.rifle_range = GameConfig.RIFLE_RANGE;
+        this.rifle_damage = GameConfig.RIFLE_DAMAGE;
+        this.d = d;        
         this.owner = p;
     }
     
@@ -38,8 +42,19 @@ public class BulletThread extends Thread{
                 }
                 counter += speed;
             }
+            
             owner.notShooting();
-            game.stateChange();
+            game.stateChange();            
+            for (int i=1 ; i <= rifle_range ; i++) {
+                Tile lof = owner.getView().getTileAt(this.owner.getX()+(i*d.x()), this.owner.getY()+(i*d.y()));  
+                if (lof instanceof Player) {
+                    ((Player)lof).takeDamage(rifle_damage);
+                    this.stop();
+                }else if (lof instanceof Wall) {                 
+                    this.stop();
+                    
+                }
+            }            
             owner.shootIsOver();
         //}
     }

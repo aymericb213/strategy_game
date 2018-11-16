@@ -82,7 +82,7 @@ public class RealGrid implements Grid {
 
 
     public void nextTurn() {
-        ArrayList<Bomb> copy_bombs = new ArrayList<Bomb>(this.bombs);
+        ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
         for (Bomb b : copy_bombs) {
             b.tick();
             b.explode(this);
@@ -93,7 +93,6 @@ public class RealGrid implements Grid {
             p.setEnergy(GameConfig.PLAYER_BASE_AP);
             p.disableShield();
         }
-
         this.turn_number++;
     }
 

@@ -133,14 +133,7 @@ public class Player extends Tile {
             this.energy-=GameConfig.MOVE_COST;
         }
     }
-
-    public void shootIsOver(){
-        //System.out.println("AH BAH BRAVO MORET");
-        threadShoot.interrupt();
-        //System.out.println("Fini ==>"+threadShoot.isInterrupted());
-        this.threadShoot = null;
-    }
-
+    
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
 
@@ -276,7 +269,14 @@ public class Player extends Tile {
     public void notShooting(){
         this.isShooting = false;
     }
-
+    
+    public void shootIsOver(){
+        //System.out.println("AH BAH BRAVO MORET");
+        threadShoot.interrupt();
+        //System.out.println("Fini ==>"+threadShoot.isInterrupted());
+        this.threadShoot = null;
+    }
+    
     public BulletThread getThreadShoot() {
         return threadShoot;
     }
