@@ -6,8 +6,7 @@ package modele;
 public class Mine extends Tile implements Weapon {
 
     protected Player owner;
-    protected int damage = GameConfig.MINE_DAMAGE;		
-    protected boolean visible = (GameConfig.MINE_VISIBILITY == 1);
+    protected int damage = GameConfig.MINE_DAMAGE;
 
     /**
     * Constructeur de la classe.
@@ -16,11 +15,13 @@ public class Mine extends Tile implements Weapon {
     public Mine(Player owner) {
         super(-1,-1);
         this.owner = owner;
+        this.visible = (GameConfig.MINE_VISIBILITY == 1);
     }
 
     public Mine(Player owner, int x, int y) {
         super(x,y);
         this.owner = owner;
+        this.visible = (GameConfig.MINE_VISIBILITY == 1);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class Mine extends Tile implements Weapon {
     public void explode(RealGrid g) {
         for (Player p : g.getPlayers()) {
             if (p.getX()==this.x && p.getY()==this.y) {
-                p.takeDamage(this.damage);            
+                p.takeDamage(this.damage);
                 g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
             }
         }

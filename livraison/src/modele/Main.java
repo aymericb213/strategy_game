@@ -63,8 +63,8 @@ public class Main {
                     System.out.println("================ STRATEGY GAME =================\n");
                     System.out.println("Tour " + g.getTurnNumber());
                     System.out.println("Player " + (i+1) + "\n");
-                    System.out.println(g + "\n");//vue globale
-                    //System.out.println(p.getView() + "\n");//vues joueur
+                    //System.out.println(g + "\n");//vue globale
+                    System.out.println(p.getView() + "\n");//vues joueur
                     System.out.println("# : mur");
                     System.out.println("; : mine");
                     System.out.println("3 : bombe");
@@ -72,7 +72,7 @@ public class Main {
                     System.out.println("@ : joueur (€ si bouclier actif)");
                     System.out.println("\n" + p.printStats());
                     System.out.println("\nz,q,s,d : déplacer joueur\nm : poser mine     b : poser bombe      t : tirer     a : activer bouclier\nn : tour auto     p : fin de tour     e : quitter");
-                    //p.act(); jeu auto
+                    //p.act(); //jeu auto
 
                     String input=sc.nextLine();
                     switch (input) {

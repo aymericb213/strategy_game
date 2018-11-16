@@ -71,15 +71,13 @@ public class RealGrid implements Grid {
 
     @Override
     public Tile getTileAt(int x, int y) {
-        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : new FreeTile(-1,-1);
+        return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : null;
     }
 
     @Override
     public void setTileAt(int x, int y, Tile t) {
         this.tiles[x+(y*this.width)]=t;
     }
-
-
 
     public void nextTurn() {
         ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
@@ -128,7 +126,6 @@ public class RealGrid implements Grid {
     public void addBomb(Bomb b){
         this.bombs.add(b);
     }
-
 
     public void removeBomb(Bomb b) {
         this.bombs.remove(b);

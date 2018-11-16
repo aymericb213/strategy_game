@@ -11,14 +11,12 @@ public class Player extends Tile {
     private boolean shield_up = false;
     private PlayerStrategy strategy;
     private PlayerGrid view;
-    private RealGrid grid;
     public Direction lastMove = Direction.z;
     private boolean selected;
     private int visionSize;
     private BulletThread threadShoot;
     private boolean isShooting = false;
     private int index;
-    private int nb_turn;
     private int nb_player;
     private boolean asTurn = false;
 
@@ -35,9 +33,7 @@ public class Player extends Tile {
         this.loadout = new HashMap<>();
         this.strategy = new RandomStrategy(this);
         this.view = new PlayerGrid(g,this);
-        this.grid = new RealGrid();
         this.selected = false;
-        this.nb_turn = grid.getTurnNumber();
         this.nb_player = PlayerFactory.nb_instances;
         this.walkable=false;
         //this.threadShoot = new BulletThread(0,0,0,lastMove,this);
@@ -136,7 +132,6 @@ public class Player extends Tile {
     
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
-
         if((this.y > 0) && view.getTileAt(this.x,this.y-1).isWalkable()) {
             res.add(Direction.z);
         }
@@ -279,13 +274,6 @@ public class Player extends Tile {
     
     public BulletThread getThreadShoot() {
         return threadShoot;
-    }
-
-    public void nextTurn(){
-        index = (nb_turn % nb_player);
-        energy = GameConfig.PLAYER_BASE_AP;
-        //game.getListPlayers().get(index);
-        //nb_turn++;
     }
 
     /**
