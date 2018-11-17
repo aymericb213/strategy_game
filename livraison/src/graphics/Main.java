@@ -54,8 +54,8 @@ public class Main {
             p.setY(12);
             game.addPlayer(p);
             Player p2 = factory.buildBasic(game.getGrid());
-            p2.setX(12);
-            p2.setY(0);
+            p2.setX(3);
+            p2.setY(12);
             game.addPlayer(p2);
             //p.setImgRepr(img);
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));

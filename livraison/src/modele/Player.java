@@ -150,7 +150,16 @@ public class Player extends Tile {
         return res;
     }
 
-
+    public Rifle getRifle(){
+        Set<Weapon> weapon = this.loadout.keySet();
+        for(Weapon w : weapon){
+            if(w instanceof Rifle){
+                return (Rifle) w;
+            }
+        }
+        return null;
+    }
+    
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
         //System.out.print(view.getTileAt(this.x, this.y));

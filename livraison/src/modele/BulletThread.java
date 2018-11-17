@@ -29,11 +29,26 @@ public class BulletThread extends Thread {
     
     @Override
     public void run(){
+        boolean noTouch = true;
         //while(running){
             int counter = 0;
-            while(counter <= range + speed){
+            while(counter <= range + speed && noTouch){
                 this.x += d.x() * speed;
                 this.y += d.y() * speed;
+                int caseX = x/64;
+                int caseY = y/64;
+                if(game.getGrid().getTileAt(caseX, caseY) instanceof Player){
+                    Player victim = (Player) game.getGrid().getTileAt(caseX, caseY);
+                    if(!victim.isShield_up()){
+                        victim.takeDamage(owner.getRifle().getDamage());
+                    }else{
+                        victim.disableShield();
+                    }
+                    noTouch = false;
+                }
+                if(game.getGrid().getTileAt(caseX, caseY) instanceof Wall){
+                    noTouch = false;
+                }
                 game.stateChange();
                 try {
                     sleep(13);
@@ -44,17 +59,7 @@ public class BulletThread extends Thread {
             }
             
             owner.notShooting();
-            game.stateChange();            
-            for (int i=1 ; i <= rifle_range ; i++) {
-                Tile lof = owner.getView().getTileAt(this.owner.getX()+(i*d.x()), this.owner.getY()+(i*d.y()));  
-                if (lof instanceof Player) {
-                    ((Player)lof).takeDamage(rifle_damage);
-                    this.stop();
-                }else if (lof instanceof Wall) {                 
-                    this.stop();
-                    
-                }
-            }            
+            game.stateChange();
             owner.shootIsOver();
         //}
     }

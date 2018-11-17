@@ -66,4 +66,10 @@ public class Rifle implements Weapon {
     public int getRange(){
         return this.range;
     }
+
+    public int getDamage() {
+        return damage;
+    }
+    
+    
 }

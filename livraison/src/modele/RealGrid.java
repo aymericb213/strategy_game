@@ -120,7 +120,6 @@ public class RealGrid implements Grid {
     }
 
     public void addPlayer(Player p){
-        System.out.println("J'ajoute");
         this.players[PlayerFactory.nb_instances-1]=p;
         this.tiles[p.getX()+(p.getY()*this.width)]=p;
     }
