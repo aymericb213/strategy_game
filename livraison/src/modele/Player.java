@@ -19,6 +19,7 @@ public class Player extends Tile {
     private int index;
     private int nb_player;
     private boolean asTurn = false;
+    private boolean isPlanting = false;
 
     /////////////ATTTETION
     public Game game;
@@ -85,10 +86,22 @@ public class Player extends Tile {
         return this.life;
     }
 
+    public void enablePlant(){
+        isPlanting = true;
+    }
+    
+    public void disablePlant(){
+        isPlanting = false;
+    }
+    
     public void setLife(int new_life) {
         this.life=new_life;
     }
 
+    public boolean isPlanting(){
+        return isPlanting;
+    }
+    
     public int getEnergy() {
         return this.energy;
     }

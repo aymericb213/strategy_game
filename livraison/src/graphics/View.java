@@ -60,6 +60,11 @@ public class View extends JPanel implements ModelListener{
             
             drawLife(p,g);
             drawActionPoint(p,g);
+            if(p.isPlanting()){
+                displayPlantPoints(g,p);
+            }
+            
+            
             //g.drawImage(img,x ,y , this);
 
             ArrayList<Direction> possibleMoves = p.possibleMoves();
@@ -95,9 +100,32 @@ public class View extends JPanel implements ModelListener{
             }
             
         }
+        displayBomb(g);
         Grid grid = game.getGrid();
     }
 
+    public void displayPlantPoints(Graphics g, Player p){
+        for(int i = p.getX()-1;  i <= p.getX()+1; i++){
+            for(int j = p.getY()-1 ; j <= p.getY()+1; j++){
+                if(!((i == p.getX()) && j==p.getY())){
+                    g.setColor(Color.RED);
+                    g.fillOval(i*64 +17, j*64+17, 30, 30);
+                }
+            }
+        }
+    }
+    
+    public void displayBomb(Graphics g){
+        System.out.println("Je dessine");
+        for(Tile t : GUI.playerToPlay.getView().getModel().getGrid()){
+            if(t instanceof Mine){
+                if(((Mine) t).getOwner() == GUI.playerToPlay){
+                    g.drawImage(ImagesLoader.mine, t.getX()*64 +12 , t.getY()*64 +12, this);
+                }
+            }
+        }
+    }
+    
     public void displayBullet(Graphics g, Player p){
         g.setColor(Color.BLACK);
         if(p.isShooting()){
@@ -106,6 +134,7 @@ public class View extends JPanel implements ModelListener{
             g.fillOval(x, y, 10, 10);
         }
     }
+    
 
     public void displayPlayer(Graphics g, Player p){
 

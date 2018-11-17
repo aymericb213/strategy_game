@@ -117,6 +117,8 @@ public class Game extends AbstractListenableModel {
         return res;  
     }
     
+    
+    
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l) {    
         int size = l.get(0).get(0).size()*l.get(0).size();        
         Tile[] res = new Tile[l.get(0).get(0).size()*l.get(0).size()];        

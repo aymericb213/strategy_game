@@ -19,9 +19,10 @@ public class GUI extends JFrame{
     private View view;
     private Game game;    
     private Integer[] coordPlayer = new Integer[2];
-    private Player playerToPlay = null;
+    public static Player playerToPlay = null;
     private boolean isShooting = false;
     private boolean isMoving = false;
+    private boolean isPlanting = false;
 
     
     public GUI(){    
@@ -56,14 +57,6 @@ public class GUI extends JFrame{
         depItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-//                if(coordPlayer[0] != null){
-//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-//                    if(p.getEnergy() >= GameConfig.MOVE_COST){
-//                        p.select();
-//                        isMoving = true;
-//                        game.stateChange();
-//                    }
-//                }
                 if(playerToPlay.getEnergy() >= GameConfig.MOVE_COST){
                         playerToPlay.select();
                         isMoving = true;
@@ -98,13 +91,6 @@ public class GUI extends JFrame{
         shootItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-//                if(coordPlayer[0] != null){
-//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-//                    if(p.getEnergy() >= GameConfig.FIRE_COST){
-//                        isShooting = true;
-//                        System.out.println("Is shooting est mis à true");
-//                    }
-//                }
                 if(playerToPlay.getEnergy() >= GameConfig.FIRE_COST){
                     isShooting = true;
                 }
@@ -113,21 +99,24 @@ public class GUI extends JFrame{
         });
         popup.add(shootItem);
         
+        JMenuItem plantBomb = new JMenuItem("Poser une mine", new ImageIcon("src/Images/target.png"));
+        plantBomb.getAccessibleContext().setAccessibleDescription("Poser une mine");
+        plantBomb.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
+                playerToPlay.enablePlant();
+                game.stateChange();
+            }
+            
+        });
+        popup.add(plantBomb);
+        
         JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("src/Images/pass.png"));
         passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
         passTurn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-//                if(coordPlayer[0] != null){
-//                    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-//                    p.nextTurn();
-//                    playerToPlay.setAsTurn(false);
-//                    int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
-//                    playerToPlay = game.getGrid().getPlayers()[index];
-//                    playerToPlay.setAsTurn(true);
-//                    game.stateChange();
-//                }
-                //playerToPlay.nextTurn();
                 changeTurn();
             }
             
@@ -326,6 +315,14 @@ public class GUI extends JFrame{
                                 changeTurn();
                             }
                             game.stateChange();
+                        }else if(p.isPlanting()){
+                            int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
+                            if(distance == 1){
+                                playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));
+                            }
+                            p.disablePlant();
+                            game.stateChange();
+                            
                         }
                     }
                 //}

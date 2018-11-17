@@ -21,6 +21,8 @@ public class ImagesLoader {
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
     private final File file;
     public static BufferedImage shield;
+    public static BufferedImage bomb;
+    public static BufferedImage mine;
 
     public ImagesLoader(File file){
         this.file = file;
@@ -159,6 +161,8 @@ public class ImagesLoader {
 
         try{
             shield = ImageIO.read(new File("src/Images/shield.png"));
+            bomb = ImageIO.read(new File("src/Images/bomb2.png"));
+            mine = ImageIO.read(new File("src/Images/mine.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }
