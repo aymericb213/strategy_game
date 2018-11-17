@@ -46,6 +46,7 @@ public class GUI extends JFrame{
         int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
         playerToPlay = game.getGrid().getPlayers()[index];
         playerToPlay.setAsTurn(true);
+        System.out.println(game.getGrid().getPlayers().length);
         
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();

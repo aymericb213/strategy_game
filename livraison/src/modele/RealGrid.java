@@ -12,6 +12,7 @@ public class RealGrid implements Grid {
     private GridStrategy generator;
 
     public RealGrid(int width, int height, int nb_players) {
+        System.out.println(nb_players);
         this.width = width;
         this.tiles = new Tile[width*height];
         this.players = new Player[nb_players];
@@ -21,7 +22,7 @@ public class RealGrid implements Grid {
     }
 
     public RealGrid() {
-        this(0,0,5);
+        this(0,0,2);
     }
 
     public void createGrid() {
@@ -89,7 +90,7 @@ public class RealGrid implements Grid {
         for (Player p : this.players) {
             //A voir si le joueur récupère vraiment toute son énergie.
             p.setEnergy(GameConfig.PLAYER_BASE_AP);
-            p.disableShield();
+            //p.disableShield();
         }
         this.turn_number++;
     }
@@ -119,6 +120,7 @@ public class RealGrid implements Grid {
     }
 
     public void addPlayer(Player p){
+        System.out.println("J'ajoute");
         this.players[PlayerFactory.nb_instances-1]=p;
         this.tiles[p.getX()+(p.getY()*this.width)]=p;
     }

@@ -45,8 +45,9 @@ public class Main {
 
         try {
             Game game = new Game();
-            game.loadGrid(file);
-            System.out.println(game.getGrid());
+            System.out.println("MARQUEE");
+            game.loadGrid(file, 2);
+            System.out.println("Grille ==>"+game.getGrid());
             
             Player p = factory.buildBasic(game.getGrid());
             p.setX(0);

@@ -27,8 +27,8 @@ public class Game extends AbstractListenableModel {
         this(new RealGrid());  
     }
  
-    public Game(RealGrid grid) {        
-        this.grid = grid;  
+    public Game(RealGrid grid) {     
+        this.grid = grid;
     }
  
     public RealGrid getGrid() {   
@@ -64,7 +64,7 @@ public class Game extends AbstractListenableModel {
         return res;  
     }
  
-    public void loadGrid(File file) throws IOException, ParserConfigurationException, SAXException {
+    public void loadGrid(File file, int nbPlayers) throws IOException, ParserConfigurationException, SAXException {
     
         LevelHandlerParser lvlHandler = new LevelHandlerParser();    
         SAXParserFactory factory = SAXParserFactory.newInstance();    
@@ -75,8 +75,7 @@ public class Game extends AbstractListenableModel {
             Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);    
         }    
         
-        this.grid=new RealGrid(lvlHandler.x,lvlHandler.y,5);    
-        System.out.println(lvlHandler.listCase.size());    
+        this.grid=new RealGrid(lvlHandler.x,lvlHandler.y,nbPlayers);    
         String myString = "";  
         for(int i = 0; i < lvlHandler.listCase.size() ; i++) {      
             for(int j = 0; j < lvlHandler.listCase.get(i).length(); j++) {        
@@ -103,8 +102,7 @@ public class Game extends AbstractListenableModel {
             layers.put(layer,copyList(temp));    
         }
     
-        // La HashMap représente les différentes couches.    
-        System.out.println(layers);    
+        // La HashMap représente les différentes couches.     
         computeTileGrid(layers);	
     }
  
