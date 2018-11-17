@@ -1,6 +1,10 @@
 package modele;
 
+import java.io.File;
 import java.util.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Player extends Tile {
 
@@ -23,6 +27,7 @@ public class Player extends Tile {
 
     /////////////ATTTETION
     public Game game;
+    private boolean plantingBomb = false;
 
     public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
         super(x,y);
@@ -136,6 +141,13 @@ public class Player extends Tile {
 
             if (this.view.getTileAt(this.x,this.y) instanceof Bonus) {
                 this.energy+=((Bonus)this.view.getTileAt(x,y)).getValue();
+            }
+            if(this.game.getGrid().getTileAt(x, y) instanceof Mine){
+                if(this.game.getGrid().getTileAt(x, y) instanceof Bomb){
+                    this.takeDamage(GameConfig.BOMB_DAMAGE);
+                }else{
+                    this.takeDamage(GameConfig.MINE_DAMAGE);
+                }
             }
             this.view.setTileAt(this.x,this.y,this);
             this.lastMove = d;
@@ -278,7 +290,7 @@ public class Player extends Tile {
             }
         }
     }
-
+    
     public boolean isShooting() {
         return isShooting;
     }
@@ -336,5 +348,17 @@ public class Player extends Tile {
     @Override
     public String toString() {
         return this.shield_up ? "€" : "@";
+    }
+
+    public boolean isPlantingBomb() {
+        return plantingBomb;
+    }
+    
+    public void enablePlantingBomb(){
+        this.plantingBomb = true;
+    }
+    
+    public void disablePlantingBomb(){
+        this.plantingBomb = false;
     }
 }

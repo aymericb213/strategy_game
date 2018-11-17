@@ -51,4 +51,10 @@ public class Bomb extends Mine {
     public String toString() {
         return ""+this.delay;
     }
+
+    public int getDelay() {
+        return delay;
+    }
+    
+    
 }

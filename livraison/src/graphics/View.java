@@ -43,62 +43,63 @@ public class View extends JPanel implements ModelListener{
 
         Set<Player> players = game.getListPlayers().keySet();
         for(Player p: players){
-            BufferedImage img = p.getImgRepr();
+            if(p.getLife() > 0){
+                BufferedImage img = p.getImgRepr();
 
-            int baseX = (int)(( 64 - sizeImg.getWidth())/2);
-            int baseY = (int)(( 64 - sizeImg.getHeight())/2);
+                int baseX = (int)(( 64 - sizeImg.getWidth())/2);
+                int baseY = (int)(( 64 - sizeImg.getHeight())/2);
 
-            int x = 64 * p.getX() + baseX;
-            int y = 64 * p.getY() + baseY;
-            displayBullet(g, p);
-            displayPlayer(g, p);
-            
-            //Draw shield
-            if(p.isShield_up()){
-                g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
-            }
-            
-            drawLife(p,g);
-            drawActionPoint(p,g);
-            if(p.isPlanting()){
-                displayPlantPoints(g,p);
-            }
-            
-            
-            //g.drawImage(img,x ,y , this);
+                int x = 64 * p.getX() + baseX;
+                int y = 64 * p.getY() + baseY;
+                displayBullet(g, p);
+                displayPlayer(g, p);
 
-            ArrayList<Direction> possibleMoves = p.possibleMoves();
+                //Draw shield
+                if(p.isShield_up()){
+                    g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+                }
 
-            if(p.getEnergy() == 0 || !p.getAsTurn()){
-                g.setColor(new Color(255,0,0));
-                g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
-            }
-            
-            if(p.isSelected()){
-                if(p.getEnergy() != 0){
-                    g.setColor(new Color(0,255,0));
-                    for(Direction d : possibleMoves){
-                        //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
-                        g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                drawLife(p,g);
+                drawActionPoint(p,g);
+                if(p.isPlanting()){
+                    displayPlantPoints(g,p);
+                }
+
+
+                //g.drawImage(img,x ,y , this);
+
+                ArrayList<Direction> possibleMoves = p.possibleMoves();
+
+                if(p.getEnergy() == 0 || !p.getAsTurn()){
+                    g.setColor(new Color(255,0,0));
+                    g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
+                }
+
+                if(p.isSelected()){
+                    if(p.getEnergy() != 0){
+                        g.setColor(new Color(0,255,0));
+                        for(Direction d : possibleMoves){
+                            //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
+                            g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                        }
+                    }
+                }
+
+
+                ArrayList<ArrayList> viewableTiles = p.visibleTiles();
+                //System.out.print(viewableTiles);
+
+                if(p.isSelected()){
+                    g.setColor(new Color(25,125,255));
+                    int counter=0;
+                    for(ArrayList t : viewableTiles){
+                        //System.out.print("nik"+counter+"\n"); counter++;
+                        Integer tx = Integer.parseInt(t.get(0).toString());
+                        Integer ty = Integer.parseInt(t.get(1).toString());
+                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
                     }
                 }
             }
-            
-            
-            ArrayList<ArrayList> viewableTiles = p.visibleTiles();
-            //System.out.print(viewableTiles);
-            
-            if(p.isSelected()){
-                g.setColor(new Color(25,125,255));
-                int counter=0;
-                for(ArrayList t : viewableTiles){
-                    //System.out.print("nik"+counter+"\n"); counter++;
-                    Integer tx = Integer.parseInt(t.get(0).toString());
-                    Integer ty = Integer.parseInt(t.get(1).toString());
-                    g.fillOval(64*tx+22, 64*ty+22, 20, 20);
-                }
-            }
-            
         }
         displayBomb(g);
         Grid grid = game.getGrid();
@@ -118,7 +119,13 @@ public class View extends JPanel implements ModelListener{
     public void displayBomb(Graphics g){
         System.out.println("Je dessine");
         for(Tile t : GUI.playerToPlay.getView().getModel().getGrid()){
-            if(t instanceof Mine){
+            if(t instanceof Bomb){
+                if(((Bomb) t).getOwner() == GUI.playerToPlay){
+                    g.setColor(Color.GREEN);
+                    g.drawString(Integer.toString(((Bomb) t).getDelay()), t.getX()*64 +28, t.getY()*64 + 20);
+                    g.drawImage(ImagesLoader.bomb, t.getX()*64 +12 , t.getY()*64 +12, this);
+                }
+            }else if(t instanceof Mine){
                 if(((Mine) t).getOwner() == GUI.playerToPlay){
                     g.drawImage(ImagesLoader.mine, t.getX()*64 +12 , t.getY()*64 +12, this);
                 }

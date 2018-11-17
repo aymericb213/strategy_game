@@ -99,14 +99,32 @@ public class GUI extends JFrame{
         });
         popup.add(shootItem);
         
-        JMenuItem plantBomb = new JMenuItem("Poser une mine", new ImageIcon("src/Images/target.png"));
-        plantBomb.getAccessibleContext().setAccessibleDescription("Poser une mine");
+        JMenuItem plantMine = new JMenuItem("Poser une mine", new ImageIcon("src/Images/target.png"));
+        plantMine.getAccessibleContext().setAccessibleDescription("Poser une mine");
+        plantMine.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
+                if(playerToPlay.getEnergy() >= GameConfig.PLANT_COST){
+                    playerToPlay.enablePlant();
+                    game.stateChange();
+                }
+            }
+            
+        });
+        popup.add(plantMine);
+        
+        JMenuItem plantBomb = new JMenuItem("Poser une bombe", new ImageIcon("src/Images/target.png"));
+        plantBomb.getAccessibleContext().setAccessibleDescription("Poser une bombe");
         plantBomb.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
-                playerToPlay.enablePlant();
-                game.stateChange();
+                if(playerToPlay.getEnergy() >= GameConfig.PLANT_COST){
+                    playerToPlay.enablePlant();
+                    playerToPlay.enablePlantingBomb();
+                    game.stateChange();
+                }
             }
             
         });
@@ -251,6 +269,13 @@ public class GUI extends JFrame{
                             }else{
                                 shootItem.setText("T̶i̶r̶e̶r̶");
                             }
+                            if(p.getEnergy() >= GameConfig.PLANT_COST){
+                                plantBomb.setText("Poser une bombe");
+                                plantMine.setText("Poser une mine");
+                            }else{
+                                plantBomb.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶b̶o̶m̶b̶e̶");
+                                plantMine.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶m̶i̶n̶e̶");
+                            }
                         }else{
                             p.unselect();
                         }
@@ -318,9 +343,14 @@ public class GUI extends JFrame{
                         }else if(p.isPlanting()){
                             int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
                             if(distance == 1){
-                                playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));
+                                if(playerToPlay.isPlantingBomb()){
+                                    playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));
+                                }else{
+                                    playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));
+                                }
                             }
                             p.disablePlant();
+                            p.disablePlantingBomb();
                             game.stateChange();
                             
                         }
