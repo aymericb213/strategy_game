@@ -94,11 +94,11 @@ public class Player extends Tile {
     public void enablePlant(){
         isPlanting = true;
     }
-    
+
     public void disablePlant(){
         isPlanting = false;
     }
-    
+
     public void setLife(int new_life) {
         this.life=new_life;
     }
@@ -106,7 +106,7 @@ public class Player extends Tile {
     public boolean isPlanting(){
         return isPlanting;
     }
-    
+
     public int getEnergy() {
         return this.energy;
     }
@@ -142,19 +142,15 @@ public class Player extends Tile {
             if (this.view.getTileAt(this.x,this.y) instanceof Bonus) {
                 this.energy+=((Bonus)this.view.getTileAt(x,y)).getValue();
             }
-            if(this.game.getGrid().getTileAt(x, y) instanceof Mine){
-                if(this.game.getGrid().getTileAt(x, y) instanceof Bomb){
-                    this.takeDamage(GameConfig.BOMB_DAMAGE);
-                }else{
-                    this.takeDamage(GameConfig.MINE_DAMAGE);
-                }
+            if(this.view.getModel().getTileAt(x,y) instanceof Weapon) {
+                ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
             }
             this.view.setTileAt(this.x,this.y,this);
             this.lastMove = d;
             this.energy-=GameConfig.MOVE_COST;
         }
     }
-    
+
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
         if((this.y > 0) && view.getTileAt(this.x,this.y-1).isWalkable()) {
@@ -184,7 +180,7 @@ public class Player extends Tile {
         }
         return null;
     }
-    
+
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
         //System.out.print(view.getTileAt(this.x, this.y));
@@ -290,7 +286,7 @@ public class Player extends Tile {
             }
         }
     }
-    
+
     public boolean isShooting() {
         return isShooting;
     }
@@ -298,14 +294,14 @@ public class Player extends Tile {
     public void notShooting(){
         this.isShooting = false;
     }
-    
+
     public void shootIsOver(){
         //System.out.println("AH BAH BRAVO MORET");
         threadShoot.interrupt();
         //System.out.println("Fini ==>"+threadShoot.isInterrupted());
         this.threadShoot = null;
     }
-    
+
     public BulletThread getThreadShoot() {
         return threadShoot;
     }
@@ -353,11 +349,11 @@ public class Player extends Tile {
     public boolean isPlantingBomb() {
         return plantingBomb;
     }
-    
+
     public void enablePlantingBomb(){
         this.plantingBomb = true;
     }
-    
+
     public void disablePlantingBomb(){
         this.plantingBomb = false;
     }

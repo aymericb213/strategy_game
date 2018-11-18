@@ -29,6 +29,12 @@ public class Bomb extends Mine {
     }
 
     @Override
+    public void explode(RealGrid g, Player p) {
+        p.takeDamage(this.damage);
+        g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+        g.removeBomb(this);
+    }
+
     public void explode(RealGrid g) {
         if (this.delay==0) {
             for (Tile t : g.getNeighbouringTiles(this)) {
@@ -38,8 +44,6 @@ public class Bomb extends Mine {
             }
             g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
             g.removeBomb(this);
-        } else {
-            super.explode(g);
         }
     }
 
@@ -55,6 +59,6 @@ public class Bomb extends Mine {
     public int getDelay() {
         return delay;
     }
-    
-    
+
+
 }

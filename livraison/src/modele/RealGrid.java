@@ -4,10 +4,12 @@ import java.util.*;
 
 public class RealGrid implements Grid {
 
-    private int turn_number = 1;
+    private int turn_number = 0;
     private int width;
     private Tile[] tiles;
     private Player[] players;
+    private Queue<Player> ordering;
+    private boolean random_order = (GameConfig.RANDOMIZED_PLAYER_ORDER==1);
     private ArrayList<Bomb> bombs;
     private GridStrategy generator;
 
@@ -37,6 +39,27 @@ public class RealGrid implements Grid {
             }
         }
         return cpt==1;
+    }
+
+    public Player nextPlayer() {
+      Player p = this.ordering.poll();
+      p.setEnergy(GameConfig.PLAYER_BASE_AP);
+      p.disableShield();
+      System.out.println(this.ordering);
+      return p;
+    }
+
+    public void nextTurn() {
+      ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
+      for (Bomb b : copy_bombs) {
+        b.tick();
+        b.explode(this);
+      }
+      this.ordering = new LinkedList<Player>(Arrays.asList(this.players));
+      if (this.random_order) {
+        Collections.shuffle((LinkedList)this.ordering);
+      }
+      this.turn_number++;
     }
 
     public boolean isInBounds(int x, int y) {
@@ -80,20 +103,6 @@ public class RealGrid implements Grid {
         this.tiles[x+(y*this.width)]=t;
     }
 
-    public void nextTurn() {
-        ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
-        for (Bomb b : copy_bombs) {
-            b.tick();
-            b.explode(this);
-        }
-
-        for (Player p : this.players) {
-            //A voir si le joueur récupère vraiment toute son énergie.
-            p.setEnergy(GameConfig.PLAYER_BASE_AP);
-            //p.disableShield();
-        }
-        this.turn_number++;
-    }
 
     public int getTurnNumber() {
         return this.turn_number;

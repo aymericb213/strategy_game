@@ -55,9 +55,10 @@ public class Main {
 
         end :
         while(!(g.gameIsOver())) {
+            g.nextTurn();
             next :
             for (int i=0 ; i<g.getPlayers().length ; i++) {
-                Player p = g.getPlayers()[i];
+                Player p = g.nextPlayer();
                 while (p.getEnergy()>0) {
                     System.out.println("\033[H\033[2J");
                     System.out.println("================ STRATEGY GAME =================\n");
@@ -154,7 +155,6 @@ public class Main {
                         }
                 }
             }
-            g.nextTurn();
         }
     }
 

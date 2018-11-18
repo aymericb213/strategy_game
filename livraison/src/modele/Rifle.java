@@ -26,7 +26,7 @@ public class Rifle implements Weapon {
     }
 
     @Override
-    public void explode(RealGrid g) {
+    public void explode(RealGrid g, Player p) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -70,6 +70,6 @@ public class Rifle implements Weapon {
     public int getDamage() {
         return damage;
     }
-    
-    
+
+
 }
