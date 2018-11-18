@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 
 
 public class ImagesLoader {
-    
+
     public static ArrayList<BufferedImage> imageList;
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
     private final File file;
@@ -39,14 +39,14 @@ public class ImagesLoader {
 
         PlayerImageParser playerHandler = new PlayerImageParser();
         SAXParserFactory factory = SAXParserFactory.newInstance();
-        
+
         try {
-            SAXParser saxParser = factory.newSAXParser();          
+            SAXParser saxParser = factory.newSAXParser();
             saxParser.parse(file,playerHandler);
         } catch (SAXException ex) {
             Logger.getLogger(Grid.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         for(int i = 0; i < 9; i++){
             imagePlayers.put(i, new ArrayList<>());
         }
@@ -63,8 +63,8 @@ public class ImagesLoader {
             System.out.println(index);
             BufferedImage temp = spritesheet.getSubimage(x,y,width, height);
             imagePlayers.get(index).add(temp);
-            
-            
+
+
             /*for(int a = 0 ; a < 3 ; a++){
                 int angle;
                 if(a == 0){
@@ -76,19 +76,19 @@ public class ImagesLoader {
                 }
 
                 BufferedImage img = rotateImageByDegrees(temp, angle);
-            } */ 
+            } */
 
             acc++;
             if(acc > 5){
                 acc = 0;
                 index++;
             }
-        }        
+        }
         System.out.println("Taille ==> "+imagePlayers.get(0).size());
     }
 
     public static BufferedImage lookUp(BufferedImage img) {
-        
+
         int height = img.getHeight();
         int width = img.getWidth();
 
@@ -108,39 +108,39 @@ public class ImagesLoader {
         int width = img.getWidth();
 
         BufferedImage rotated = new BufferedImage(height, width, img.getType());
-        
+
         for(int x = 0; x < width; x++){
-            for(int y = 0; y < height ; y++){            
+            for(int y = 0; y < height ; y++){
                 rotated.setRGB(y, x, img.getRGB(x,y));
             }
         }
         return rotated;
     }
-    
+
     public static BufferedImage lookRight(BufferedImage img) {
 
         int height = img.getHeight();
         int width = img.getWidth();
 
         BufferedImage rotated = new BufferedImage(width, height, img.getType());
-        
+
         for(int x = 0; x < width; x++){
-            for(int y = 0; y < height ; y++){            
+            for(int y = 0; y < height ; y++){
                 rotated.setRGB(x, y, img.getRGB(x,y));
             }
         }
         return rotated;
     }
-    
+
     public static BufferedImage lookLeft(BufferedImage img) {
 
         int height = img.getHeight();
         int width = img.getWidth();
 
         BufferedImage rotated = new BufferedImage(width, height, img.getType());
-        
+
         for(int x = 0; x < width; x++){
-            for(int y = 0; y < height ; y++){            
+            for(int y = 0; y < height ; y++){
                 rotated.setRGB((width-1)-x, y, img.getRGB(x,y));
             }
         }
@@ -162,7 +162,7 @@ public class ImagesLoader {
         try{
             shield = ImageIO.read(new File("src/Images/shield.png"));
             bomb = ImageIO.read(new File("src/Images/bomb2.png"));
-            mine = ImageIO.read(new File("src/Images/mine.png"));
+            mine = ImageIO.read(new File("src/Images/mine2.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }

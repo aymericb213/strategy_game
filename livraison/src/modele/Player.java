@@ -1,10 +1,6 @@
 package modele;
 
-import java.io.File;
 import java.util.*;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 public class Player extends Tile {
 

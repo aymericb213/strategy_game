@@ -23,7 +23,6 @@ public class GUI extends JFrame{
     private boolean isShooting = false;
     private boolean isMoving = false;
     private boolean isPlanting = false;
-
     
     public GUI(){    
         this(new Game());
@@ -38,6 +37,7 @@ public class GUI extends JFrame{
         setSize(832,854); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        
         
         //Pour lire les entrées claviers
         setFocusable(true);
@@ -99,7 +99,7 @@ public class GUI extends JFrame{
         });
         popup.add(shootItem);
         
-        JMenuItem plantMine = new JMenuItem("Poser une mine", new ImageIcon("src/Images/target.png"));
+        JMenuItem plantMine = new JMenuItem("Poser une mine", new ImageIcon("src/Images/mine.png"));
         plantMine.getAccessibleContext().setAccessibleDescription("Poser une mine");
         plantMine.addActionListener(new ActionListener(){
             @Override
@@ -114,7 +114,7 @@ public class GUI extends JFrame{
         });
         popup.add(plantMine);
         
-        JMenuItem plantBomb = new JMenuItem("Poser une bombe", new ImageIcon("src/Images/target.png"));
+        JMenuItem plantBomb = new JMenuItem("Poser une bombe", new ImageIcon("src/Images/bomb.png"));
         plantBomb.getAccessibleContext().setAccessibleDescription("Poser une bombe");
         plantBomb.addActionListener(new ActionListener(){
             @Override
@@ -134,7 +134,7 @@ public class GUI extends JFrame{
         passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
         passTurn.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {                
                 changeTurn();
             }
             
@@ -381,7 +381,9 @@ public class GUI extends JFrame{
         //Le joueur actuel ne joues plus
         playerToPlay.setAsTurn(false);
         //On incrémente le tour
+        
         game.getGrid().nextTurn();
+        game.getGrid().nextPlayer();        
         //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
         //Dans les tests on a 2 jours donc : 
         int index = (game.getGrid().getTurnNumber() % 2) ;

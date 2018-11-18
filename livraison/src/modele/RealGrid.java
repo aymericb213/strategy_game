@@ -55,7 +55,7 @@ public class RealGrid implements Grid {
         b.tick();
         b.explode(this);
       }
-      this.ordering = new LinkedList<Player>(Arrays.asList(this.players));
+      this.ordering = new LinkedList<>(Arrays.asList(this.players));
       if (this.random_order) {
         Collections.shuffle((LinkedList)this.ordering);
       }
