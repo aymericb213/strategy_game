@@ -1,5 +1,6 @@
 package modele;
 
+import graphics.SoundLoader;
 import java.util.*;
 
 public class Player extends Tile {
@@ -20,6 +21,7 @@ public class Player extends Tile {
     private int nb_player;
     private boolean asTurn = false;
     private boolean isPlanting = false;
+    private SoundLoader sound;
 
     /////////////ATTTETION
     public Game game;
@@ -281,6 +283,7 @@ public class Player extends Tile {
                 this.energy-=GameConfig.FIRE_COST;
             }
         }
+        sound = new SoundLoader(3);
     }
 
     public boolean isShooting() {

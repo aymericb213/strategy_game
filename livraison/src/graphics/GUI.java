@@ -23,12 +23,25 @@ public class GUI extends JFrame{
     private boolean isShooting = false;
     private boolean isMoving = false;
     private boolean isPlanting = false;
+    private SoundLoader sound;
+    
+    
     
     public GUI(){    
         this(new Game());
     }
 
     public GUI(Game game){
+        com.sun.javafx.application.PlatformImpl.startup(()->{});       
+        this.sound = new SoundLoader(0);       
+        sound.getTrack().setOnEndOfMedia(() -> {
+            if(game.getGrid().gameIsOver()){
+                sound.getTrack().stop();
+            }else{
+                sound.getTrack().seek(sound.getTrack().getStartTime());
+            }
+        });
+        
         this.game = game;
         this.view = new View(null,game);
         view.setEntities(game.getGrid().getGrid());
@@ -36,8 +49,7 @@ public class GUI extends JFrame{
         setTitle("Shooter Game");
         setSize(832,854); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
+        setLocationRelativeTo(null);   
         
         //Pour lire les entrées claviers
         setFocusable(true);
@@ -92,7 +104,7 @@ public class GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(playerToPlay.getEnergy() >= GameConfig.FIRE_COST){
-                    isShooting = true;
+                    isShooting = true;                    
                 }
             }
             
@@ -134,7 +146,7 @@ public class GUI extends JFrame{
         passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
         passTurn.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {                
+            public void actionPerformed(ActionEvent e) {   
                 changeTurn();
             }
             

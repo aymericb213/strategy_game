@@ -22,6 +22,7 @@ public class Bomb extends Mine {
         super(owner,x,y);
         this.damage=GameConfig.BOMB_DAMAGE;
         this.visible=(GameConfig.BOMB_VISIBILITY == 1);
+
     }
 
     public void tick() {
@@ -30,6 +31,7 @@ public class Bomb extends Mine {
 
     @Override
     public void explode(RealGrid g, Player p) {
+
         p.takeDamage(this.damage);
         g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
         g.removeBomb(this);

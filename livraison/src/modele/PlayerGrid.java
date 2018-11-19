@@ -29,7 +29,6 @@ public class PlayerGrid implements Grid {
         model.setTileAt(x,y,t);
     }
 
-
     public void addBomb(Bomb b) {
         model.addBomb(b);
     }
