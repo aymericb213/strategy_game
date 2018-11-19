@@ -55,7 +55,6 @@ public class Main {
 
         end :
         while(!(g.gameIsOver())) {
-            g.nextTurn();
             next :
             for (int i=0 ; i<g.getPlayers().length ; i++) {
                 Player p = g.nextPlayer();
