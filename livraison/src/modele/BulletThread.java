@@ -20,7 +20,7 @@ public class BulletThread extends Thread {
         this.x = x *64;
         this.y = y *64;
         //this.range = range;
-        this.range = range * 64;
+        this.range = (range-1) * 64;
         this.rifle_range = GameConfig.RIFLE_RANGE;
         this.rifle_damage = GameConfig.RIFLE_DAMAGE;
         this.d = d;        
@@ -32,12 +32,14 @@ public class BulletThread extends Thread {
         boolean noTouch = true;
         //while(running){
             int counter = 0;
-            while(counter <= range + speed && noTouch){
+            while(counter <= range /*+ speed*/ && noTouch){
+                System.out.println(counter+" "+range);
                 this.x += d.x() * speed;
                 this.y += d.y() * speed;
                 int caseX = x/64;
                 int caseY = y/64;
-                if(game.getGrid().getTileAt(caseX, caseY) instanceof Player){
+                System.out.println(caseX+" "+caseY);
+                if(game.getGrid().getTileAt(caseX, caseY ) instanceof Player){
                     Player victim = (Player) game.getGrid().getTileAt(caseX, caseY);
                     if(!victim.isShield_up()){
                         victim.takeDamage(owner.getRifle().getDamage());

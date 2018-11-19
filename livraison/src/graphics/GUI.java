@@ -56,10 +56,14 @@ public class GUI extends JFrame{
         requestFocus();
         
         System.out.println("INIT");
+        
         int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
-        playerToPlay = game.getGrid().getPlayers()[index];
+        //playerToPlay = game.getGrid().getPlayers()[index];
+        playerToPlay = game.getGrid().nextPlayer();
         playerToPlay.setAsTurn(true);
+        /*
         System.out.println(game.getGrid().getPlayers().length);
+        */
         
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
@@ -329,6 +333,7 @@ public class GUI extends JFrame{
                                 }
                                 game.stateChange();
                             }
+                            isMoving = false;
                         }else if(isShooting){
                             Direction d = null;
                             //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
@@ -390,10 +395,13 @@ public class GUI extends JFrame{
     }
     
     public void changeTurn(){
-        //Le joueur actuel ne joues plus
         playerToPlay.setAsTurn(false);
-        //On incrémente le tour
+        playerToPlay = game.getGrid().nextPlayer();
+        playerToPlay.setAsTurn(true);
         
+        //Le joueur actuel ne joues plus
+        //On incrémente le tour
+        /*
         game.getGrid().nextTurn();
         game.getGrid().nextPlayer();        
         //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
@@ -403,6 +411,7 @@ public class GUI extends JFrame{
         System.out.println(game.getGrid().getTurnNumber());
         playerToPlay = game.getGrid().getPlayers()[index];
         playerToPlay.setAsTurn(true);
+        */
         game.stateChange();
     }
     

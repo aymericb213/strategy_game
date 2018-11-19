@@ -42,7 +42,8 @@ public class RealGrid implements Grid {
     }
 
     public Player nextPlayer() {
-      if (this.ordering.size()==0) {
+        System.out.println("Je change");
+      if (this.ordering == null || this.ordering.size() == 0) {
         nextTurn();
       }
       Player p = this.ordering.poll();

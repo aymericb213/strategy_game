@@ -138,7 +138,17 @@ public class View extends JPanel implements ModelListener{
         if(p.isShooting()){
             int x = p.getThreadShoot().getX();//* 64;
             int y = p.getThreadShoot().getY();// * 64;
-            g.fillOval(x, y, 10, 10);
+            
+            if(p.lastMove == Direction.z){
+            g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);
+            }else if(p.lastMove == Direction.s){
+                g.drawImage(ImagesLoader.lookDown(ImagesLoader.bullet), x + 40, y, this);
+            }else if(p.lastMove == Direction.q){
+                g.drawImage(ImagesLoader.lookLeft(ImagesLoader.bullet), x, y + 40, this);
+            }else if(p.lastMove == Direction.d){
+                g.drawImage(ImagesLoader.lookRight(ImagesLoader.bullet), x, y + 40, this);
+            }
+            //g.fillOval(x, y, 10, 10);
         }
     }
     

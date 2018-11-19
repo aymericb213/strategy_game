@@ -142,6 +142,7 @@ public class Player extends Tile {
             }
             if(this.view.getModel().getTileAt(x,y) instanceof Weapon) {
                 ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
+                sound = new SoundLoader(2);
             }
             this.view.setTileAt(this.x,this.y,this);
             this.lastMove = d;
