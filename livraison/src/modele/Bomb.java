@@ -1,5 +1,7 @@
 package modele;
 
+import graphics.SoundLoader;
+
 /**
 * Classe fille de Tile représentant un bonus.
 */
@@ -7,6 +9,7 @@ public class Bomb extends Mine {
 
     //Nombre de tours avant explosion
     private int delay = GameConfig.BOMB_DELAY;
+    private SoundLoader sound;
 
     /**
     * Constructeur de la classe.
@@ -30,18 +33,19 @@ public class Bomb extends Mine {
     }
 
     @Override
-    public void explode(RealGrid g, Player p) {
-
+    public void explode(RealGrid g, Player p) {        
         p.takeDamage(this.damage);
         g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
         g.removeBomb(this);
     }
 
-    public void explode(RealGrid g) {
+    public void explode(RealGrid g) {         
         if (this.delay==0) {
+            sound = new SoundLoader(1);
             for (Tile t : g.getNeighbouringTiles(this)) {
                 if (t instanceof Player) {
                     ((Player)t).takeDamage(this.damage);
+                    sound = new SoundLoader(2);
                 }
             }
             g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));

@@ -142,7 +142,6 @@ public class Player extends Tile {
             }
             if(this.view.getModel().getTileAt(x,y) instanceof Weapon) {
                 ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
-                sound = new SoundLoader(2);
             }
             this.view.setTileAt(this.x,this.y,this);
             this.lastMove = d;
@@ -269,6 +268,7 @@ public class Player extends Tile {
 
     /* Tir */
     public void fire(Direction d) {
+        this.sound = new SoundLoader(4);
         this.isShooting = true;
         this.threadShoot = new BulletThread(0,0,0,lastMove,this);
         threadShoot.setGame(this.game);
@@ -283,8 +283,7 @@ public class Player extends Tile {
                 //this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
-        }
-        sound = new SoundLoader(3);
+        }        
     }
 
     public boolean isShooting() {

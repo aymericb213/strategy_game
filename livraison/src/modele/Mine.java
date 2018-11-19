@@ -1,5 +1,7 @@
 package modele;
 
+import graphics.SoundLoader;
+
 /**
 * Classe fille de Tile représentant une mine.
 */
@@ -7,6 +9,7 @@ public class Mine extends Tile implements Weapon {
 
     protected Player owner;
     protected int damage = GameConfig.MINE_DAMAGE;
+    private graphics.SoundLoader sound;
 
     /**
     * Constructeur de la classe.
@@ -36,7 +39,8 @@ public class Mine extends Tile implements Weapon {
 
     @Override
     public void explode(RealGrid g, Player p) {
-        p.takeDamage(this.damage);
+        sound = new SoundLoader(2);
+        p.takeDamage(this.damage);       
         g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
     }
 

@@ -3,6 +3,7 @@ package graphics;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.media.Media;
@@ -16,8 +17,8 @@ public class SoundLoader {
         String mainPath = new File("").getAbsolutePath();
         File audioFiles = new File("src/Sons/");
         File[] fileList = audioFiles.listFiles();
-        
-        for (File f: fileList){            
+        Arrays.sort(fileList);      
+        for (File f: fileList){             
             String sound = mainPath + "/src/Sons/"+fileList[action].getName();            
             try {
                 final URL songPath = new File(sound).toURI().toURL();

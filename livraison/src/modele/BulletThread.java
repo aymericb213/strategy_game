@@ -1,5 +1,6 @@
 package modele;
 
+import graphics.SoundLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ public class BulletThread extends Thread {
     private Game game = null;;
     private final Player owner;
     private final boolean running = false;
+    private SoundLoader sound;
     
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
@@ -41,6 +43,7 @@ public class BulletThread extends Thread {
                 System.out.println(caseX+" "+caseY);
                 if(game.getGrid().getTileAt(caseX, caseY ) instanceof Player){
                     Player victim = (Player) game.getGrid().getTileAt(caseX, caseY);
+                    sound = new SoundLoader(2);
                     if(!victim.isShield_up()){
                         victim.takeDamage(owner.getRifle().getDamage());
                     }else{
