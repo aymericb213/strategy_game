@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BulletThread extends Thread {
-    private int x;	
+    private int x;
     private int y;
     private int range;
     private final int rifle_range;
@@ -17,7 +17,7 @@ public class BulletThread extends Thread {
     private final Player owner;
     private final boolean running = false;
     private SoundLoader sound;
-    
+
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
         this.y = y *64;
@@ -25,10 +25,10 @@ public class BulletThread extends Thread {
         this.range = (range-1) * 64;
         this.rifle_range = GameConfig.RIFLE_RANGE;
         this.rifle_damage = GameConfig.RIFLE_DAMAGE;
-        this.d = d;        
+        this.d = d;
         this.owner = p;
     }
-    
+
     @Override
     public void run(){
         boolean noTouch = true;
@@ -62,7 +62,7 @@ public class BulletThread extends Thread {
                 }
                 counter += speed;
             }
-            
+
             owner.notShooting();
             game.stateChange();
             owner.shootIsOver();
@@ -75,7 +75,7 @@ public class BulletThread extends Thread {
         this.range = range* 64;
         this.d = d;
     }
-    
+
     public int getX() {
         return x;
     }
@@ -83,8 +83,8 @@ public class BulletThread extends Thread {
     public int getY() {
         return y;
     }
-    
+
     public void setGame(Game g){
         this.game =g;
-    }   
+    }
 }

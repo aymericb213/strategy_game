@@ -21,6 +21,7 @@ public class Rifle implements Weapon {
             Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));
             if (lof instanceof Player) {
                 ((Player)lof).takeDamage(this.damage);
+                break;
             }
         }
     }

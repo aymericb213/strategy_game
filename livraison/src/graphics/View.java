@@ -15,14 +15,15 @@ public class View extends JPanel implements ModelListener{
     private Tile[] entities;
     private final Game game;
     private final Dimension sizeImg;
+    private BulletThread anim;
 
-    public View(Tile[] entities, Game game) {    
+    public View(Tile[] entities, Game game) {
         this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
         game.addListener(this);
     }
-    
+
     /*
     public void addEntity(Tile entity){
         entities.add(entity);
@@ -115,7 +116,7 @@ public class View extends JPanel implements ModelListener{
             }
         }
     }
-    
+
     public void displayBomb(Graphics g){
         System.out.println("Je dessine");
         for(Tile t : GUI.playerToPlay.getView().getModel().getGrid()){
@@ -132,13 +133,13 @@ public class View extends JPanel implements ModelListener{
             }
         }
     }
-    
+
     public void displayBullet(Graphics g, Player p){
         g.setColor(Color.BLACK);
         if(p.isShooting()){
             int x = p.getThreadShoot().getX();//* 64;
             int y = p.getThreadShoot().getY();// * 64;
-            
+
             if(p.lastMove == Direction.z){
             g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);
             }else if(p.lastMove == Direction.s){
@@ -151,7 +152,7 @@ public class View extends JPanel implements ModelListener{
             //g.fillOval(x, y, 10, 10);
         }
     }
-    
+
 
     public void displayPlayer(Graphics g, Player p){
 
@@ -206,17 +207,17 @@ public class View extends JPanel implements ModelListener{
 
     public void drawActionPoint(Player p, Graphics g){
         int nbAction = p.getEnergy();
-        
+
         int x = 64 * (p.getX());
         int y = 64 * (p.getY()+1);
-        
+
         g.setColor(new Color(0,255,255));
         g.setFont(new Font("default", Font.BOLD, 14));
         g.drawString(Integer.toString(nbAction), x+10, y-10);
         //g.fillOval(x+10, y-10, 5, 5);
-        
+
     }
-    
+
     public void drawLife(Player p, Graphics g){
         g.setColor(Color.BLACK);
         int life = p.getLife();

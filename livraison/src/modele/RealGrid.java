@@ -14,10 +14,10 @@ public class RealGrid implements Grid {
     private GridStrategy generator;
 
     public RealGrid(int width, int height, int nb_players) {
-        System.out.println(nb_players);
         this.width = width;
         this.tiles = new Tile[width*height];
         this.players = new Player[nb_players];
+        this.ordering = new LinkedList<Player>();
         this.bombs = new ArrayList<>();
         this.generator = new RandomGeneration();
         System.out.println("Nombre de joueurs: "+nb_players);
@@ -42,14 +42,12 @@ public class RealGrid implements Grid {
     }
 
     public Player nextPlayer() {
-        System.out.println("Je change");
-      if (this.ordering == null || this.ordering.size() == 0) {
+      if (this.ordering==null || this.ordering.size()==0) {
         nextTurn();
       }
       Player p = this.ordering.poll();
       p.setEnergy(GameConfig.PLAYER_BASE_AP);
       p.disableShield();
-      System.out.println(this.ordering);
       return p;
     }
 
@@ -59,11 +57,20 @@ public class RealGrid implements Grid {
         b.tick();
         b.explode(this);
       }
-      this.ordering = new LinkedList<>(Arrays.asList(this.players));
+      this.ordering = new LinkedList<>();
+      this.fillPlayerQueue();
       if (this.random_order) {
         Collections.shuffle((LinkedList)this.ordering);
       }
       this.turn_number++;
+    }
+
+    public void fillPlayerQueue() {
+      for (Player p : this.players) {
+        if (p.getLife() > 0) {
+          this.ordering.add(p);
+        }
+      }
     }
 
     public boolean isInBounds(int x, int y) {
@@ -107,6 +114,10 @@ public class RealGrid implements Grid {
         this.tiles[x+(y*this.width)]=t;
     }
 
+
+    public Queue<Player> getActivePlayers() {
+      return this.ordering;
+    }
 
     public int getTurnNumber() {
         return this.turn_number;

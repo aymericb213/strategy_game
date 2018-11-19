@@ -1,6 +1,5 @@
 package modele;
 
-import graphics.SoundLoader;
 import java.util.*;
 
 public class Player extends Tile {
@@ -15,16 +14,13 @@ public class Player extends Tile {
     public Direction lastMove = Direction.z;
     private boolean selected;
     private int visionSize;
-    private BulletThread threadShoot;
     private boolean isShooting = false;
     private int index;
     private int nb_player;
     private boolean asTurn = false;
     private boolean isPlanting = false;
-    private SoundLoader sound;
 
     /////////////ATTTETION
-    public Game game;
     private boolean plantingBomb = false;
 
     public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
@@ -124,10 +120,6 @@ public class Player extends Tile {
 
     public void disableShield() {
         this.shield_up = false;
-    }
-
-    public void setGame(Game game){
-        this.game = game;
     }
 
     /* Mouvement */
@@ -250,7 +242,14 @@ public class Player extends Tile {
     public void takeDamage(int damage) {
         if (!(this.shield_up)) {
             this.life -= damage;
+            if (this.life<=0) {
+              this.energy=0;
+              this.view.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+            }
+        } else {
+            this.disableShield();
         }
+
     }
 
     /* Explosifs */
@@ -268,22 +267,17 @@ public class Player extends Tile {
 
     /* Tir */
     public void fire(Direction d) {
-        this.sound = new SoundLoader(4);
         this.isShooting = true;
-        this.threadShoot = new BulletThread(0,0,0,lastMove,this);
-        threadShoot.setGame(this.game);
         System.out.println("Je tir");
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
             if (w.equals(new Rifle(this))) {
-                //w.fire(this.view,d);
+                w.fire(this.view.getModel(),d);
                 System.out.println("Portée: "+((Rifle)w).getRange());
-                threadShoot.ResetThread(this.x, this.y, ((Rifle)w).getRange(), d);
-                threadShoot.start();
                 //this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
-        }        
+        }
     }
 
     public boolean isShooting() {
@@ -292,17 +286,6 @@ public class Player extends Tile {
 
     public void notShooting(){
         this.isShooting = false;
-    }
-
-    public void shootIsOver(){
-        //System.out.println("AH BAH BRAVO MORET");
-        threadShoot.interrupt();
-        //System.out.println("Fini ==>"+threadShoot.isInterrupted());
-        this.threadShoot = null;
-    }
-
-    public BulletThread getThreadShoot() {
-        return threadShoot;
     }
 
     /**
@@ -335,9 +318,29 @@ public class Player extends Tile {
         return this.name.equals(p.name);
     }
 
+    public String getName() {
+      return this.name;
+    }
 
     public String printStats() {
-        return this.name + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+        return "Position : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+    }
+
+    public String printControls() {
+      String controls = "\nn : tour auto     p : fin de tour     e : quitter";
+      if (this.energy>=GameConfig.MOVE_COST) {
+        controls+="\nz,q,s,d : déplacer joueur\n";
+      }
+      if (this.energy>=GameConfig.PLANT_COST) {
+        controls+="m : poser mine      b : poser bombe     ";
+      }
+      if (this.energy>=GameConfig.FIRE_COST) {
+        controls+="t : tirer     ";
+      }
+      if (this.energy>=GameConfig.SHIELD_COST) {
+        controls+="a : activer bouclier";
+      }
+      return controls;
     }
 
     @Override
