@@ -15,6 +15,7 @@ public class View extends JPanel implements ModelListener{
     private final Game game;
     private final Dimension sizeImg;
     private BulletThread anim;
+    private boolean startAnim = true;
 
     public View(Tile[] entities, Game game) {
         this.entities = entities;
@@ -136,21 +137,34 @@ public class View extends JPanel implements ModelListener{
     public void displayBullet(Graphics g, Player p){
         g.setColor(Color.BLACK);
         if(p.isShooting()){
-            BulletThread t = new BulletThread(p.getX(),p.getY(),GameConfig.RIFLE_RANGE, Direction.z,p);
-            t.run();
-            int x = t.getX();//* 64;
-            int y = t.getY();// * 64;
-
-            if(p.lastMove == Direction.z){
-            g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);
-            }else if(p.lastMove == Direction.s){
-                g.drawImage(ImagesLoader.lookDown(ImagesLoader.bullet), x + 40, y, this);
-            }else if(p.lastMove == Direction.q){
-                g.drawImage(ImagesLoader.lookLeft(ImagesLoader.bullet), x, y + 40, this);
-            }else if(p.lastMove == Direction.d){
-                g.drawImage(ImagesLoader.lookRight(ImagesLoader.bullet), x, y + 40, this);
+            if(startAnim){
+                anim = new BulletThread();
+                anim.ResetThread(p.getX(),p.getY(),GameConfig.RIFLE_RANGE-1, p.lastMove);
+                anim.setPlayer(p);
+                anim.setGame(game);
+                anim.start();
+                startAnim = false;
             }
-            //g.fillOval(x, y, 10, 10);
+            else if(!anim.over){
+                int x = anim.getX();//* 64;
+                int y = anim.getY();// * 64;
+
+                if(p.lastMove == Direction.z){
+                g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);
+                }else if(p.lastMove == Direction.s){
+                    g.drawImage(ImagesLoader.lookDown(ImagesLoader.bullet), x + 40, y, this);
+                }else if(p.lastMove == Direction.q){
+                    g.drawImage(ImagesLoader.lookLeft(ImagesLoader.bullet), x, y + 40, this);
+                }else if(p.lastMove == Direction.d){
+                    g.drawImage(ImagesLoader.lookRight(ImagesLoader.bullet), x, y + 40, this);
+                }
+                //g.fillOval(x, y, 10, 10);
+            }
+            else if(anim.over){
+                anim.interrupt();
+                anim = null;
+                startAnim = true;
+            }
         }
     }
 

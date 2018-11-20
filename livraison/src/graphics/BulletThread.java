@@ -12,9 +12,10 @@ public class BulletThread extends Thread {
     private final int distance = 0;
     private Direction d;
     private Game game = null;
-    private final Player owner;
+    private Player owner;
     private final boolean running = false;
     private SoundLoader sound;
+    boolean over = false;
 
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
@@ -24,18 +25,20 @@ public class BulletThread extends Thread {
         this.d = d;
         this.owner = p;
     }
+    
+    public BulletThread(){
+        this(0,0,0,null,null);
+    }
 
     @Override
     public void run(){
         //while(running){
             int counter = 0;
             while(counter <= range /*+ speed*/){
-                System.out.println(counter+" "+range);
                 this.x += d.x() * speed;
                 this.y += d.y() * speed;
                 int caseX = x/64;
                 int caseY = y/64;
-                System.out.println(caseX+" "+caseY);
                 game.stateChange();
                 try {
                     sleep(13);
@@ -45,9 +48,10 @@ public class BulletThread extends Thread {
                 counter += speed;
             }
 
-            owner.notShooting();
+            //owner.notShooting();
+            over = true;
             game.stateChange();
-            this.interrupt();
+            //this.interrupt();
         //}
     }
 
@@ -66,6 +70,10 @@ public class BulletThread extends Thread {
         return y;
     }
 
+    public void setPlayer(Player p){
+        this.owner = p;
+    }
+    
     public void setGame(Game g){
         this.game =g;
     }
