@@ -69,6 +69,8 @@ public class Main {
 //            game.getGrid().addPlayer(p);
 //            game.getGrid().addPlayer(p2);
             GUI gui = new GUI(game);
+            ViewConsole console = new ViewConsole(null,game);
+            /*console.display();*/
             //GUI gui2 = new GUI(game);
             //gui.getView().addEntity(ground);
         } catch (IOException | ParserConfigurationException ex) {

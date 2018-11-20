@@ -12,6 +12,7 @@ public class RealGrid implements Grid {
     private boolean random_order = (GameConfig.RANDOMIZED_PLAYER_ORDER==1);
     private ArrayList<Bomb> bombs;
     private GridStrategy generator;
+    private Player playerToPlay;
 
     public RealGrid(int width, int height, int nb_players) {
         this.width = width;
@@ -48,9 +49,14 @@ public class RealGrid implements Grid {
       Player p = this.ordering.poll();
       p.setEnergy(GameConfig.PLAYER_BASE_AP);
       p.disableShield();
+      playerToPlay = p;
       return p;
     }
 
+    public Player getPlayerToPlay() {
+        return playerToPlay;
+    }
+    
     public void nextTurn() {
       ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
       for (Bomb b : copy_bombs) {

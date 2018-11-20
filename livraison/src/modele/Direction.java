@@ -78,6 +78,6 @@ public enum Direction {
      */
     @Override
     public String toString() {
-        return "Le deplacement est : "+x+","+y;
+        return repr;
     }
 }

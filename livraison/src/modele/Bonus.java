@@ -9,8 +9,8 @@ public class Bonus extends Tile {
   public enum BonusType {
     HP("life"),
     AP("energy"),
-    AMMO("rifle");
-    BOMB("bomb");
+    AMMO("rifle"),
+    BOMB("bomb"),
     MINE("mine");
     String desc;
 
