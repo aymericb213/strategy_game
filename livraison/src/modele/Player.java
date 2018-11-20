@@ -36,7 +36,6 @@ public class Player extends Tile {
         this.selected = false;
         this.nb_player = PlayerFactory.nb_instances;
         this.walkable=false;
-        //this.threadShoot = new BulletThread(0,0,0,lastMove,this);
     }
 
 

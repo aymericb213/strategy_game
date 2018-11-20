@@ -25,6 +25,7 @@ public final class GameConfig {
     public static int RIFLE_BASE_AMMO;
     public static int RIFLE_DAMAGE;
     public static int RIFLE_RANGE;
+    public static int BONUS_VALUE;
 
     public GameConfig() {
         this.assignParameters();
@@ -33,7 +34,7 @@ public final class GameConfig {
     public void assignParameters() {
         ArrayList<Integer> parameters = new ArrayList<>();
         try {
-            Path file_path = FileSystems.getDefault().getPath("src/config.txt");
+            Path file_path = FileSystems.getDefault().getPath("config.txt");
             List<String> d = Files.readAllLines(file_path, StandardCharsets.UTF_8);
             for (String line : d) {
                 String[] s = line.split("=");
@@ -61,5 +62,6 @@ public final class GameConfig {
         GameConfig.RIFLE_BASE_AMMO=parameters.get(15);
         GameConfig.RIFLE_DAMAGE=parameters.get(16);
         GameConfig.RIFLE_RANGE=parameters.get(17);
+        GameConfig.BONUS_VALUE=parameters.get(18);
     }
 }
