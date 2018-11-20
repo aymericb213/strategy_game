@@ -221,36 +221,6 @@ public class GUI extends JFrame{
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
-//                if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
-//                    Player p = (Player) game.getGrid().getTileAt(x, y);
-//                    if(p.getAsTurn()){
-//                        //coordPlayer[0] = x;
-//                        //coordPlayer[1] = y;
-//
-//                        if(!p.isSelected()){
-//                            //p.select();
-//                            showPopup(e);
-//                            if(p.getEnergy() >= GameConfig.MOVE_COST){
-//                                depItem.setText("Déplacement");
-//                            }else{
-//                                depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶");
-//                            }
-//                            if(p.getEnergy() >= GameConfig.SHIELD_COST && !p.isShield_up()){
-//                                shieldItem.setText("Activer bouclier");
-//                            }else{
-//                                shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶");
-//                            }
-//                            if(p.getEnergy() >= GameConfig.FIRE_COST){
-//                                shootItem.setText("Tirer");
-//                            }else{
-//                                shootItem.setText("T̶i̶r̶e̶r̶");
-//                            }
-//                        }else{
-//                            p.unselect();
-//                        }
-//                    }
-//                    game.stateChange();
-//                }
             }
 
             @Override
@@ -297,17 +267,12 @@ public class GUI extends JFrame{
                     }
                     game.stateChange();
                 }
-                //System.out.println("Etat du tir : "+isShooting);
-                //if(coordPlayer[0] != null){
-                //    Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
                     Player p = playerToPlay;
                     if(p.getEnergy() > 0){
                         if(isMoving){
                             int depX = x - p.getX();
                             int depY = y - p.getY();
 
-                            //System.out.println("Le joueur: "+p.getX()+", "+p.getY());
-                            //System.out.println("La nouvelle case: "+x+", "+y);
 
                             Direction d = null;
 

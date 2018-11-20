@@ -118,7 +118,6 @@ public class View extends JPanel implements ModelListener{
     }
 
     public void displayBomb(Graphics g){
-        System.out.println("Je dessine");
         for(Tile t : GUI.playerToPlay.getView().getModel().getGrid()){
             if(t instanceof Bomb){
                 if(((Bomb) t).getOwner() == GUI.playerToPlay){
@@ -161,6 +160,7 @@ public class View extends JPanel implements ModelListener{
                 //g.fillOval(x, y, 10, 10);
             }
             else if(anim.over){
+                p.notShooting();
                 anim.interrupt();
                 anim = null;
                 startAnim = true;
