@@ -1,6 +1,5 @@
 package graphics;
 
-import modele.Game;
 import modele.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -137,8 +136,10 @@ public class View extends JPanel implements ModelListener{
     public void displayBullet(Graphics g, Player p){
         g.setColor(Color.BLACK);
         if(p.isShooting()){
-            int x = p.getThreadShoot().getX();//* 64;
-            int y = p.getThreadShoot().getY();// * 64;
+            BulletThread t = new BulletThread(p.getX(),p.getY(),GameConfig.RIFLE_RANGE, Direction.z,p);
+            t.run();
+            int x = t.getX();//* 64;
+            int y = t.getY();// * 64;
 
             if(p.lastMove == Direction.z){
             g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);

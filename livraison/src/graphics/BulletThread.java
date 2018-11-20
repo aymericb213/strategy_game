@@ -1,6 +1,6 @@
-package modele;
+package graphics;
 
-import graphics.SoundLoader;
+import modele.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,12 +8,10 @@ public class BulletThread extends Thread {
     private int x;
     private int y;
     private int range;
-    private final int rifle_range;
-    private final int rifle_damage;
     private final int speed = 10;
     private final int distance = 0;
     private Direction d;
-    private Game game = null;;
+    private Game game = null;
     private final Player owner;
     private final boolean running = false;
     private SoundLoader sound;
@@ -23,37 +21,21 @@ public class BulletThread extends Thread {
         this.y = y *64;
         //this.range = range;
         this.range = (range-1) * 64;
-        this.rifle_range = GameConfig.RIFLE_RANGE;
-        this.rifle_damage = GameConfig.RIFLE_DAMAGE;
         this.d = d;
         this.owner = p;
     }
 
     @Override
     public void run(){
-        boolean noTouch = true;
         //while(running){
             int counter = 0;
-            while(counter <= range /*+ speed*/ && noTouch){
+            while(counter <= range /*+ speed*/){
                 System.out.println(counter+" "+range);
                 this.x += d.x() * speed;
                 this.y += d.y() * speed;
                 int caseX = x/64;
                 int caseY = y/64;
                 System.out.println(caseX+" "+caseY);
-                if(game.getGrid().getTileAt(caseX, caseY ) instanceof Player){
-                    Player victim = (Player) game.getGrid().getTileAt(caseX, caseY);
-                    sound = new SoundLoader(2);
-                    if(!victim.isShield_up()){
-                        victim.takeDamage(owner.getRifle().getDamage());
-                    }else{
-                        victim.disableShield();
-                    }
-                    noTouch = false;
-                }
-                if(game.getGrid().getTileAt(caseX, caseY) instanceof Wall){
-                    noTouch = false;
-                }
                 game.stateChange();
                 try {
                     sleep(13);
@@ -65,7 +47,7 @@ public class BulletThread extends Thread {
 
             owner.notShooting();
             game.stateChange();
-            owner.shootIsOver();
+            this.interrupt();
         //}
     }
 

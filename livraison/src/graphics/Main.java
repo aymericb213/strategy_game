@@ -1,6 +1,6 @@
 package graphics;
 
-import modele.Game;
+
 import modele.*;
 import java.util.logging.*;
 import java.io.*;
@@ -13,7 +13,7 @@ import org.xml.sax.SAXException;
 public class Main {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-				
+
         new GameConfig();
         System.out.println(System.getProperty("user.dir"));
 
@@ -22,13 +22,13 @@ public class Main {
         BufferedImage img2 = null;
 
         try {
-            img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
-            img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
+            img = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_hold.png"));
+            img2 = ImageIO.read(new File("Images/PNG/Hitman1/hitman1_gun.png"));
         } catch(IOException e) {
             System.out.println(e);
         }
 
-        File file2 = new File("src/Images/Spritesheet/spritesheet_characters.xml");
+        File file2 = new File("Images/Spritesheet/spritesheet_characters.xml");
         ImagesLoader il = new ImagesLoader(file2);
         il.loadPlayerImages();
 
@@ -41,14 +41,14 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        File file = new File("src/Levels/level3.xml");
+        File file = new File("Levels/level3.xml");
 
         try {
             Game game = new Game();
             System.out.println("MARQUEE");
             game.loadGrid(file, 2);
             System.out.println("Grille ==>"+game.getGrid());
-            
+
             Player p = factory.buildBasic(game.getGrid());
             p.setX(0);
             p.setY(12);
@@ -59,13 +59,13 @@ public class Main {
             game.addPlayer(p2);
             //p.setImgRepr(img);
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
-            p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));  
-                        
+            p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
+
             p2.lastMove = Direction.s;
-            
+
 //            game.addPlayer(p);
 //            game.addPlayer(p2);
-//            
+//
 //            game.getGrid().addPlayer(p);
 //            game.getGrid().addPlayer(p2);
             GUI gui = new GUI(game);
