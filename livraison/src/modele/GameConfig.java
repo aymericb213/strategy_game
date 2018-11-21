@@ -18,6 +18,7 @@ public final class GameConfig {
     public static int BOMB_BASE_COUNT;
     public static int BOMB_DAMAGE;
     public static int BOMB_DELAY;
+    public static int BOMB_RANGE;
     public static int BOMB_VISIBILITY;
     public static int MINE_BASE_COUNT;
     public static int MINE_DAMAGE;
@@ -55,13 +56,14 @@ public final class GameConfig {
         GameConfig.BOMB_BASE_COUNT=parameters.get(8);
         GameConfig.BOMB_DAMAGE=parameters.get(9);
         GameConfig.BOMB_DELAY=parameters.get(10);
-        GameConfig.BOMB_VISIBILITY=parameters.get(11);
-        GameConfig.MINE_BASE_COUNT=parameters.get(12);
-        GameConfig.MINE_DAMAGE=parameters.get(13);
-        GameConfig.MINE_VISIBILITY=parameters.get(14);
-        GameConfig.RIFLE_BASE_AMMO=parameters.get(15);
-        GameConfig.RIFLE_DAMAGE=parameters.get(16);
-        GameConfig.RIFLE_RANGE=parameters.get(17);
-        GameConfig.BONUS_VALUE=parameters.get(18);
+        GameConfig.BOMB_RANGE=parameters.get(11);
+        GameConfig.BOMB_VISIBILITY=parameters.get(12);
+        GameConfig.MINE_BASE_COUNT=parameters.get(13);
+        GameConfig.MINE_DAMAGE=parameters.get(14);
+        GameConfig.MINE_VISIBILITY=parameters.get(15);
+        GameConfig.RIFLE_BASE_AMMO=parameters.get(16);
+        GameConfig.RIFLE_DAMAGE=parameters.get(17);
+        GameConfig.RIFLE_RANGE=parameters.get(18);
+        GameConfig.BONUS_VALUE=parameters.get(19);
     }
 }

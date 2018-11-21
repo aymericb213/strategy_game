@@ -71,8 +71,8 @@ public class Main {
             System.out.println("@ : joueur (€ si bouclier actif)");
             System.out.println("\n" + p.printStats());
             System.out.println(p.printControls());
-            p.act(); //jeu auto
-/*
+            //p.act(); //jeu auto
+
             String input=sc.nextLine();
             switch (input) {
               case "E"://quitter
@@ -93,7 +93,7 @@ public class Main {
               case "m":
               case "B":
               case "b":
-                ArrayList<FreeTile> sites = g.getNeighbouringFreeTiles(p);
+                ArrayList<FreeTile> sites = g.getNeighbouringFreeTiles(p,1);
                 String site_list = "";
                 for (FreeTile f : sites) {
                   site_list+=f.printCoords()+" ";
@@ -150,7 +150,7 @@ public class Main {
               default:
                 System.out.println("Entrez une commande valide.");
                 break;
-              }*/
+              }
             }
           }
         }

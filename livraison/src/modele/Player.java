@@ -124,7 +124,7 @@ public class Player extends Tile {
     /* Mouvement */
     public void move(Direction d) {
         if (this.possibleMoves().contains(d)) {
-            this.view.setTileAt(this.x,this.y,new FreeTile(x,y));
+            this.view.setTileAt(new FreeTile(x,y));
             this.x += d.x();
             this.y += d.y();
 
@@ -134,7 +134,7 @@ public class Player extends Tile {
             if(this.view.getModel().getTileAt(x,y) instanceof Weapon) {
                 ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
             }
-            this.view.setTileAt(this.x,this.y,this);
+            this.view.setTileAt(this);
             this.lastMove = d;
             this.energy-=GameConfig.MOVE_COST;
         }
@@ -243,7 +243,7 @@ public class Player extends Tile {
             this.life -= damage;
             if (this.life<=0) {
               this.energy=0;
-              this.view.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+              this.view.setTileAt(new FreeTile(this.x,this.y));
             }
         } else {
             this.disableShield();
@@ -255,7 +255,7 @@ public class Player extends Tile {
     public void plant(Mine m, Tile t) {
         if (t!=null) {
             m.setPosition(t.getX(),t.getY());
-            this.view.setTileAt(t.getX(),t.getY(),m);
+            this.view.setTileAt(m);
             //this.loadout.put(m, this.loadout.get(m)-1);
             this.energy-=GameConfig.PLANT_COST;
             if (m instanceof Bomb) {
@@ -273,7 +273,7 @@ public class Player extends Tile {
             if (w.equals(new Rifle(this))) {
                 w.fire(this.view.getModel(),d);
                 System.out.println("Portée: "+((Rifle)w).getRange());
-                //this.loadout.put(new Rifle(this), this.loadout.get(new Rifle(this))-1);
+                this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
         }
@@ -336,7 +336,7 @@ public class Player extends Tile {
       if (this.energy>=GameConfig.FIRE_COST) {
         controls+="t : tirer     ";
       }
-      if (this.energy>=GameConfig.SHIELD_COST) {
+      if (this.energy>=GameConfig.SHIELD_COST && !this.shield_up) {
         controls+="a : activer bouclier";
       }
       return controls;

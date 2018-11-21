@@ -23,25 +23,25 @@ import modele.Player;
  * @author quentindeme
  */
 public class ThreadPlay extends Thread{
-    
+
     private Game game;
-    
+
     public ThreadPlay(Game game){
         this.game = game;
     }
-    
+
     @Override
     public void run(){
         Player p = game.getGrid().getPlayerToPlay();
         String action = "";
-        
+
         while(!action.contains("p")){
             displayInstructions(p);
             //BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
             Scanner r = new Scanner(System.in);
             System.out.println("On demande une entrée");
             action = r.nextLine();
-            
+
             System.out.println("Et on traite l'info: "+action);
             treatInfo(action, p);
         }
@@ -54,16 +54,16 @@ public class ThreadPlay extends Thread{
         game.getGrid().nextPlayer();
         game.stateChange();
     }
-    
+
     public void displayInstructions(Player p){
         System.out.println("Directions possibles: ");
         System.out.println(p.possibleMoves());
-        
+
         System.out.println("Vous pouvez consulter les commandes en tapant: man");
         System.out.println("Saisissez votre actions : ");
-        
+
     }
-    
+
     public void treatInfo(String input, Player p){
         Scanner sc = new Scanner(System.in);
         switch (input) {
@@ -88,7 +88,7 @@ public class ThreadPlay extends Thread{
               case "m":
               case "B":
               case "b":
-                ArrayList<FreeTile> sites = game.getGrid().getNeighbouringFreeTiles(p);
+                ArrayList<FreeTile> sites = game.getGrid().getNeighbouringFreeTiles(p,1);
                 String site_list = "";
                 for (FreeTile f : sites) {
                   site_list+=f.printCoords()+" ";
@@ -148,7 +148,7 @@ public class ThreadPlay extends Thread{
               }
         game.stateChange();
     }
-    
+
     public void displayMan(Scanner r, Player p){
         String action = "";
                 System.out.println("# : mur");

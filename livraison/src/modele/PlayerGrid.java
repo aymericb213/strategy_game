@@ -25,8 +25,8 @@ public class PlayerGrid implements Grid {
     }
 
     @Override
-    public void setTileAt(int x, int y, Tile t) {
-        model.setTileAt(x,y,t);
+    public void setTileAt(Tile t) {
+        model.setTileAt(t);
     }
 
     public void addBomb(Bomb b) {

@@ -12,14 +12,14 @@ public class RandomStrategy implements PlayerStrategy {
 
     @Override
     public void execute() {
-        int r = new Random().nextInt(4);	
+        int r = new Random().nextInt(4);
         switch (r) {
             case 0 :
                 client.move(Direction.getDirections().get(r));
                 break;
             case 1 :
                 boolean r_plant = new Random().nextBoolean();
-                ArrayList<FreeTile> sites = client.getView().getModel().getNeighbouringFreeTiles(this.client);
+                ArrayList<FreeTile> sites = client.getView().getModel().getNeighbouringFreeTiles(this.client,1);
                 if (sites.size()>0) {
                     int r_site = new Random().nextInt(sites.size());
                     if (r_plant) {

@@ -56,7 +56,7 @@ public class RealGrid implements Grid {
     public Player getPlayerToPlay() {
         return playerToPlay;
     }
-    
+
     public void nextTurn() {
       ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
       for (Bomb b : copy_bombs) {
@@ -87,22 +87,23 @@ public class RealGrid implements Grid {
         return check;
     }
 
-    public ArrayList<Tile> getNeighbouringTiles(Tile t) {
+    public ArrayList<Tile> getNeighbouringTiles(Tile t, int size) {
         ArrayList<Tile> neighbours = new ArrayList<>();
-        neighbours.add(this.getTileAt(t.getX()+1,t.getY()));
-        neighbours.add(this.getTileAt(t.getX()-1,t.getY()));
-        neighbours.add(this.getTileAt(t.getX(),t.getY()+1));
-        neighbours.add(this.getTileAt(t.getX(),t.getY()-1));
-        neighbours.add(this.getTileAt(t.getX()-1,t.getY()+1));
-        neighbours.add(this.getTileAt(t.getX()+1,t.getY()-1));
-        neighbours.add(this.getTileAt(t.getX()+1,t.getY()+1));
-        neighbours.add(this.getTileAt(t.getX()-1,t.getY()-1));
+        for (int i=-size ; i<=size ; i++) {
+          for (int j=-size; j<=size; j++) {
+            Tile candidate = this.getTileAt(t.getX()+i,t.getY()+j);
+            if (candidate!=null) {
+              neighbours.add(candidate);
+            }
+          }
+        }
+        neighbours.remove(this.getTileAt(t.getX(),t.getY()));
         return neighbours;
     }
 
-    public ArrayList<FreeTile> getNeighbouringFreeTiles(Tile t) {
+    public ArrayList<FreeTile> getNeighbouringFreeTiles(Tile t, int size) {
         ArrayList<FreeTile> valids = new ArrayList<>();
-        for (Tile d : getNeighbouringTiles(t)) {
+        for (Tile d : getNeighbouringTiles(t,size)) {
             if (d instanceof FreeTile) {
                 valids.add((FreeTile)d);
             }
@@ -116,8 +117,8 @@ public class RealGrid implements Grid {
     }
 
     @Override
-    public void setTileAt(int x, int y, Tile t) {
-        this.tiles[x+(y*this.width)]=t;
+    public void setTileAt(Tile t) {
+        this.tiles[t.getX()+(t.getY()*this.width)]=t;
     }
 
 

@@ -7,7 +7,7 @@ public class Bomb extends Mine {
 
     //Nombre de tours avant explosion
     private int delay = GameConfig.BOMB_DELAY;
-
+    private int range = GameConfig.BOMB_RANGE;
     /**
     * Constructeur de la classe.
     * @param owner
@@ -32,22 +32,22 @@ public class Bomb extends Mine {
     @Override
     public void explode(RealGrid g, Player p) {
         p.takeDamage(this.damage);
-        g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+        g.setTileAt(new FreeTile(this.x,this.y));
         g.removeBomb(this);
     }
 
     public void explode(RealGrid g) {
         if (this.delay==0) {
-            for (Tile t : g.getNeighbouringTiles(this)) {
+            for (Tile t : g.getNeighbouringTiles(this, this.range)) {
                 if (!(t.isWalkable())) {
                   try {
                     ((Player)t).takeDamage(this.damage);
                   } catch (ClassCastException not_a_player) {
-                    g.setTileAt(t.getX(),t.getY(),new FreeTile(t.getX(),t.getY()));
+                    g.setTileAt(new FreeTile(t.getX(),t.getY()));
                   }
                 }
             }
-            g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
+            g.setTileAt(new FreeTile(this.x,this.y));
             g.removeBomb(this);
         }
     }
