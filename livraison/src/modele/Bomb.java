@@ -39,8 +39,12 @@ public class Bomb extends Mine {
     public void explode(RealGrid g) {
         if (this.delay==0) {
             for (Tile t : g.getNeighbouringTiles(this)) {
-                if (t instanceof Player) {
+                if (!(t.isWalkable())) {
+                  try {
                     ((Player)t).takeDamage(this.damage);
+                  } catch (ClassCastException not_a_player) {
+                    g.setTileAt(t.getX(),t.getY(),new FreeTile(t.getX(),t.getY()));
+                  }
                 }
             }
             g.setTileAt(this.x,this.y,new FreeTile(this.x,this.y));
