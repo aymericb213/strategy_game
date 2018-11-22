@@ -29,6 +29,7 @@ public class ViewConsole implements ModelListener{
     }
     
     public void display(){
+        System.out.println("On crée un nouveau Thread"+ThreadPlay.counterInstance);
         threadPlay = new ThreadPlay(game);
         System.out.println("\033[H\033[2J");
         System.out.println("================ STRATEGY GAME =================\n");

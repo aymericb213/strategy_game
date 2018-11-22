@@ -25,6 +25,7 @@ import modele.Player;
 public class ThreadPlay extends Thread{
 
     private Game game;
+    public static int counterInstance = 0;
 
     public ThreadPlay(Game game){
         this.game = game;
