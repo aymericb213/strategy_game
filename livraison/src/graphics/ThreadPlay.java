@@ -35,16 +35,25 @@ public class ThreadPlay extends Thread{
     public void run(){
         Player p = game.getGrid().getPlayerToPlay();
         String action = "";
+        BufferedReader r = null;
 
         while(!action.contains("p")){
             displayInstructions(p);
             //BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-            Scanner r = new Scanner(System.in);
+            r = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("On demande une entrée");
-            action = r.nextLine();
+            try {
+                action = r.readLine();
+            } catch (IOException ex) {
+
+            }
 
             System.out.println("Et on traite l'info: "+action);
-            treatInfo(action, p);
+            try {
+                treatInfo(action, p, r);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadPlay.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         System.out.println("Fin de tour");
         try {
@@ -53,6 +62,11 @@ public class ThreadPlay extends Thread{
             //Logger.getLogger(ThreadPlay.class.getName()).log(Level.SEVERE, null, ex);
         }
         game.getGrid().nextPlayer();
+        try {
+            r.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadPlay.class.getName()).log(Level.SEVERE, null, ex);
+        }
         game.stateChange();
     }
 
@@ -65,11 +79,10 @@ public class ThreadPlay extends Thread{
 
     }
 
-    public void treatInfo(String input, Player p){
-        Scanner sc = new Scanner(System.in);
+    public void treatInfo(String input, Player p, BufferedReader r) throws IOException{
         switch (input) {
             case "man":
-                displayMan(sc, p);
+                displayMan(r, p);
                 break;
               case "E"://quitter
               case "e":
@@ -96,16 +109,16 @@ public class ThreadPlay extends Thread{
                 }
                 System.out.println(site_list+"\nChoisissez un emplacement :");
                 if (input.equals("M") || input.equals("m")) {
-                  p.plant(new Mine(p), sites.get(Integer.parseInt(sc.nextLine())));
+                  p.plant(new Mine(p), sites.get(Integer.parseInt(r.readLine())));
                 }
                 if (input.equals("B") || input.equals("b")) {
-                  p.plant(new Bomb(p), sites.get(Integer.parseInt(sc.nextLine())));
+                  p.plant(new Bomb(p), sites.get(Integer.parseInt(r.readLine())));
                 }
                 break;
               case "T"://tir
               case "t":
                 System.out.println("\nChoisissez une direction (z,q,s,d):");
-                switch (sc.nextLine()) {
+                switch (r.readLine()) {
                   case "Z" :
                   case "z" :
                     p.fire(Direction.z);
@@ -150,7 +163,7 @@ public class ThreadPlay extends Thread{
         game.stateChange();
     }
 
-    public void displayMan(Scanner r, Player p){
+    public void displayMan(BufferedReader r, Player p) throws IOException{
         String action = "";
                 System.out.println("# : mur");
                 System.out.println("; : mine");
@@ -161,11 +174,11 @@ public class ThreadPlay extends Thread{
                 System.out.println(p.printControls());
 
 
-                System.out.println("Appuyez sur entrer pour quitter.");
-                action = r.nextLine();
-                while(!action.contains("q")){
-                    System.out.println("Appuyez sur entrer pour quitter.");
-                    action = r.nextLine();
+                System.out.println("Appuyez sur q puis entrer pour quitter.");
+                action = r.readLine();
+                while(!action.equals("q")){
+                    System.out.println("Appuyez sur q puis entrer pour quitter.");
+                    action = r.readLine();
                 }
                 System.out.println(game.getGrid().getPlayerToPlay().getView());
             }
