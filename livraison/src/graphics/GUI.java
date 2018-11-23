@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -18,7 +19,7 @@ public class GUI extends JFrame{
     private View view;
     private Game game;
     private Integer[] coordPlayer = new Integer[2];
-    public static Player playerToPlay = null;
+    public  Player playerToPlay = null;
     private boolean isShooting = false;
     private boolean isMoving = false;
     private boolean isPlanting = false;
@@ -44,7 +45,9 @@ public class GUI extends JFrame{
         });
 
         this.game = game;
-        this.view = new View(null,game, player);
+        playerToPlay = game.getGrid().getPlayerToPlay();
+        System.out.println("JOUEUR ==> "+playerToPlay);
+        this.view = new View(null,game, player, this);
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
         setTitle("Shooter Game ("+player.getName()+")");
@@ -56,12 +59,11 @@ public class GUI extends JFrame{
         setFocusable(true);
         requestFocus();
 
-        System.out.println("INIT");
 
-        int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
+        //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
         //playerToPlay = game.getGrid().getPlayers()[index];
-        playerToPlay = game.getGrid().nextPlayer();
-        playerToPlay.setAsTurn(true);
+        
+        setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
         /*
         System.out.println(game.getGrid().getPlayers().length);
         */
@@ -74,8 +76,8 @@ public class GUI extends JFrame{
         depItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(playerToPlay.getEnergy() >= GameConfig.MOVE_COST){
-                        playerToPlay.select();
+                if(player.getEnergy() >= GameConfig.MOVE_COST){
+                        player.select();
                         isMoving = true;
                         game.stateChange();
                     }
@@ -88,7 +90,7 @@ public class GUI extends JFrame{
         shieldItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                Player p = playerToPlay;
+                Player p = player;
                     if(!p.isShield_up() && p.getEnergy() >= GameConfig.SHIELD_COST){
                         p.enableShield();
                         if(p.getEnergy() == 0){
@@ -108,7 +110,7 @@ public class GUI extends JFrame{
         shootItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(playerToPlay.getEnergy() >= GameConfig.FIRE_COST){
+                if(player.getEnergy() >= GameConfig.FIRE_COST){
                     isShooting = true;
                 }
             }
@@ -122,8 +124,8 @@ public class GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
-                if(playerToPlay.getEnergy() >= GameConfig.PLANT_COST){
-                    playerToPlay.enablePlant();
+                if(player.getEnergy() >= GameConfig.PLANT_COST){
+                    player.enablePlant();
                     game.stateChange();
                 }
             }
@@ -137,9 +139,9 @@ public class GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
-                if(playerToPlay.getEnergy() >= GameConfig.PLANT_COST){
-                    playerToPlay.enablePlant();
-                    playerToPlay.enablePlantingBomb();
+                if(player.getEnergy() >= GameConfig.PLANT_COST){
+                    player.enablePlant();
+                    player.enablePlantingBomb();
                     game.stateChange();
                 }
             }
@@ -171,34 +173,34 @@ public class GUI extends JFrame{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(playerToPlay.getEnergy() >= GameConfig.MOVE_COST){
+                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getAsTurn()){
                     if(e.getKeyCode() == KeyEvent.VK_Z){
-                        if(playerToPlay.possibleMoves().contains(Direction.z)){
-                          playerToPlay.move(Direction.z);
+                        if(player.possibleMoves().contains(Direction.z)){
+                          player.move(Direction.z);
                           game.stateChange();
                         }
                     }
                     if(e.getKeyCode() == KeyEvent.VK_Q){
-                        if(playerToPlay.possibleMoves().contains(Direction.q)){
-                          playerToPlay.move(Direction.q);
+                        if(player.possibleMoves().contains(Direction.q)){
+                          player.move(Direction.q);
                           game.stateChange();
                         }
                         
                     }
                     if(e.getKeyCode() == KeyEvent.VK_S){
-                            if(playerToPlay.possibleMoves().contains(Direction.s)){
-                              playerToPlay.move(Direction.s);
+                            if(player.possibleMoves().contains(Direction.s)){
+                              player.move(Direction.s);
                               game.stateChange();
                             }
                     }
                     if(e.getKeyCode() == KeyEvent.VK_D){
-                        if(playerToPlay.possibleMoves().contains(Direction.d)){
-                          playerToPlay.move(Direction.d);
+                        if(player.possibleMoves().contains(Direction.d)){
+                          player.move(Direction.d);
                           game.stateChange();
                         }
                     }
                 }
-                if(playerToPlay.getEnergy() == 0){
+                if(player.getEnergy() == 0){
                     changeTurn();
                 }
             }
@@ -367,6 +369,7 @@ public class GUI extends JFrame{
         playerToPlay.setAsTurn(false);
         playerToPlay = game.getGrid().nextPlayer();
         playerToPlay.setAsTurn(true);
+        setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
 
         //Le joueur actuel ne joues plus
         //On incrémente le tour

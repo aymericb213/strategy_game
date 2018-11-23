@@ -243,14 +243,14 @@ public class Player extends Tile {
         }
         ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y); t.add(pos);
         //System.out.println(t.toString());
-        System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT:");
+        //System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT:");
         for(ArrayList l : t){
             for(Object i : l){
-                System.out.print(i+":");
+                //System.out.print(i+":");
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println("end TTTTTTTTTTTTTTTTTTTTTTTT\n\n\n\n");
+        //System.out.println("end TTTTTTTTTTTTTTTTTTTTTTTT\n\n\n\n");
         return t;
     }
 
@@ -274,14 +274,14 @@ public class Player extends Tile {
 //        }
         testView(jX,jY,5,5,visibles);
 
-        System.out.println("visiblesTiles:");
+        //System.out.println("visiblesTiles:");
         for(ArrayList l : visibles){
             for(Object i : l){
-                System.out.print(i+":");
+          //      System.out.print(i+":");
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println("end Visibles\n\n\n\n");
+        //System.out.println("end Visibles\n\n\n\n");
         return visibles;
     }
 
@@ -318,9 +318,9 @@ public class Player extends Tile {
         revX = vX-jX<0;
         revY = vY-jY<0;
 
-        System.out.println("points === jX:"+jX+" jY:"+jY);
-        System.out.println("points === vX:"+vX+" vY:"+vY);
-        System.out.println();
+//        System.out.println("points === jX:"+jX+" jY:"+jY);
+//        System.out.println("points === vX:"+vX+" vY:"+vY);
+//        System.out.println();
 
         for(int i=0; i<intHypothenuse; i++){
 
@@ -330,9 +330,9 @@ public class Player extends Tile {
             int xtest = (int) Math.floor( ((int)(XX)+10) /20 );
             int ytest = (int) Math.floor( ((int)(YY)+10) /20 );
 
-            System.out.println("x:"+xtest+" y:"+ytest);
+            //System.out.println("x:"+xtest+" y:"+ytest);
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
-            System.out.println("walkable ? "+question);
+            //System.out.println("walkable ? "+question);
             if(question){ g[xtest][ytest] += 1; /*System.out.println("ON CONTINU LE TEST");*/}
             else{ /*System.out.println("ON QUITTE LE TEST");*/ return; }
 
@@ -343,7 +343,7 @@ public class Player extends Tile {
         tmp.add(0,vX);
         tmp.add(1,vY);
         visibles.add(tmp);
-        System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
+        //System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
         return;
 
     }
@@ -351,14 +351,14 @@ public class Player extends Tile {
 
 
     public void affG(int[][] g){
-        System.out.println("start");
+        //System.out.println("start");
         for(int[] i : g){
             for(int j : i){
-                System.out.print(j+" ");
+            //    System.out.print(j+" ");
             }
-            System.out.println();
+          //  System.out.println();
         }
-        System.out.println("end");
+        //System.out.println("end");
     }
 
 

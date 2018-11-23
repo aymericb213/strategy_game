@@ -43,14 +43,16 @@ public class RealGrid implements Grid {
     }
 
     public Player nextPlayer() {
-      if (this.ordering==null || this.ordering.size()==0) {
-        nextTurn();
-      }
-      Player p = this.ordering.poll();
-      p.setEnergy(GameConfig.PLAYER_BASE_AP);
-      p.disableShield();
-      playerToPlay = p;
-      return p;
+        if (this.ordering==null || this.ordering.size()==0) {
+          nextTurn();
+        }
+        Player p = this.ordering.poll();
+        p.setEnergy(GameConfig.PLAYER_BASE_AP);
+        p.disableShield();
+        playerToPlay = p;
+          System.out.println(playerToPlay);
+        p.setAsTurn(true);
+        return p;
     }
 
     public Player getPlayerToPlay() {

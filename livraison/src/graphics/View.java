@@ -17,12 +17,14 @@ public class View extends JPanel implements ModelListener{
     private BulletThread anim;
     private boolean startAnim = true;
     private Player player;
+    private GUI observer;
 
-    public View(Tile[] entities, Game game, Player p) {
+    public View(Tile[] entities, Game game, Player p, GUI observer) {
         this.player = p;
         this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
+        this.observer = observer;
         game.addListener(this);
     }
 
@@ -201,6 +203,10 @@ public class View extends JPanel implements ModelListener{
 //        }
 //        displayBomb(g);
 //        Grid grid = game.getGrid();
+
+    if(observer.playerToPlay.getName() != null || player.getName() != null){
+        observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
+    }
     }
 
     public void displayPlantPoints(Graphics g, Player p){
