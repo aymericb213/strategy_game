@@ -23,14 +23,16 @@ public class GUI extends JFrame{
     private boolean isMoving = false;
     private boolean isPlanting = false;
     private SoundLoader sound;
+    private Player player;
 
 
 
-    public GUI(){
-        this(new Game());
+    public GUI(Player p){
+        this(new Game(),p);
     }
 
-    public GUI(Game game){
+    public GUI(Game game, Player p){
+        this.player = p;
         com.sun.javafx.application.PlatformImpl.startup(()->{});
         this.sound = new SoundLoader(0);
         sound.getTrack().setOnEndOfMedia(() -> {
@@ -42,10 +44,10 @@ public class GUI extends JFrame{
         });
 
         this.game = game;
-        this.view = new View(null,game);
+        this.view = new View(null,game, player);
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
-        setTitle("Shooter Game");
+        setTitle("Shooter Game ("+player.getName()+")");
         setSize(832,854); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -315,8 +317,10 @@ public class GUI extends JFrame{
 //                            }else if(depX == 1 && depY == 0){
 //                                d = Direction.d;
 //                            }
-                            p.fire(d);
-                            new SoundLoader(4);
+                            if(depX != p.getX() && depY != p.getY()){
+                                p.fire(d);
+                                new SoundLoader(4);
+                            }
                             isShooting = false;
                             if(p.getEnergy()==0){
                                 changeTurn();

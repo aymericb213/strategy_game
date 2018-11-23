@@ -16,8 +16,10 @@ public class View extends JPanel implements ModelListener{
     private final Dimension sizeImg;
     private BulletThread anim;
     private boolean startAnim = true;
+    private Player player;
 
-    public View(Tile[] entities, Game game) {
+    public View(Tile[] entities, Game game, Player p) {
+        this.player = p;
         this.entities = entities;
         this.game = game;
         this.sizeImg = new Dimension(35,43);
@@ -38,60 +40,69 @@ public class View extends JPanel implements ModelListener{
             for(Tile t : list){
                 int x = 64 * t.getX();
                 int y = 64 * t.getY();
+                if(player.getView().playerCanSee(t)){
+                    g.drawImage(t.getImgRepr(), x , y, this);
+                }
+            }
+        }
+        /*
+        for(int i = 0; i < game.getTileMap().size(); i++){
+            ArrayList<Tile> list = game.getTileMap().get(i);
+            for(Tile t : list){
+                int x = 64 * t.getX();
+                int y = 64 * t.getY();
                 g.drawImage(t.getImgRepr(), x , y, this);
             }
         }
-
-        Set<Player> players = game.getListPlayers().keySet();
-        for(Player p: players){
-            if(p.getLife() > 0){
-                BufferedImage img = p.getImgRepr();
+        */
+        if(player.getLife() > 0){
+                BufferedImage img = player.getImgRepr();
 
                 int baseX = (int)(( 64 - sizeImg.getWidth())/2);
                 int baseY = (int)(( 64 - sizeImg.getHeight())/2);
 
-                int x = 64 * p.getX() + baseX;
-                int y = 64 * p.getY() + baseY;
-                displayBullet(g, p);
-                displayPlayer(g, p);
+                int x = 64 * player.getX() + baseX;
+                int y = 64 * player.getY() + baseY;
+                displayBullet(g, player);
+                displayPlayer(g, player);
 
                 //Draw shield
-                if(p.isShield_up()){
-                    g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+                if(player.isShield_up()){
+                    g.drawImage(ImagesLoader.shield, player.getX()*64, player.getY()*64, this);
                 }
 
-                drawLife(p,g);
-                drawActionPoint(p,g);
-                if(p.isPlanting()){
-                    displayPlantPoints(g,p);
+                drawLife(player,g);
+                drawActionPoint(player,g);
+                if(player.isPlanting()){
+                    displayPlantPoints(g,player);
                 }
 
 
                 //g.drawImage(img,x ,y , this);
 
-                ArrayList<Direction> possibleMoves = p.possibleMoves();
+                ArrayList<Direction> possibleMoves = player.possibleMoves();
 
-                if(p.getEnergy() == 0 || !p.getAsTurn()){
+                if(player.getEnergy() == 0 || !player.getAsTurn()){
                     g.setColor(new Color(255,0,0));
-                    g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
+                    g.drawRect(64 * (player.getX()), 64 * (player.getY()), 64, 64);
                 }
 
-                if(p.isSelected()){
-                    if(p.getEnergy() != 0){
+                if(player.isSelected()){
+                    if(player.getEnergy() != 0){
                         g.setColor(new Color(0,255,0));
                         for(Direction d : possibleMoves){
                             //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
-                            g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+                            g.fillOval(64 * (player.getX()+d.x()) + 17, 64* (player.getY()+d.y()) +17 , 30, 30);
                         }
                     }
                 }
 
 
-                ArrayList<ArrayList> viewableTiles = p.visibleTiles();
-                ArrayList<ArrayList<Integer>> visiblesTiles = p.visiblesTiles();
+                ArrayList<ArrayList> viewableTiles = player.visibleTiles();
+                ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
                 //System.out.print(viewableTiles);
 
-                if(p.isSelected()){
+                if(player.isSelected()){
                     g.setColor(new Color(25,125,255));
                     int counter=0;
                     for(ArrayList t : viewableTiles){
@@ -110,9 +121,86 @@ public class View extends JPanel implements ModelListener{
                     
                 }
             }
-        }
+        
         displayBomb(g);
         Grid grid = game.getGrid();
+        Set<Player> players = game.getListPlayers().keySet();
+        for(Player p: players){
+            if(p.getName() != player.getName()){
+                displayPlayer(g,p);
+            }
+        }
+//        Set<Player> players = game.getListPlayers().keySet();
+//        for(Player p: players){
+//            if(p.getLife() > 0){
+//                BufferedImage img = p.getImgRepr();
+//
+//                int baseX = (int)(( 64 - sizeImg.getWidth())/2);
+//                int baseY = (int)(( 64 - sizeImg.getHeight())/2);
+//
+//                int x = 64 * p.getX() + baseX;
+//                int y = 64 * p.getY() + baseY;
+//                displayBullet(g, p);
+//                displayPlayer(g, p);
+//
+//                //Draw shield
+//                if(p.isShield_up()){
+//                    g.drawImage(ImagesLoader.shield, p.getX()*64, p.getY()*64, this);
+//                }
+//
+//                drawLife(p,g);
+//                drawActionPoint(p,g);
+//                if(p.isPlanting()){
+//                    displayPlantPoints(g,p);
+//                }
+//
+//
+//                //g.drawImage(img,x ,y , this);
+//
+//                ArrayList<Direction> possibleMoves = p.possibleMoves();
+//
+//                if(p.getEnergy() == 0 || !p.getAsTurn()){
+//                    g.setColor(new Color(255,0,0));
+//                    g.drawRect(64 * (p.getX()), 64 * (p.getY()), 64, 64);
+//                }
+//
+//                if(p.isSelected()){
+//                    if(p.getEnergy() != 0){
+//                        g.setColor(new Color(0,255,0));
+//                        for(Direction d : possibleMoves){
+//                            //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
+//                            g.fillOval(64 * (p.getX()+d.x()) + 17, 64* (p.getY()+d.y()) +17 , 30, 30);
+//                        }
+//                    }
+//                }
+//
+//
+//                ArrayList<ArrayList> viewableTiles = p.visibleTiles();
+//                ArrayList<ArrayList<Integer>> visiblesTiles = p.visiblesTiles();
+//                //System.out.print(viewableTiles);
+//
+//                if(p.isSelected()){
+//                    g.setColor(new Color(25,125,255));
+//                    int counter=0;
+//                    for(ArrayList t : viewableTiles){
+//                        //System.out.print("nik"+counter+"\n"); counter++;
+//                        Integer tx = Integer.parseInt(t.get(0).toString());
+//                        Integer ty = Integer.parseInt(t.get(1).toString());
+//                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
+//                    }
+//                    
+//                    g.setColor(new Color(125,25,255));
+//                    for(ArrayList t : visiblesTiles){
+//                        Integer tx = Integer.parseInt(t.get(0).toString());
+//                        Integer ty = Integer.parseInt(t.get(1).toString());
+//                        g.fillOval(64*tx+22, 64*ty+22, 15, 15);
+//                    }
+//                    
+//                }
+//            }
+//        }
+//        displayBomb(g);
+//        Grid grid = game.getGrid();
     }
 
     public void displayPlantPoints(Graphics g, Player p){
@@ -127,6 +215,20 @@ public class View extends JPanel implements ModelListener{
     }
 
     public void displayBomb(Graphics g){
+        for(Tile t : player.getView().getModel().getGrid()){
+            if(t instanceof Bomb){
+                if(((Bomb) t).getOwner() == player){
+                    g.setColor(Color.GREEN);
+                    g.drawString(Integer.toString(((Bomb) t).getDelay()), t.getX()*64 +28, t.getY()*64 + 20);
+                    g.drawImage(ImagesLoader.bomb, t.getX()*64 +12 , t.getY()*64 +12, this);
+                }
+            }else if(t instanceof Mine){
+                if(((Mine) t).getOwner() == player){
+                    g.drawImage(ImagesLoader.mine, t.getX()*64 +12 , t.getY()*64 +12, this);
+                }
+            }
+        }
+        /*
         for(Tile t : GUI.playerToPlay.getView().getModel().getGrid()){
             if(t instanceof Bomb){
                 if(((Bomb) t).getOwner() == GUI.playerToPlay){
@@ -140,6 +242,7 @@ public class View extends JPanel implements ModelListener{
                 }
             }
         }
+        */
     }
 
     public void displayBullet(Graphics g, Player p){
