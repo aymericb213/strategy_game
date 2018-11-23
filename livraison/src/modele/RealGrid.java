@@ -66,7 +66,7 @@ public class RealGrid implements Grid {
       this.ordering = new LinkedList<>();
       this.fillPlayerQueue();
       if (this.random_order) {
-        Collections.shuffle((LinkedList)this.ordering);
+        Collections.shuffle((List)this.ordering);
       }
       this.turn_number++;
     }

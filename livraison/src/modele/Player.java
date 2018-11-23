@@ -128,12 +128,13 @@ public class Player extends Tile {
             this.x += d.x();
             this.y += d.y();
 
-            if (this.view.getTileAt(this.x,this.y) instanceof Bonus) {
-                this.energy+=((Bonus)this.view.getTileAt(x,y)).getValue();
-            }
-            if(this.view.getModel().getTileAt(x,y) instanceof Weapon) {
-                ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
-            }
+            try {
+              ((Bonus)this.view.getTileAt(x,y)).boost(this);
+            } catch (ClassCastException not_a_bonus) {}
+            try {
+              ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
+            } catch(ClassCastException not_a_weapon) { }
+
             this.view.setTileAt(this);
             this.lastMove = d;
             this.energy-=GameConfig.MOVE_COST;
@@ -160,12 +161,10 @@ public class Player extends Tile {
         return res;
     }
 
-    public Rifle getRifle(){
-        Set<Weapon> weapon = this.loadout.keySet();
-        for(Weapon w : weapon){
-            if(w instanceof Rifle){
-                return (Rifle) w;
-            }
+    public Weapon getWeapon(Weapon a){
+        Set<Weapon> keys = this.loadout.keySet();
+        for(Weapon w : keys){
+
         }
         return null;
     }
@@ -258,9 +257,9 @@ public class Player extends Tile {
             this.view.setTileAt(m);
             //this.loadout.put(m, this.loadout.get(m)-1);
             this.energy-=GameConfig.PLANT_COST;
-            if (m instanceof Bomb) {
-                this.view.addBomb((Bomb)m);
-            }
+            try {
+              this.view.addBomb((Bomb)m);
+            } catch(ClassCastException not_a_bomb) {}
         }
     }
 
@@ -273,7 +272,7 @@ public class Player extends Tile {
             if (w.equals(new Rifle(this))) {
                 w.fire(this.view.getModel(),d);
                 System.out.println("Portée: "+((Rifle)w).getRange());
-//                this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
+                //this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
         }

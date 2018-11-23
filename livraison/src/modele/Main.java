@@ -153,6 +153,7 @@ public class Main {
               }
             }
           }
+          System.out.println(g.getActivePlayers().poll().getName() + " a gagné !");
         }
 
     public String executeCommand(String command) {

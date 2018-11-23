@@ -1,6 +1,6 @@
 package modele;
 
-import java.util.Random;
+import java.util.*;
 
 public class RandomGeneration implements GridStrategy {
 
