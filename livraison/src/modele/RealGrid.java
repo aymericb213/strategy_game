@@ -145,9 +145,9 @@ public class RealGrid implements Grid {
     public int getWidth() {
         return this.width;
     }
-	
+
 	public int getHeight(){
-        return this.height;
+        return this.tiles.length/this.width;
     }
 
     public void setWidth(int new_width) {

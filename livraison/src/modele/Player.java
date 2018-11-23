@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.*;
+import java.lang.*;
 
 public class Player extends Tile {
 
@@ -168,14 +169,14 @@ public class Player extends Tile {
         }
         return null;
     }
-   
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
@@ -253,17 +254,17 @@ public class Player extends Tile {
         return t;
     }
 
-    
-    
-    
-    
+
+
+
+
     public ArrayList<ArrayList<Integer>> visiblesTiles(){
         ArrayList<ArrayList<Integer>> visibles = new ArrayList<>();
         int jX = this.x ;
         int jY = this.y ;
         int mapSizeX = view.getModel().getWidth();
         int mapSizeY = view.getModel().getHeight();
-        
+
 //        for(int vX = 0; vX<mapSizeX/2; vX++){
 //            for(int vY = 0; vY<mapSizeY/2; vY++){
 //                if(!(jX==vX && jY==vX)){
@@ -272,7 +273,7 @@ public class Player extends Tile {
 //            }
 //        }
         testView(jX,jY,5,5,visibles);
-    
+
         System.out.println("visiblesTiles:");
         for(ArrayList l : visibles){
             for(Object i : l){
@@ -283,72 +284,72 @@ public class Player extends Tile {
         System.out.println("end Visibles\n\n\n\n");
         return visibles;
     }
-    
+
     public void testView(int jX, int jY, int vX, int vY, ArrayList visibles){
         visibles.removeAll(visibles);
         int mapSizeX = view.getModel().getWidth();
         int mapSizeY = view.getModel().getHeight();
         int[][] g = new int[mapSizeX][mapSizeY];
-        
+
         for(int[] i : g){
             for(int j : i){
                 j = 0;
             }
         }
-        
+
         //affG(g);
-        
-        int distanceX = abs(vX-jX);
-        int distanceY = abs(vY-jY);
-        double hypothenuse = sqrt(pow(distanceX,2)+pow(distanceY,2));
+
+        int distanceX = Math.abs(vX-jX);
+        int distanceY = Math.abs(vY-jY);
+        double hypothenuse = Math.sqrt(Math.pow(distanceX,2)+Math.pow(distanceY,2));
         int intHypothenuse = (int)(hypothenuse*20);
-        
+
         double movingX = x*20;
         double movingY = y*20;
         if(intHypothenuse!=0){
             movingX/=intHypothenuse;
             movingY/=intHypothenuse;
         }
-        
+
         float XX = jX*20;
         float YY = jY*20;
         boolean revX;
         boolean revY;
         revX = vX-jX<0;
         revY = vY-jY<0;
-        
+
         System.out.println("points === jX:"+jX+" jY:"+jY);
         System.out.println("points === vX:"+vX+" vY:"+vY);
         System.out.println();
-        
+
         for(int i=0; i<intHypothenuse; i++){
-            
+
             if(revX){ XX-=movingX; }else{ XX+=movingX; }
             if(revY){ YY-=movingY; }else{ YY+=movingY; }
-              
-            int xtest = (int) floor( ((int)(XX)+10) /20 );
-            int ytest = (int) floor( ((int)(YY)+10) /20 );
-            
+
+            int xtest = (int) Math.floor( ((int)(XX)+10) /20 );
+            int ytest = (int) Math.floor( ((int)(YY)+10) /20 );
+
             System.out.println("x:"+xtest+" y:"+ytest);
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
             System.out.println("walkable ? "+question);
             if(question){ g[xtest][ytest] += 1; /*System.out.println("ON CONTINU LE TEST");*/}
             else{ /*System.out.println("ON QUITTE LE TEST");*/ return; }
-        
+
         }
-        
+
         //affG(g);
-        ArrayList<Integer> tmp = new ArrayList<>(2); 
-        tmp.add(0,vX); 
-        tmp.add(1,vY); 
+        ArrayList<Integer> tmp = new ArrayList<>(2);
+        tmp.add(0,vX);
+        tmp.add(1,vY);
         visibles.add(tmp);
         System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
         return;
-    
+
     }
-    
-    
-    
+
+
+
     public void affG(int[][] g){
         System.out.println("start");
         for(int[] i : g){
@@ -359,23 +360,23 @@ public class Player extends Tile {
         }
         System.out.println("end");
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void takeDamage(int damage) {
         if (!(this.shield_up)) {
             this.life -= damage;
