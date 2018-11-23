@@ -314,6 +314,10 @@ public class View extends JPanel implements ModelListener{
         }else if(p.lastMove == Direction.d){
             g.drawImage(ImagesLoader.lookRight(img), x, y, this);
         }
+        if(!p.getAsTurn()){
+            g.setColor(new Color(255,0,0));
+            g.drawRect(p.getX()*64, p.getY()*64, 64, 64);
+        }
         /*
         AffineTransform at = new AffineTransform();
 
