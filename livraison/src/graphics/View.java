@@ -88,6 +88,7 @@ public class View extends JPanel implements ModelListener{
 
 
                 ArrayList<ArrayList> viewableTiles = p.visibleTiles();
+                ArrayList<ArrayList<Integer>> visiblesTiles = p.visiblesTiles();
                 //System.out.print(viewableTiles);
 
                 if(p.isSelected()){
@@ -99,6 +100,14 @@ public class View extends JPanel implements ModelListener{
                         Integer ty = Integer.parseInt(t.get(1).toString());
                         g.fillOval(64*tx+22, 64*ty+22, 20, 20);
                     }
+                    
+                    g.setColor(new Color(125,25,255));
+                    for(ArrayList t : visiblesTiles){
+                        Integer tx = Integer.parseInt(t.get(0).toString());
+                        Integer ty = Integer.parseInt(t.get(1).toString());
+                        g.fillOval(64*tx+22, 64*ty+22, 15, 15);
+                    }
+                    
                 }
             }
         }
