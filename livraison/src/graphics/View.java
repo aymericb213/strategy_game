@@ -141,6 +141,7 @@ public class View extends JPanel implements ModelListener{
                 anim.ResetThread(p.getX(),p.getY(),GameConfig.RIFLE_RANGE-1, p.lastMove);
                 anim.setPlayer(p);
                 anim.setGame(game);
+                anim.setObserver(this);
                 anim.start();
                 startAnim = false;
             }

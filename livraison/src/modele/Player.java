@@ -273,7 +273,7 @@ public class Player extends Tile {
             if (w.equals(new Rifle(this))) {
                 w.fire(this.view.getModel(),d);
                 System.out.println("Portée: "+((Rifle)w).getRange());
-                this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
+//                this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
         }

@@ -4,6 +4,9 @@ import modele.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Thread used for bullet animation after a shot.
+ */
 public class BulletThread extends Thread {
     private int x;
     private int y;
@@ -16,7 +19,15 @@ public class BulletThread extends Thread {
     private final boolean running = false;
     private SoundLoader sound;
     boolean over = false;
-
+    private View observer;
+    /**
+     * Constructor of a new BulletThread.
+     * @param x
+     * @param y
+     * @param range
+     * @param d
+     * @param p 
+     */
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
         this.y = y *64;
@@ -26,10 +37,16 @@ public class BulletThread extends Thread {
         this.owner = p;
     }
     
+    /**
+     * Second constructor.
+     */
     public BulletThread(){
         this(0,0,0,null,null);
     }
 
+    /**
+     * Define tasks in order to perform the animation.
+     */
     @Override
     public void run(){
         //while(running){
@@ -39,7 +56,8 @@ public class BulletThread extends Thread {
                 this.y += d.y() * speed;
                 int caseX = x/64;
                 int caseY = y/64;
-                game.stateChange();
+                //game.stateChange();
+                observer.repaint();
                 try {
                     sleep(13);
                 } catch (InterruptedException ex) {
@@ -50,11 +68,19 @@ public class BulletThread extends Thread {
 
             //owner.notShooting();
             over = true;
-            game.stateChange();
+            observer.repaint();
+            //game.stateChange();
             //this.interrupt();
         //}
     }
 
+    /**
+     * Setup the thread before start it.
+     * @param x Player's x coordinate.
+     * @param y Player's y coordinate.
+     * @param range Weapon's range.
+     * @param d Shot's direction.
+     */
     public void ResetThread(int x, int y, int range, Direction d){
         this.x = (x+d.x()) * 64;
         this.y = (y+d.y()) * 64;
@@ -62,19 +88,35 @@ public class BulletThread extends Thread {
         this.d = d;
     }
 
+    /**
+     * Get x coordinate, corresponding to the bullet's coordinate.
+     * @return x bullet's coordinate.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Get y coordinate, corresponding to the bullet's coordinate.
+     * @return y bullet's coordinate.
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Set the player that is shooting.
+     * @param p Player that is shooting.
+     */
     public void setPlayer(Player p){
         this.owner = p;
     }
     
     public void setGame(Game g){
         this.game =g;
+    }
+    
+    public void setObserver(View view){
+        this.observer = view;
     }
 }

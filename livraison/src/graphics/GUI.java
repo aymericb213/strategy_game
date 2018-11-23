@@ -169,37 +169,35 @@ public class GUI extends JFrame{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_Z){
-                    for(Player p : game.getListPlayers().keySet()){
-                        if(p.possibleMoves().contains(Direction.z)){
-                          p.move(Direction.z);
+                if(playerToPlay.getEnergy() >= GameConfig.MOVE_COST){
+                    if(e.getKeyCode() == KeyEvent.VK_Z){
+                        if(playerToPlay.possibleMoves().contains(Direction.z)){
+                          playerToPlay.move(Direction.z);
+                          game.stateChange();
+                        }
+                    }
+                    if(e.getKeyCode() == KeyEvent.VK_Q){
+                        if(playerToPlay.possibleMoves().contains(Direction.q)){
+                          playerToPlay.move(Direction.q);
+                          game.stateChange();
+                        }
+                        
+                    }
+                    if(e.getKeyCode() == KeyEvent.VK_S){
+                            if(playerToPlay.possibleMoves().contains(Direction.s)){
+                              playerToPlay.move(Direction.s);
+                              game.stateChange();
+                            }
+                    }
+                    if(e.getKeyCode() == KeyEvent.VK_D){
+                        if(playerToPlay.possibleMoves().contains(Direction.d)){
+                          playerToPlay.move(Direction.d);
                           game.stateChange();
                         }
                     }
                 }
-                if(e.getKeyCode() == KeyEvent.VK_Q){
-                    for(Player p : game.getListPlayers().keySet()){
-                        if(p.possibleMoves().contains(Direction.q)){
-                          p.move(Direction.q);
-                          game.stateChange();
-                        }
-                    }
-                }
-                if(e.getKeyCode() == KeyEvent.VK_S){
-                    for(Player p : game.getListPlayers().keySet()){
-                        if(p.possibleMoves().contains(Direction.s)){
-                          p.move(Direction.s);
-                          game.stateChange();
-                        }
-                    }
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    for(Player p : game.getListPlayers().keySet()){
-                        if(p.possibleMoves().contains(Direction.d)){
-                          p.move(Direction.d);
-                          game.stateChange();
-                        }
-                    }
+                if(playerToPlay.getEnergy() == 0){
+                    changeTurn();
                 }
             }
 
