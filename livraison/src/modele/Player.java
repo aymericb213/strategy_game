@@ -24,8 +24,8 @@ public class Player extends Tile {
     /////////////ATTTETION
     private boolean plantingBomb = false;
 
-    public Player(RealGrid g, int x, int y, int hp, int mp, String name) {
-        super(x,y);
+    public Player(RealGrid g, int hp, int mp, String name) {
+        super(0,0);
         this.nb_player = PlayerFactory.nb_instances;
         this.visionSize = GameConfig.PLAYER_FOV;
         this.life = hp;
@@ -41,8 +41,7 @@ public class Player extends Tile {
 
 
     public Player(RealGrid g) {
-        this(g,0,0,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
-        this.walkable=false;
+        this(g,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
     }
 
     public void act() {

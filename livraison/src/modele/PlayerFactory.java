@@ -29,10 +29,10 @@ public final class PlayerFactory {
 
     public Player buildTank(RealGrid g) {
         PlayerFactory.nb_instances++;
-        Player p = new Player(g,0,0,50,10, ("Player " + PlayerFactory.nb_instances));
+        Player p = new Player(g,50,10, ("Player " + PlayerFactory.nb_instances));
         p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO-15);
         p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT-2);
-        p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT-2);	
+        p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT-2);
         return p;
     }
 }
