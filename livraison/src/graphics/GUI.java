@@ -173,7 +173,7 @@ public class GUI extends JFrame{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getAsTurn()){
+                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getName() == playerToPlay.getName()){
                     if(e.getKeyCode() == KeyEvent.VK_Z){
                         if(player.possibleMoves().contains(Direction.z)){
                           player.move(Direction.z);
@@ -199,9 +199,9 @@ public class GUI extends JFrame{
                           game.stateChange();
                         }
                     }
-                }
                 if(player.getEnergy() == 0){
                     changeTurn();
+                }
                 }
             }
 
