@@ -35,4 +35,12 @@ public final class PlayerFactory {
     public Player buildTank(RealGrid g) {
       return build(g,"Tank",20,0,0,0,0);
     }
+
+    public Player buildMarksman(RealGrid g) {
+      return build(g,"Marksman",-5,4,30,-5,-2);
+    }
+
+    public Player buildEngineer(RealGrid g) {
+      return build(g,"Engineer",0,0,-15,5,3);
+    }
 }

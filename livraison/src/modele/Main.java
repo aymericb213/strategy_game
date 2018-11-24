@@ -23,16 +23,20 @@ public class Main {
                 if (args[0].equals("-p1")) {//classe de chaque joueur
                     for (int i=1 ; i<=Integer.parseInt(nb_players) ; i++) {
                         System.out.println("Classe du joueur " + i);
-
+                        System.out.println("Choisir parmi : basic, tank, marksman, engineer");
                         switch (sc.nextLine()) {
                             case "basic" :
                                 g.addPlayer(factory.buildBasic(g));
                                 break;
-
                             case "tank" :
                                 g.addPlayer(factory.buildTank(g));
                                 break;
-
+                            case "marksman" :
+                                g.addPlayer(factory.buildMarksman(g));
+                                break;
+                            case "engineer" :
+                                g.addPlayer(factory.buildEngineer(g));
+                                break;
                             default :
                                 System.out.println(PlayerFactory.nb_instances);
                         }
