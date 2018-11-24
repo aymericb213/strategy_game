@@ -20,6 +20,7 @@ public class Player extends Tile {
     private boolean isShooting = false;
     private boolean asTurn = false;
     private boolean isPlanting = false;
+    private int baseEnergy;
 
     /////////////ATTTETION
     private boolean plantingBomb = false;
@@ -29,6 +30,7 @@ public class Player extends Tile {
         this.visionSize = GameConfig.PLAYER_FOV;
         this.life = GameConfig.PLAYER_BASE_HP;
         this.energy = GameConfig.PLAYER_BASE_AP;
+        this.baseEnergy = GameConfig.PLAYER_BASE_AP;
         this.name = name;
         this.classname = classname;
         this.loadout = new HashMap<>();
@@ -58,6 +60,16 @@ public class Player extends Tile {
         this.asTurn = asTurn;
     }
 
+    public int getBaseEnergy() {
+        return baseEnergy;
+    }
+
+    public void setBaseEnergy(int baseEnergy) {
+        this.baseEnergy = baseEnergy;
+    }
+
+    
+    
     public boolean getAsTurn() {
         return asTurn;
     }
@@ -128,6 +140,7 @@ public class Player extends Tile {
             try {
               ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
             } catch(ClassCastException not_a_weapon) { }
+            
 
             this.view.setTileAt(this);
             this.lastMove = d;

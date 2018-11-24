@@ -33,7 +33,8 @@ public class Bonus extends Tile {
     }
 
     public void boost(Player p) {
-      p.setEnergy(p.getEnergy()+this.value);
+      //p.setEnergy(p.getEnergy()+this.value);
+      p.setBaseEnergy(p.getBaseEnergy()+1);
     }
 
     /**

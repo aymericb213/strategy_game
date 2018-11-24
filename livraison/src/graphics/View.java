@@ -39,19 +39,29 @@ public class View extends JPanel implements ModelListener{
         super.paintComponent(g);
         for(int i = 0; i < game.getTileMap().size(); i++){
             ArrayList<Tile> list = game.getTileMap().get(i);
-            for(Tile t : list){
-                int x = 64 * t.getX();						// bloc for décalé plus loin
-                int y = 64 * t.getY();
-                if(player.getView().playerCanSee(t)){
-                    if(t instanceof Bonus){
-                        System.out.println("C'est un bonus");
-                        g.drawImage(t.getImgRepr(), x+15 , y+15, this);
-                    }else{
-                        System.out.println(t instanceof Bonus);
-                        g.drawImage(t.getImgRepr(), x , y, this);
+            try{
+                for(Tile t : list){
+                    int x = 64 * t.getX();						// bloc for décalé plus loin
+                    int y = 64 * t.getY();
+                    if(player.getView().playerCanSee(t)){
+                        if(t instanceof Bonus){
+                            if(player.getX() == t.getX() && player.getY() == t.getY()){
+                                ((Bonus) t).boost(player);
+                                try{
+                                    game.getTileMap().get(i).remove(t);
+                                }catch(java.util.ConcurrentModificationException e){
+
+                                }
+                            }
+                            g.drawImage(t.getImgRepr(), x+15 , y+15, this);
+                        }else{
+                            g.drawImage(t.getImgRepr(), x , y, this);
+                        }
+
                     }
-                                       
                 }
+            }catch(java.util.ConcurrentModificationException e){
+                
             }
         }
         

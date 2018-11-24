@@ -47,7 +47,7 @@ public class RealGrid implements Grid {
           nextTurn();
         }
         Player p = this.ordering.poll();
-        p.setEnergy(GameConfig.PLAYER_BASE_AP);
+        p.setEnergy(p.getBaseEnergy());
         p.disableShield();
         playerToPlay = p;
           System.out.println(playerToPlay);
