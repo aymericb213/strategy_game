@@ -238,7 +238,7 @@ public class GUI extends JFrame{
                         //coordPlayer[0] = x;
                         //coordPlayer[1] = y;
 
-                        if(!p.isSelected()){
+                        if(!p.isSelected() && p.getName() == player.getName()){
                             //p.select();
                             showPopup(e);
                             if(p.getEnergy() >= GameConfig.MOVE_COST){
