@@ -35,7 +35,16 @@ public class View extends JPanel implements ModelListener{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        
+        for(int i = 0; i < game.getTileMap().size(); i++){
+            ArrayList<Tile> list = game.getTileMap().get(i);
+            for(Tile t : list){
+                int x = 64 * t.getX();
+                int y = 64 * t.getY();
+                if(player.getView().playerCanSee(t)){
+                    g.drawImage(t.getImgRepr(), x , y, this);
+                }
+            }
+        }
         /*
         for(int i = 0; i < game.getTileMap().size(); i++){
             ArrayList<Tile> list = game.getTileMap().get(i);
@@ -93,32 +102,15 @@ public class View extends JPanel implements ModelListener{
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
                 //System.out.print(viewableTiles);
 
-                for(int i = 0; i < game.getTileMap().size(); i++){
-                    ArrayList<Tile> list = game.getTileMap().get(i);
-                    for(Tile t : list){
-                        int xx = 64 * t.getX();
-                        int yy = 64 * t.getY();
-                        
-                        boolean playerCanSee = player.getView().playerCanSee(t);
-                        ArrayList<Integer> tmp = new ArrayList<Integer>(); tmp.add(0,t.getX()); tmp.add(1,t.getY());
-                        boolean isInViewable = (viewableTiles.contains(tmp));
-                        boolean isInVisibles = (visiblesTiles.contains(tmp));
-                        //if(playerCanSee && ( isInViewable || isInVisibles ) ){
-                        if(true){
-                            g.drawImage(t.getImgRepr(), xx , yy, this);
-                        }
-                    }
-                }
-                
                 if(player.isSelected()){
-//                    g.setColor(new Color(25,125,255));
-//                    int counter=0;
-//                    for(ArrayList t : viewableTiles){
-//                        //System.out.print("nik"+counter+"\n"); counter++;
-//                        Integer tx = Integer.parseInt(t.get(0).toString());
-//                        Integer ty = Integer.parseInt(t.get(1).toString());
-//                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
-//                    }
+                    g.setColor(new Color(25,125,255));
+                    int counter=0;
+                    for(ArrayList t : viewableTiles){
+                        //System.out.print("nik"+counter+"\n"); counter++;
+                        Integer tx = Integer.parseInt(t.get(0).toString());
+                        Integer ty = Integer.parseInt(t.get(1).toString());
+                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
+                    }
                     
                     g.setColor(new Color(125,25,255));
                     for(ArrayList t : visiblesTiles){
