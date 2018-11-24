@@ -20,7 +20,7 @@ public class RealGrid implements Grid {
         this.players = new Player[nb_players];
         this.ordering = new LinkedList<Player>();
         this.bombs = new ArrayList<>();
-        this.generator = new RandomGeneration();
+        this.generator = new RandomGeneration(this);
         System.out.println("Nombre de joueurs: "+nb_players);
     }
 
@@ -29,7 +29,7 @@ public class RealGrid implements Grid {
     }
 
     public void createGrid() {
-        generator.generate(this);
+        generator.generate();
     }
 
     public boolean gameIsOver() {
