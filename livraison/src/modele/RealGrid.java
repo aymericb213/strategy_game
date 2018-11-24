@@ -94,12 +94,12 @@ public class RealGrid implements Grid {
         for (int i=-size ; i<=size ; i++) {
           for (int j=-size; j<=size; j++) {
             Tile candidate = this.getTileAt(t.getX()+i,t.getY()+j);
-            if (candidate!=null) {
+            if (candidate!=null) {//gestion du résultat négatif de getTileAt
               neighbours.add(candidate);
             }
           }
         }
-        neighbours.remove(this.getTileAt(t.getX(),t.getY()));
+        neighbours.remove(this.getTileAt(t.getX(),t.getY()));//on ne garde pas la position du joueur lui-même
         return neighbours;
     }
 

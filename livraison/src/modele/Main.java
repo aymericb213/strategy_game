@@ -58,22 +58,12 @@ public class Main {
           Player p = g.nextPlayer();
           next :
           while (p.getEnergy()>0) {
-            System.out.println("\033[H\033[2J");
-            System.out.println("================ STRATEGY GAME =================\n");
-            System.out.println("Tour " + g.getTurnNumber());
-            System.out.println(p.getName() + "\n");
-            //System.out.println(g + "\n");//vue globale
-            System.out.println(p.getView() + "\n");//vues joueur
-            System.out.println("# : mur");
-            System.out.println("; : mine");
-            System.out.println("3 : bombe");
-            System.out.println(". : bonus");
-            System.out.println("@ : joueur (€ si bouclier actif)");
-            System.out.println("\n" + p.printStats());
-            System.out.println(p.printControls());
             //p.act(); //jeu auto
-
+            Runnable thread = new PrintThread(g,p);
+            Thread t = new Thread(thread);
+            t.start();
             String input=sc.nextLine();
+            t.interrupt();
             switch (input) {
               case "E"://quitter
               case "e":
@@ -153,7 +143,9 @@ public class Main {
               }
             }
           }
-          System.out.println(g.getActivePlayers().poll().getName() + " a gagné !");
+          if (g.gameIsOver()) {
+            System.out.println(g.getActivePlayers().peek().getName() + " a gagné !");
+          }
         }
 
     public String executeCommand(String command) {

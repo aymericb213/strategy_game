@@ -4,6 +4,7 @@ public class PlayerGrid implements Grid {
 
     private final RealGrid model;
     private final Player client;
+    private boolean alt_string =false;
 
     public PlayerGrid(RealGrid g, Player p) {
         this.model = g;
@@ -50,6 +51,10 @@ public class PlayerGrid implements Grid {
                 res.append(new FreeTile(-1,-1).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
             }
         }
-        return res.toString();
+        StringBuilder res2 = new StringBuilder(res.toString());
+        int position = client.getX()+(client.getY()*(this.getModel().getWidth()+1));
+        res2.replace(position,position+1,new FreeTile(-1,-1).toString());
+        alt_string=!alt_string;
+        return alt_string ? res.toString() : res2.toString();
     }
 }

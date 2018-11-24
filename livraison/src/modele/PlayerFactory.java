@@ -17,22 +17,22 @@ public final class PlayerFactory {
         return PlayerFactory.instance;
     }
 
-    public Player buildBasic(RealGrid g) {
-        PlayerFactory.nb_instances++;
-        Player p = new Player(g);
-        p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO);
-        p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT);
-        p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT);
-        return p;
+    public Player build(RealGrid g, String classname, int hp_mod, int ap_mod, int rifle_ammo_mod, int bombs_mod, int mines_mod) {
+      PlayerFactory.nb_instances++;
+      Player p = new Player(g,"Player "+PlayerFactory.nb_instances, classname);
+      p.setLife(p.getLife()+hp_mod);
+      p.setEnergy(p.getEnergy()+ap_mod);
+      p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO+rifle_ammo_mod);
+      p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT+mines_mod);
+      p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT+bombs_mod);
+      return p;
     }
 
+    public Player buildBasic(RealGrid g) {
+      return build(g,"Basic",0,0,0,0,0);
+    }
 
     public Player buildTank(RealGrid g) {
-        PlayerFactory.nb_instances++;
-        Player p = new Player(g,50,10, ("Player " + PlayerFactory.nb_instances));
-        p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO-15);
-        p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT-2);
-        p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT-2);
-        return p;
+      return build(g,"Tank",20,0,0,0,0);
     }
 }

@@ -7,6 +7,7 @@ import static java.lang.Math.*;
 public class Player extends Tile {
 
     private final String name;
+    private final String classname;
     private int energy;
     private int life;
     private HashMap<Weapon,Integer> loadout;
@@ -17,32 +18,24 @@ public class Player extends Tile {
     private boolean selected;
     private int visionSize;
     private boolean isShooting = false;
-    private int index;
-    private int nb_player;
     private boolean asTurn = false;
     private boolean isPlanting = false;
 
     /////////////ATTTETION
     private boolean plantingBomb = false;
 
-    public Player(RealGrid g, int hp, int mp, String name) {
+    public Player(RealGrid g, String name, String classname) {
         super(0,0);
-        this.nb_player = PlayerFactory.nb_instances;
         this.visionSize = GameConfig.PLAYER_FOV;
-        this.life = hp;
-        this.energy = mp;
+        this.life = GameConfig.PLAYER_BASE_HP;
+        this.energy = GameConfig.PLAYER_BASE_AP;
         this.name = name;
+        this.classname = classname;
         this.loadout = new HashMap<>();
         this.strategy = new RandomStrategy(this);
         this.view = new PlayerGrid(g,this);
         this.selected = false;
-        this.nb_player = PlayerFactory.nb_instances;
         this.walkable=false;
-    }
-
-
-    public Player(RealGrid g) {
-        this(g,GameConfig.PLAYER_BASE_HP,GameConfig.PLAYER_BASE_AP, ("Player " + (PlayerFactory.nb_instances)));
     }
 
     public void act() {
@@ -258,16 +251,16 @@ public class Player extends Tile {
 
 
 
-    
-    
-    
+
+
+
     public ArrayList<ArrayList<Integer>> visiblesTiles(){
         ArrayList<ArrayList<Integer>> visibles = new ArrayList<>();
         int jX = this.x ;
         int jY = this.y ;
         int mapSizeX = view.getModel().getWidth();
         int mapSizeY = view.getModel().getHeight();
-        
+
         for(int vX = 0; vX<mapSizeX; vX++){
             for(int vY = 0; vY<mapSizeY; vY++){
                 if(!(jX==vX && jY==vX)){
@@ -283,46 +276,46 @@ public class Player extends Tile {
 //                boolean isContained = visibles.contains(a);
 //                if( "#".equals(t.toString()) && !(isContained) ){
 //                    System.out.println(" test vx :"+vX+" vY:"+vY+"\nisWall ? "+isWall+"\nisContained ? "+isContained);
-//                    
+//
 //                    if(vX>0){System.out.print("droite ");
 //                    ArrayList<Integer> testd = new ArrayList<>(); a.add(0,vX-1); a.add(1,vY);
 //                    boolean asVisibleD = visibles.contains(testd) ;
 //                        if ( !"#".equals(view.getModel().getTileAt(vX-1,vY).toString()) && asVisibleD){
-//                            visibles.add(a);    
+//                            visibles.add(a);
 //                        }
 //                    }
-//                    
+//
 //                    if(vX<mapSizeX){System.out.print("gauche ");
 //                    ArrayList<Integer> testg = new ArrayList<>(); a.add(0,vX+1); a.add(1,vY);
 //                    boolean asVisibleG = visibles.contains(testg) ;
 //                        if ( !"#".equals(view.getModel().getTileAt(vX+1,vY).toString()) && asVisibleG){
-//                            visibles.add(a);    
+//                            visibles.add(a);
 //                        }
 //                    }
-//                    
+//
 //                    if(vY>0){System.out.print("haut ");
 //                    ArrayList<Integer> testh = new ArrayList<>(); a.add(0,vX); a.add(1,vY-1);
 //                    boolean asVisibleH = visibles.contains(testh) ;
 //                        if ( !"#".equals(view.getModel().getTileAt(vX,vY-1).toString()) && asVisibleH){
-//                            visibles.add(a);    
+//                            visibles.add(a);
 //                        }
 //                    }
-//                    
+//
 //                    if(vY<mapSizeY){System.out.println("bas");
 //                    ArrayList<Integer> testb = new ArrayList<>(); a.add(0,vX); a.add(1,vY+1);
 //                    boolean asVisibleB = visibles.contains(testb) ;
 //                        if ( !"#".equals(view.getModel().getTileAt(vX,vY+1).toString()) && asVisibleB){
-//                            visibles.add(a);    
+//                            visibles.add(a);
 //                        }
 //                    }
-//                    
+//
 //                }
 //            }
 //        }
 
 
         //testView(jX,jY,5,5,visibles);
-    
+
 //        System.out.println("visiblesTiles:");
 //        for(ArrayList l : visibles){
 //            for(Object i : l){
@@ -333,72 +326,72 @@ public class Player extends Tile {
 //        System.out.println("end Visibles\n\n\n\n");
         return visibles;
     }
-    
+
     public void testView(int jX, int jY, int vX, int vY, ArrayList visibles){
         //visibles.removeAll(visibles);
         int mapSizeX = view.getModel().getWidth(); //creation de g[][], liste de valeurs parcourues
         int mapSizeY = view.getModel().getHeight();
         int[][] g = new int[mapSizeX][mapSizeY];
-        
+
         for(int[] i : g){ //parcours g
             for(int j : i){
                 j = 0; //met toutes les valeurs de g à 0
             }
         }
-        
+
 //        affG(g);
-        
+
         int distanceX = abs(vX-jX); //calcul la distance absolue entre le joueur et le point (X)
         int distanceY = abs(vY-jY); //calcul la distance absolue entre le joueur et le point (X)
         double hypothenuse = sqrt(pow(distanceX,2)+pow(distanceY,2)); //calcul la longueur de l'hypothenuse
         int intHypothenuse = ((int)(hypothenuse))*20; //arrondi la longueur de l'hypothenuse en int
-        
+
         double movingX = distanceX*20; //calcul la distance par mouvement de test en X
         double movingY = distanceY*20; //calcul la distance par mouvement de test en Y
         if(intHypothenuse!=0){
             movingX/=intHypothenuse; //la divise par la taille de l'hypothenuse si la distance est supérieure à 0
             movingY/=intHypothenuse; //la divise par la taille de l'hypothenuse si la distance est supérieure à 0
         }
-        
+
         float XX = jX*20; //creer XX valeur en jX * 20
         float YY = jY*20; //creer YY valeur en jY * 20
         boolean revX;
         boolean revY;
         revX = vX-jX<0;
         revY = vY-jY<0;
-        
+
 //        System.out.println("points === jX:"+jX+" jY:"+jY);
 //        System.out.println("points === vX:"+vX+" vY:"+vY);
 //        System.out.println();
-        
+
         for(int i=0; i<intHypothenuse; i++){
-            
+
             if(revX){ XX-=movingX; }else{ XX+=movingX; } //deplace XX de movingX (vers vX*20 donc)
             if(revY){ YY-=movingY; }else{ YY+=movingY; }
-              
+
             int xtest = (int) floor( ((int)(XX)+10) /20 );
             int ytest = (int) floor( ((int)(YY)+10) /20 );
-            
+
 //            System.out.println("x:"+xtest+" y:"+ytest);
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
 //            System.out.println("walkable ? "+question);
             if(question){ g[xtest][ytest] += 1; /*System.out.println("ON CONTINU LE TEST");*/}
             else{ /*System.out.println("ON QUITTE LE TEST");*/ return; }
-        
+
         }
-        
+
         //affG(g);
-        ArrayList<Integer> tmp = new ArrayList<>(2); 
-        tmp.add(0,vX); 
-        tmp.add(1,vY); 
+        ArrayList<Integer> tmp = new ArrayList<>(2);
+        tmp.add(0,vX);
+        tmp.add(1,vY);
         visibles.add(tmp);
 //        System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
         return;
-    
+
     }
-    
-    
-    
+
+
+
     public void affG(int[][] g){
         System.out.println("start");
         for(int[] i : g){
@@ -409,7 +402,7 @@ public class Player extends Tile {
         }
         System.out.println("end");
     }
-    
+
 
 
 
@@ -433,6 +426,7 @@ public class Player extends Tile {
             if (this.life<=0) {
               this.energy=0;
               this.view.setTileAt(new FreeTile(this.x,this.y));
+              this.view.getModel().getActivePlayers().remove(this);
             }
         } else {
             this.disableShield();
@@ -511,7 +505,7 @@ public class Player extends Tile {
     }
 
     public String printStats() {
-        return "Position : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+        return "Classe : " + this.classname + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
     }
 
     public String printControls() {
