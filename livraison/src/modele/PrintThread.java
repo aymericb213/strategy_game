@@ -21,7 +21,7 @@ public class PrintThread implements Runnable {
               System.out.println("Tour " + g.getTurnNumber());
               System.out.println(p.getName() + "\n");
               //System.out.println(g + "\n");//vue globale
-              System.out.println(p.getView() + "\n");//vues joueur
+              System.out.println(p.getView().toStringForThread() + "\n");//vues joueur
               System.out.println("# : mur");
               System.out.println("; : mine");
               System.out.println("3 : bombe (délai avant détonation)");

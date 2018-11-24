@@ -68,8 +68,8 @@ public class Player extends Tile {
         this.baseEnergy = baseEnergy;
     }
 
-    
-    
+
+
     public boolean getAsTurn() {
         return asTurn;
     }
@@ -140,7 +140,7 @@ public class Player extends Tile {
             try {
               ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
             } catch(ClassCastException not_a_weapon) { }
-            
+
 
             this.view.setTileAt(this);
             this.lastMove = d;
@@ -463,12 +463,10 @@ public class Player extends Tile {
     /* Tir */
     public void fire(Direction d) {
         this.isShooting = true;
-        System.out.println("Je tir");
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
             if (w.equals(new Rifle(this))) {
                 w.fire(this.view.getModel(),d);
-                System.out.println("Portée: "+((Rifle)w).getRange());
                 //this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
                 this.energy-=GameConfig.FIRE_COST;
             }

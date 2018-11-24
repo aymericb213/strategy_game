@@ -21,7 +21,6 @@ public class RealGrid implements Grid {
         this.ordering = new LinkedList<Player>();
         this.bombs = new ArrayList<>();
         this.generator = new RandomGeneration(this);
-        System.out.println("Nombre de joueurs: "+nb_players);
     }
 
     public RealGrid() {
@@ -167,10 +166,6 @@ public class RealGrid implements Grid {
 
     public void removeBomb(Bomb b) {
         this.bombs.remove(b);
-    }
-
-    public void displayGrid() {
-        System.out.println(Arrays.toString(this.tiles));
     }
 
     @Override

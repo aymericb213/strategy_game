@@ -51,10 +51,14 @@ public class PlayerGrid implements Grid {
                 res.append(new FreeTile(-1,-1).toString());//affichage de FreeTile si la case est une bombe ou une mine adverse
             }
         }
-        StringBuilder res2 = new StringBuilder(res.toString());
-        int position = client.getX()+(client.getY()*(this.getModel().getWidth()+1));
-        res2.replace(position,position+1,new FreeTile(-1,-1).toString());
-        alt_string=!alt_string;
-        return alt_string ? res.toString() : res2.toString();
+        return res.toString();
+    }
+
+    public String toStringForThread() {
+      StringBuilder res_thread = new StringBuilder(this.toString());
+      int position = client.getX()+(client.getY()*(this.getModel().getWidth()+1));
+      res_thread.replace(position,position+1,new FreeTile(-1,-1).toString());
+      alt_string=!alt_string;
+      return alt_string ? this.toString() : res_thread.toString();
     }
 }

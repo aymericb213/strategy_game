@@ -66,7 +66,7 @@ public class Main {
         while(!(g.gameIsOver())) {
           p = g.nextPlayer();
           next :
-          while (p.getEnergy()>0) {
+          while (p.getEnergy()>0 && !g.gameIsOver()) {
             if (args.length>0 && !autoplay) {//jeu manuel
               Runnable thread = new PrintThread(g,p);
               Thread t = new Thread(thread);
