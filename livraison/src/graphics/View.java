@@ -37,26 +37,24 @@ public class View extends JPanel implements ModelListener{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        /*for(int i = 0; i < game.getTileMap().size(); i++){
+        for(int i = 0; i < game.getTileMap().size(); i++){
             ArrayList<Tile> list = game.getTileMap().get(i);
             for(Tile t : list){
                 int x = 64 * t.getX();						// bloc for décalé plus loin
                 int y = 64 * t.getY();
                 if(player.getView().playerCanSee(t)){
-                    g.drawImage(t.getImgRepr(), x , y, this);
+                    if(t instanceof Bonus){
+                        System.out.println("C'est un bonus");
+                        g.drawImage(t.getImgRepr(), x+15 , y+15, this);
+                    }else{
+                        System.out.println(t instanceof Bonus);
+                        g.drawImage(t.getImgRepr(), x , y, this);
+                    }
+                                       
                 }
             }
-        }*/
-        /*
-        for(int i = 0; i < game.getTileMap().size(); i++){
-            ArrayList<Tile> list = game.getTileMap().get(i);
-            for(Tile t : list){
-                int x = 64 * t.getX();
-                int y = 64 * t.getY();
-                g.drawImage(t.getImgRepr(), x , y, this);
-            }
         }
-        */
+        
         if(player.getLife() > 0){
                 BufferedImage img = player.getImgRepr();
 
@@ -103,7 +101,7 @@ public class View extends JPanel implements ModelListener{
                 ArrayList<ArrayList> viewableTiles = player.visibleTiles();
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
                 //System.out.print(viewableTiles);
-				
+		/*		
 				for(int i = 0; i < game.getTileMap().size(); i++){
                     ArrayList<Tile> list = game.getTileMap().get(i);
                     for(Tile t : list){
@@ -120,16 +118,8 @@ public class View extends JPanel implements ModelListener{
                         }
                     }
                 }
-
+                */
                 if(player.isSelected()){
-//                    g.setColor(new Color(25,125,255));
-//                    int counter=0;
-//                    for(ArrayList t : viewableTiles){
-//                        //System.out.print("nik"+counter+"\n"); counter++;
-//                        Integer tx = Integer.parseInt(t.get(0).toString());
-//                        Integer ty = Integer.parseInt(t.get(1).toString());
-//                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
-//                    }
                     
                     g.setColor(new Color(125,25,255));
                     for(ArrayList t : visiblesTiles){

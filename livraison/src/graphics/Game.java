@@ -133,12 +133,21 @@ public class Game extends AbstractListenableModel {
                         if(index == 1){
                             index = new Random().nextInt(4);
                         }
-                        BufferedImage img = ImagesLoader.imageList.get(index);
+                        BufferedImage img = null;
+                        if(index == 999){
+                            img = ImagesLoader.bonus;
+                        }else{
+                            
+                            img = ImagesLoader.imageList.get(index);
+                        }
                         Tile tile = null;
                         if(i == 1){
                             tile = new Wall(x,j, img);
                         }else{
                             tile = new FreeTile(x,j, img);
+                        }
+                        if(index == 999){
+                            tile = new Bonus(x,j,img);
                         }
                         tileList.add(tile);
                         if(i < 2){

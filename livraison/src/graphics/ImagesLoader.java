@@ -24,6 +24,7 @@ public class ImagesLoader {
     public static BufferedImage bomb;
     public static BufferedImage mine;
     public static BufferedImage bullet;
+    public static BufferedImage bonus;
 
     public ImagesLoader(File file){
         this.file = file;
@@ -165,6 +166,7 @@ public class ImagesLoader {
             bomb = ImageIO.read(new File("src/Images/bomb2.png"));
             mine = ImageIO.read(new File("src/Images/mine2.png"));
             bullet = ImageIO.read(new File("src/Images/bullet.png"));
+            bonus = ImageIO.read(new File("src/Images/bonus.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }

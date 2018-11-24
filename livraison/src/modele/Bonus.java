@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.image.BufferedImage;
+
 /**
 * Classe fille de Tile représentant un bonus.
 */
@@ -20,6 +22,10 @@ public class Bonus extends Tile {
 
     public Bonus(int x, int y) {
         super(x,y);
+    }
+    
+    public Bonus(int x, int y, BufferedImage img){
+        super(x,y,img);
     }
 
     public int getValue() {
