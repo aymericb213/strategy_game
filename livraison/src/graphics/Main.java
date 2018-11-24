@@ -68,7 +68,8 @@ public class Main {
 //
 //            game.getGrid().addPlayer(p);
 //            game.getGrid().addPlayer(p2);
-
+            game.getGrid().nextPlayer();
+            System.out.println(game.getGrid().getPlayerToPlay());
             GUI gui1 = new GUI(game, p);
             GUI gui2 = new GUI(game, p2);
             ViewConsole console = new ViewConsole(null,game);
