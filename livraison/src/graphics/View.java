@@ -73,7 +73,7 @@ public class View extends JPanel implements ModelListener{
                     g.drawImage(ImagesLoader.shield, player.getX()*64, player.getY()*64, this);
                 }
 
-                drawLife(player,g);
+                //drawLife(player,g);
                 drawActionPoint(player,g);
                 if(player.isPlanting()){
                     displayPlantPoints(g,player);
@@ -129,7 +129,9 @@ public class View extends JPanel implements ModelListener{
         Set<Player> players = game.getListPlayers().keySet();
         for(Player p: players){
             if(p.getName() != player.getName()){
-                displayPlayer(g,p);
+                if(p.getLife() > 0){
+                    displayPlayer(g,p);
+                }
             }
         }
 //        Set<Player> players = game.getListPlayers().keySet();
@@ -207,6 +209,18 @@ public class View extends JPanel implements ModelListener{
     if(observer.playerToPlay.getName() != null || player.getName() != null){
         observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
     }
+    
+    if(game.getGrid().gameIsOver() && player.getLife() > 0){
+        g.setColor(Color.GREEN);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+        g.drawString("VICTOIRE", 416, 416);
+    }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){
+        g.setColor(Color.RED);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+        g.drawString("DEFAITE", 416, 416);
+    }
+        
+    
     }
 
     public void displayPlantPoints(Graphics g, Player p){
@@ -318,28 +332,8 @@ public class View extends JPanel implements ModelListener{
             g.setColor(new Color(255,0,0));
             g.drawRect(p.getX()*64, p.getY()*64, 64, 64);
         }
-        /*
-        AffineTransform at = new AffineTransform();
-
-        // 4. translate it to the center of the component
-        //at.translate(getWidth() / 2, getHeight() / 2);
-        at.translate(64 * p.getX() + 32, 63*p.getY() +32);
-
-        // 3. do the actual rotation
-        double secAngle = Math.toRadians(angle);
-        at.rotate(secAngle);//Math.PI/4);
-
-        // 2. just a scale because this image is big
-        //at.scale(0.5, 0.5);
-
-        // 1. translate the object so that you rotate it around the
-        //    center (easier :))
-        at.translate(-img.getWidth()/2, -img.getHeight()/2);
-
-        // draw the image
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(img, at, null);
-        */
+        
+        drawLife(p,g);
 
     }
 

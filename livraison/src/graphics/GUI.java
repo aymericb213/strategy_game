@@ -215,6 +215,7 @@ public class GUI extends JFrame{
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
             }
@@ -223,6 +224,7 @@ public class GUI extends JFrame{
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
+                playerToPlay = game.getGrid().getPlayerToPlay();
             }
 
             @Override
@@ -238,7 +240,7 @@ public class GUI extends JFrame{
                         //coordPlayer[0] = x;
                         //coordPlayer[1] = y;
 
-                        if(!p.isSelected() && p.getName() == player.getName()){
+                        if(!p.isSelected() && p.getName() == player.getName() && !game.getGrid().gameIsOver()){
                             //p.select();
                             showPopup(e);
                             if(p.getEnergy() >= GameConfig.MOVE_COST){
