@@ -51,7 +51,7 @@ public class GUI extends JFrame{
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);
         setTitle("Shooter Game ("+player.getName()+")");
-        setSize(832,854); //64*20;
+        setSize(832,832); //64*20;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -357,6 +357,9 @@ public class GUI extends JFrame{
             }
         });
         setVisible(true);
+        int difX = 832 + (832 - this.getContentPane().getWidth());
+        int difY = 832 + (832 - this.getContentPane().getHeight());
+        this.setSize(difX, difY);
     }
 
     public View getView(){
