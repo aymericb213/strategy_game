@@ -19,9 +19,13 @@ public class Rifle implements Weapon {
     public void fire(Grid g, Direction d) {
         for (int i=1 ; i<=this.range ; i++) {
             Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));
-            if (lof instanceof Player) {
-                ((Player)lof).takeDamage(this.damage);
-                break;
+            if (!lof.isWalkable()) {
+                try {
+                  ((Player)lof).takeDamage(this.damage);
+                  break;
+                } catch (ClassCastException not_a_player) {
+                  break;
+                }
             }
         }
     }
