@@ -306,28 +306,28 @@ public class Player extends Tile {
         int mapSizeX = view.getModel().getWidth();
         int mapSizeY = view.getModel().getHeight();
 
-        for(int vX = 0; vX<mapSizeX; vX++){
+        for(int vX = 0; vX<mapSizeX; vX++){					//loop for all positions in the map
             for(int vY = 0; vY<mapSizeY; vY++){
                 if(!(jX==vX && jY==vX)){
-                    testView(jX,jY,vX,vY,visibles);
+                    testView(jX,jY,vX,vY,visibles);			//launch testView with the playerPosition and the position we want to test
                 }
             }
         }
-
-        for(int vY = 0; vY<mapSizeY; vY++){
+        
+        for(int vY = 0; vY<mapSizeY; vY++){					//loop to test all walls
             for(int vX = 0; vX<mapSizeX; vX++){
-
+                
                 Tile t = view.getModel().getTileAt(vX, vY);
                 boolean isWall = t instanceof Wall;
-
+                
                 ArrayList<Integer> a = new ArrayList<>(); a.add(0,vX); a.add(1,vY);
                 boolean isContained = visibles.contains(a);
-
+                
                 boolean narrowContained;
-                if( isWall && !(isContained) ){
+                if( isWall && !(isContained) ){				//if Tile at vX vY is a Wall :
                     narrowContained = false;
                     ArrayList<Integer> narrow = new ArrayList<>(); narrow.add(0,0); narrow.add(1,0);
-                    for(int narrowvX=-1; narrowvX<=1; narrowvX+=1){
+                    for(int narrowvX=-1; narrowvX<=1; narrowvX+=1){			//and if right/left/up/down Tiles is(are) in visible Tile (normals one, not wall)
                         for(int narrowvY=-(1); narrowvY<=1; narrowvY+=1){
                             try{
                                 narrow.set(0,vX+narrowvX); narrow.set(1,vY+narrowvY);
@@ -335,9 +335,9 @@ public class Player extends Tile {
                             }catch(Exception e){ }
                         }
                     }
-                    if(narrowContained){ visibles.add(a); }
+                    if(narrowContained){ visibles.add(a); }			// add this wall if all is good.
                 }
-
+                
             }
         }
         return visibles;
@@ -375,33 +375,33 @@ public class Player extends Tile {
 
         for(int i=0; i<intHypothenuse; i++){
 
-            if(revX){
-                XX-=movingX;
+            if(revX){ 
+                XX-=movingX; 
             }else{
-                XX+=movingX;
+                XX+=movingX; 
             } //deplace XX de movingX (vers vX*20 donc)
             if(revY){
                 YY-=movingY;
-            }else{
+            }else{ 
                 YY+=movingY;
-            }
+            } //deplace YY de movingY (vers vY*20 donc)
 
-            int xtest = (int) floor( ((int)(XX)+10) /20 );
-            int ytest = (int) floor( ((int)(YY)+10) /20 );
+            int xtest = (int) floor( ((int)(XX)+10) /20 );//regarde sur quelle case on se trouve
+            int ytest = (int) floor( ((int)(YY)+10) /20 );//regarde sur quelle case on se trouve
 
-            boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
-            if(question){
-                g[xtest][ytest] += 1;
+            boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;// si la  case testée n'est pas un obstacle (joueurs à part) alors
+            if(question){ 
+                g[xtest][ytest] += 1;			// on ajoute 1 a la position de la grille
             }
-            else{
-                return;
+            else{ 
+                return; 			// sinon on arrete testView
             }
         }
 
-        ArrayList<Integer> tmp = new ArrayList<>(2);
-        tmp.add(0,vX);
-        tmp.add(1,vY);
-        visibles.add(tmp);
+        ArrayList<Integer> tmp = new ArrayList<>(2); 
+        tmp.add(0,vX); 
+        tmp.add(1,vY); 
+        visibles.add(tmp);			//si la boucle est fini alors il n'y a pas d'obstacle qui a bloqué la vue, on ajoute donc la position de la tuile qui était testée aux positions ee tuiles visibles
     }
 
     /** Applies damage to the player
