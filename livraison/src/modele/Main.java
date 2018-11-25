@@ -23,7 +23,7 @@ public class Main {
                 g = new RealGrid(Integer.parseInt(dim[0]),Integer.parseInt(dim[1]),Integer.parseInt(nb_players));
                 System.out.println("Jeu sans humains ? (y/n)");
                 if (sc.nextLine().equals("n")) {
-                  autoplay=false;
+                    autoplay=false;
                 }
                 if (args[0].equals("-p1")) {//classe de chaque joueur
                     for (int i=1 ; i<=Integer.parseInt(nb_players) ; i++) {

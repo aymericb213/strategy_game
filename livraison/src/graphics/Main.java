@@ -14,9 +14,9 @@ public class Main {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         com.sun.javafx.application.PlatformImpl.startup(()->{});
+        SoundLoader bg = new SoundLoader(0);
+        bg.loopTrack();
         new GameConfig();
-        SoundLoader sound = new SoundLoader(0);
-        sound.loopTrack();
         System.out.println(System.getProperty("user.dir"));
 
         //Chargement de l'image qui représentera le joueur
@@ -46,7 +46,7 @@ public class Main {
         File file = new File("src/Levels/level3.xml");
 
         try {
-            Game game = new Game();
+            Game game = new Game();            
             System.out.println("MARQUEE");
             game.loadGrid(file, 2);
             System.out.println("Grille ==>"+game.getGrid());
