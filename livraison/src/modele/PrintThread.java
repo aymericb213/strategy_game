@@ -5,7 +5,7 @@ package modele;
 */
 public class PrintThread implements Runnable {
     private final RealGrid grid;
-    private final Player p;
+    private final Player active_player;
 
     /** Class constructor.
      * @param grid
