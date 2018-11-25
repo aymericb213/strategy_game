@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -22,28 +21,16 @@ public class GUI extends JFrame{
     public  Player playerToPlay = null;
     private boolean isShooting = false;
     private boolean isMoving = false;
-    private boolean isPlanting = false;
-    private SoundLoader sound;
+    private boolean isPlanting = false;    
     private Player player;
-
-
-
+    private SoundLoader sound;
+    
     public GUI(Player p){
         this(new Game(),p);
     }
 
     public GUI(Game game, Player p){
-        this.player = p;
-        com.sun.javafx.application.PlatformImpl.startup(()->{});
-        this.sound = new SoundLoader(0);
-        sound.getTrack().setOnEndOfMedia(() -> {
-            if(game.getGrid().gameIsOver()){
-                sound.getTrack().stop();
-            }else{
-                sound.getTrack().seek(sound.getTrack().getStartTime());
-            }
-        });
-
+        this.player = p;    
         this.game = game;
         playerToPlay = game.getGrid().getPlayerToPlay();
         System.out.println("JOUEUR ==> "+playerToPlay);
@@ -71,7 +58,7 @@ public class GUI extends JFrame{
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
 
-        JMenuItem depItem = new JMenuItem("Déplacement", new ImageIcon("src/Images/moveIcon.png"));
+        JMenuItem depItem = new JMenuItem("Déplacement"  + GameConfig.MOVE_COST + " AP", new ImageIcon("src/Images/moveIcon.png"));
         depItem.getAccessibleContext().setAccessibleDescription("Déplacer le personnage");
         depItem.addActionListener(new ActionListener(){
             @Override
@@ -85,7 +72,7 @@ public class GUI extends JFrame{
         });
         popup.add(depItem);
 
-        JMenuItem shieldItem = new JMenuItem("Activer bouclier", new ImageIcon("src/Images/shieldIcon.png"));
+        JMenuItem shieldItem = new JMenuItem("Activer bouclier"  + GameConfig.SHIELD_COST + " AP", new ImageIcon("src/Images/shieldIcon.png"));
         shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
         shieldItem.addActionListener(new ActionListener(){
             @Override
@@ -99,13 +86,11 @@ public class GUI extends JFrame{
                             game.stateChange();
                         }
                     }
-
             }
-
         });
         popup.add(shieldItem);
 
-        JMenuItem shootItem = new JMenuItem("Tirer", new ImageIcon("src/Images/target.png"));
+        JMenuItem shootItem = new JMenuItem("Tirer"  + GameConfig.FIRE_COST + " AP", new ImageIcon("src/Images/target.png"));
         shootItem.getAccessibleContext().setAccessibleDescription("Tirer dans une direction");
         shootItem.addActionListener(new ActionListener(){
             @Override
@@ -114,11 +99,10 @@ public class GUI extends JFrame{
                     isShooting = true;
                 }
             }
-
         });
         popup.add(shootItem);
 
-        JMenuItem plantMine = new JMenuItem("Poser une mine", new ImageIcon("src/Images/mine.png"));
+        JMenuItem plantMine = new JMenuItem("Poser une mine"  + GameConfig.PLANT_COST + " AP", new ImageIcon("src/Images/mine.png"));
         plantMine.getAccessibleContext().setAccessibleDescription("Poser une mine");
         plantMine.addActionListener(new ActionListener(){
             @Override
@@ -129,11 +113,10 @@ public class GUI extends JFrame{
                     game.stateChange();
                 }
             }
-
         });
         popup.add(plantMine);
 
-        JMenuItem plantBomb = new JMenuItem("Poser une bombe", new ImageIcon("src/Images/bomb.png"));
+        JMenuItem plantBomb = new JMenuItem("Poser une bombe"  + GameConfig.PLANT_COST + " AP", new ImageIcon("src/Images/bomb.png"));
         plantBomb.getAccessibleContext().setAccessibleDescription("Poser une bombe");
         plantBomb.addActionListener(new ActionListener(){
             @Override
@@ -145,7 +128,6 @@ public class GUI extends JFrame{
                     game.stateChange();
                 }
             }
-
         });
         popup.add(plantBomb);
 
@@ -156,7 +138,6 @@ public class GUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 changeTurn();
             }
-
         });
         popup.add(passTurn);
 
@@ -173,7 +154,7 @@ public class GUI extends JFrame{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getName() == playerToPlay.getName()){
+                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getName().equals(playerToPlay.getName())){
                     if(e.getKeyCode() == KeyEvent.VK_Z){
                         if(player.possibleMoves().contains(Direction.z)){
                           player.move(Direction.z);
@@ -199,12 +180,11 @@ public class GUI extends JFrame{
                           game.stateChange();
                         }
                     }
+                }
                 if(player.getEnergy() == 0){
                     changeTurn();
                 }
-                }
             }
-
         });
 
         getContentPane().addMouseListener(new MouseListener(){
@@ -232,130 +212,135 @@ public class GUI extends JFrame{
                 int popX = e.getX();
                 int popY = e.getY();
                 int x = e.getX() / 64;
-                int y = e.getY() / 64;
-
+                int y = e.getY() / 64; 
+                
                 if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
                     if(p.getAsTurn()){
                         //coordPlayer[0] = x;
                         //coordPlayer[1] = y;
 
-                        if(!p.isSelected() && p.getName() == player.getName() && !game.getGrid().gameIsOver()){
+                        if(!p.isSelected() && p.getName().equals(player.getName()) && !game.getGrid().gameIsOver()){
                             //p.select();
                             showPopup(e);
                             if(p.getEnergy() >= GameConfig.MOVE_COST){
-                                depItem.setText("Déplacement");
+                                depItem.setText("Déplacement: "  + GameConfig.MOVE_COST + " AP");
                             }else{
-                                depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶");
+                                depItem.setText("D̶é̶p̶l̶a̶c̶e̶m̶e̶n̶t̶: " + GameConfig.MOVE_COST + " AP");
                             }
                             if(p.getEnergy() >= GameConfig.SHIELD_COST && !p.isShield_up()){
-                                shieldItem.setText("Activer bouclier");
+                                shieldItem.setText("Activer bouclier: " + GameConfig.SHIELD_COST + " AP");
                             }else{
-                                shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶");
+                                shieldItem.setText("A̶c̶t̶i̶v̶e̶r̶ ̶b̶o̶u̶c̶l̶i̶e̶r̶: " + GameConfig.SHIELD_COST + " AP");
                             }
                             if(p.getEnergy() >= GameConfig.FIRE_COST){
-                                shootItem.setText("Tirer");
+                                shootItem.setText("Tirer: " + GameConfig.FIRE_COST + " AP");
                             }else{
-                                shootItem.setText("T̶i̶r̶e̶r̶");
+                                shootItem.setText("T̶i̶r̶e̶r̶: "  + GameConfig.FIRE_COST + " AP");
                             }
                             if(p.getEnergy() >= GameConfig.PLANT_COST){
-                                plantBomb.setText("Poser une bombe");
-                                plantMine.setText("Poser une mine");
+                                plantBomb.setText("Poser une bombe: " + GameConfig.PLANT_COST + " AP");
+                                plantMine.setText("Poser une mine: " + GameConfig.PLANT_COST + " AP");
                             }else{
-                                plantBomb.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶b̶o̶m̶b̶e̶");
-                                plantMine.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶m̶i̶n̶e̶");
+                                plantBomb.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶b̶o̶m̶b̶e̶: "  + GameConfig.PLANT_COST + " AP");
+                                plantMine.setText("P̶o̶s̶e̶r̶ ̶u̶n̶e̶ ̶m̶i̶n̶e̶: " + GameConfig.PLANT_COST + " AP");
                             }
                         }else{
                             p.unselect();
                         }
                     }
                     game.stateChange();
-                }
-                    Player p = playerToPlay;
-                    if(p.getEnergy() > 0){
-                        if(isMoving){
-                            int depX = x - p.getX();
-                            int depY = y - p.getY();
-
-
-                            Direction d = null;
-
-                            if(depX == 0 && depY == -1){
-                                d = Direction.z;
-                            }else if(depX == 0 && depY == 1){
-                                d = Direction.s;
-                            }else if(depX == -1 && depY == 0){
-                                d = Direction.q;
-                            }else if(depX == 1 && depY == 0){
-                                d = Direction.d;
-                            }
-                            if(p.possibleMoves().contains(d)){
-                                if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y())  instanceof Mine) {
-                                  new SoundLoader(2);
-                                }
-                                p.move(d);
-                                isMoving = false;
-                                //coordPlayer[0] = null;
-                                //coordPlayer[1] = null;
-                                p.unselect();
-                                if(p.getEnergy()==0){
-                                    changeTurn();
-                                }
-                                game.stateChange();
-                            }
-                            isMoving = false;
-                        }else if(isShooting){
-                            Direction d = null;
-                            //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
-
-                            int depX = x - p.getX();
-                            int depY = y - p.getY();
-
-                            d = block2dir(x,y);
-//                            if(depX == 0 && depY == -1){
-//                                d = Direction.z;
-//                            }else if(depX == 0 && depY == 1){
-//                                d = Direction.s;
-//                            }else if(depX == -1 && depY == 0){
-//                                d = Direction.q;
-//                            }else if(depX == 1 && depY == 0){
-//                                d = Direction.d;
-//                            }
-                            if(depX != p.getX() && depY != p.getY()){
-                                p.fire(d);
-                                new SoundLoader(4);
-                            }
-                            isShooting = false;
-                            if(p.getEnergy()==0){
-                                changeTurn();
-                            }
-                            game.stateChange();
-                        }else if(p.isPlanting()){
-                            int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
-                            if(distance == 1){
-                                if(playerToPlay.isPlantingBomb()){
-                                    playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));
-                                }else{
-                                    playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));
-                                }
-                            }
-                            p.disablePlant();
-                            p.disablePlantingBomb();
-                            game.stateChange();
-
-                        }
-                    }
-                //}
+                }                
+                
+                Player p = playerToPlay;                
+                if(p.getEnergy() > 0){                
+                    if(isMoving){                    
+                        int depX = x - p.getX();                        
+                        int depY = y - p.getY();    
+                        
+                        Direction d = null;
+                        if(depX == 0 && depY == -1){                        
+                            d = Direction.z;                            
+                        }else if(depX == 0 && depY == 1){                        
+                            d = Direction.s;                            
+                        }else if(depX == -1 && depY == 0){                        
+                            d = Direction.q;                            
+                        }else if(depX == 1 && depY == 0){                        
+                            d = Direction.d;                            
+                        }                        
+                        
+                        if(p.possibleMoves().contains(d)){                        
+                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y())  instanceof Mine) {                            
+                                sound = new SoundLoader(1);                                
+                                sound.getTrack().setOnEndOfMedia(() -> {                                        
+                                    sound = new SoundLoader(2);                                    
+                                });                                
+                            }                                
+                               
+                            p.move(d);                                
+                            isMoving = false;                                
+                            //coordPlayer[0] = null;
+                            //coordPlayer[1] = null;                               
+                            p.unselect();                            
+                            if(p.getEnergy()==0){                            
+                                changeTurn();                                
+                            }                            
+                            game.stateChange();                            
+                        }                        
+                        isMoving = false;                        
+                        p.unselect();                        
+                        game.stateChange();                        
+                    }else if(isShooting){                    
+                        Direction d = null;                        
+                        //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);                            
+                        int depX = x - p.getX();                          
+                        int depY = y - p.getY();                        
+                        d = block2dir(x,y);
+                        /*if(depX == 0 && depY == -1){
+                            d = Direction.z;                         
+                        }else if(depX == 0 && depY == 1){                        
+                            d = Direction.s;                        
+                        }else if(depX == -1 && depY == 0){                        
+                            d = Direction.q;                        
+                        }else if(depX == 1 && depY == 0){                        
+                            d = Direction.d;                        
+                        }*/
+                            
+                        if(depX != p.getX() && depY != p.getY()){                        
+                            p.fire(d);   
+                            sound = new SoundLoader(3);                            
+                        }                        
+                        isShooting = false;                           
+                        if(p.getEnergy()==0){   
+                            changeTurn();
+                        }               
+                        game.stateChange();
+                        
+                    }else if(p.isPlanting()){                    
+                        int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));                        
+                        if(distance == 1){                        
+                            if(playerToPlay.isPlantingBomb()){                            
+                                playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));                                
+                            }else{                            
+                                playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));                                
+                            }                            
+                        }                        
+                        p.disablePlant();                        
+                        p.disablePlantingBomb();                        
+                        game.stateChange();
+                    }                    
+                } 
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-            }
+            }        
         });
+        
         setVisible(true);
         int difX = 832 + (832 - this.getContentPane().getWidth());
         int difY = 832 + (832 - this.getContentPane().getHeight());
@@ -371,11 +356,15 @@ public class GUI extends JFrame{
     }
 
     public void changeTurn(){
-        playerToPlay.setAsTurn(false);
-        playerToPlay = game.getGrid().nextPlayer();
+        playerToPlay.setAsTurn(false);        
+        playerToPlay = game.getGrid().nextPlayer();        
         playerToPlay.setAsTurn(true);
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
-
+        
+        if(game.getGrid().hearExplosion()){
+            sound = new SoundLoader(1);            
+            game.getGrid().endExplosion();
+        }
         //Le joueur actuel ne joues plus
         //On incrémente le tour
         /*

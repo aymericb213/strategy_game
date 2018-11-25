@@ -16,8 +16,8 @@ public class View extends JPanel implements ModelListener{
     private final Dimension sizeImg;
     private BulletThread anim;
     private boolean startAnim = true;
-    private Player player;
-    private GUI observer;
+    private final Player player;
+    private final GUI observer;
 
     public View(Tile[] entities, Game game, Player p, GUI observer) {
         this.player = p;
@@ -41,7 +41,7 @@ public class View extends JPanel implements ModelListener{
             ArrayList<Tile> list = game.getTileMap().get(i);
             try{
                 for(Tile t : list){
-                    int x = 64 * t.getX();						// bloc for décalé plus loin
+                    int x = 64 * t.getX();	// bloc for décalé plus loin
                     int y = 64 * t.getY();
                     if(player.getView().playerCanSee(t)){
                         if(t instanceof Bonus){
@@ -230,11 +230,11 @@ public class View extends JPanel implements ModelListener{
     if(game.getGrid().gameIsOver() && player.getLife() > 0){
         g.setColor(Color.GREEN);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-        g.drawString("VICTOIRE", 416, 416);
+        g.drawString("VICTOIRE", 300, 416);
     }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){
         g.setColor(Color.RED);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-        g.drawString("DEFAITE", 416, 416);
+        g.drawString("DEFAITE", 300, 416);
     }
         
     

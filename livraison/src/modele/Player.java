@@ -1,7 +1,6 @@
 package modele;
 
 import java.util.*;
-import java.lang.*;
 import static java.lang.Math.*;
 
 public class Player extends Tile {
@@ -10,13 +9,13 @@ public class Player extends Tile {
     private final String classname;
     private int energy;
     private int life;
-    private HashMap<Weapon,Integer> loadout;
+    private final HashMap<Weapon,Integer> loadout;
     private boolean shield_up = false;
     private PlayerStrategy strategy;
-    private PlayerGrid view;
+    private final PlayerGrid view;
     public Direction lastMove = Direction.z;
     private boolean selected;
-    private int visionSize;
+    private final int visionSize;
     private boolean isShooting = false;
     private boolean asTurn = false;
     private boolean isPlanting = false;
@@ -67,9 +66,7 @@ public class Player extends Tile {
     public void setBaseEnergy(int baseEnergy) {
         this.baseEnergy = baseEnergy;
     }
-
-
-
+    
     public boolean getAsTurn() {
         return asTurn;
     }
@@ -170,21 +167,10 @@ public class Player extends Tile {
 
     public Weapon getWeapon(Weapon a){
         Set<Weapon> keys = this.loadout.keySet();
-        for(Weapon w : keys){
-
-        }
+        for(Weapon w : keys){}
         return null;
     }
-
-
-
-
-
-
-
-
-
-
+    
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
         //System.out.print(view.getTileAt(this.x, this.y));
@@ -260,12 +246,6 @@ public class Player extends Tile {
 //        System.out.println("end TTTTTTTTTTTTTTTTTTTTTTTT\n\n\n\n");
         return t;
     }
-
-
-
-
-
-
 
     public ArrayList<ArrayList<Integer>> visiblesTiles(){
         ArrayList<ArrayList<Integer>> visibles = new ArrayList<>();
@@ -399,12 +379,8 @@ public class Player extends Tile {
         tmp.add(1,vY);
         visibles.add(tmp);
 //        System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
-        return;
-
     }
-
-
-
+    
     public void affG(int[][] g){
         System.out.println("start");
         for(int[] i : g){
@@ -415,24 +391,7 @@ public class Player extends Tile {
         }
         System.out.println("end");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     public void takeDamage(int damage) {
         if (!(this.shield_up)) {
             this.life -= damage;
@@ -541,12 +500,7 @@ public class Player extends Tile {
       }
       return controls;
     }
-
-    @Override
-    public String toString() {
-        return this.shield_up ? "€" : "@";
-    }
-
+    
     public boolean isPlantingBomb() {
         return plantingBomb;
     }
@@ -557,5 +511,10 @@ public class Player extends Tile {
 
     public void disablePlantingBomb(){
         this.plantingBomb = false;
+    }
+
+    @Override
+    public String toString() {
+        return this.shield_up ? "€" : "@";
     }
 }

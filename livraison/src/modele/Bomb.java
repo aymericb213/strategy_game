@@ -96,6 +96,4 @@ public class Bomb extends Mine {
     public int getDelay() {
         return delay;
     }
-
-
 }

@@ -27,7 +27,7 @@ public class SoundLoader {
                 Logger.getLogger(SoundLoader.class.getName()).log(Level.SEVERE, null, ex);
             }   
             
-            playSound = new MediaPlayer(loadSound);
+            playSound = new MediaPlayer(loadSound);  
             playSound.setVolume(0.3);
             playSound.play();
         }    
@@ -35,5 +35,11 @@ public class SoundLoader {
     
     public MediaPlayer getTrack(){
         return playSound;
+    }
+    
+    public void loopTrack(){
+        playSound.setOnEndOfMedia(() -> {
+            playSound.seek(playSound.getStartTime());
+        });
     }
 }

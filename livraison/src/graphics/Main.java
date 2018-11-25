@@ -13,8 +13,10 @@ import org.xml.sax.SAXException;
 public class Main {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-
+        com.sun.javafx.application.PlatformImpl.startup(()->{});
         new GameConfig();
+        SoundLoader sound = new SoundLoader(0);
+        sound.loopTrack();
         System.out.println(System.getProperty("user.dir"));
 
         //Chargement de l'image qui représentera le joueur

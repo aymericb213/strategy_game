@@ -13,12 +13,13 @@ public class RealGrid implements Grid {
     private ArrayList<Bomb> bombs;
     private GridStrategy generator;
     private Player playerToPlay;
+    private boolean explode = false;
 
     public RealGrid(int width, int height, int nb_players) {
         this.width = width;
         this.tiles = new Tile[width*height];
         this.players = new Player[nb_players];
-        this.ordering = new LinkedList<Player>();
+        this.ordering = new LinkedList<>();
         this.bombs = new ArrayList<>();
         this.generator = new RandomGeneration(this);
     }
@@ -42,14 +43,14 @@ public class RealGrid implements Grid {
     }
 
     public Player nextPlayer() {
-        if (this.ordering==null || this.ordering.size()==0) {
+        if (this.ordering==null || this.ordering.isEmpty()) {
           nextTurn();
         }
         Player p = this.ordering.poll();
         p.setEnergy(p.getBaseEnergy());
         p.disableShield();
         playerToPlay = p;
-          System.out.println(playerToPlay);
+        System.out.println(playerToPlay);
         p.setAsTurn(true);
         return p;
     }
@@ -58,18 +59,30 @@ public class RealGrid implements Grid {
         return playerToPlay;
     }
 
-    public void nextTurn() {
-      ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
-      for (Bomb b : copy_bombs) {
-        b.tick();
-        b.explode(this);
-      }
-      this.ordering = new LinkedList<>();
-      this.fillPlayerQueue();
-      if (this.random_order) {
-        Collections.shuffle((List)this.ordering);
-      }
-      this.turn_number++;
+    public void nextTurn() {     
+        ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);      
+        for (Bomb b : copy_bombs) {
+            if(b.getDelay() == 1){
+                this.explode = true;
+            }
+            b.tick();      
+            b.explode(this);      
+        }      
+        this.ordering = new LinkedList<>();      
+        this.fillPlayerQueue();      
+        if (this.random_order) {       
+            Collections.shuffle((List)this.ordering);     
+        }
+      
+        this.turn_number++;    
+    }
+    
+    public boolean hearExplosion(){
+        return explode;
+    }
+    
+    public void endExplosion(){
+        this.explode = false;
     }
 
     public void fillPlayerQueue() {
@@ -122,7 +135,6 @@ public class RealGrid implements Grid {
         this.tiles[t.getX()+(t.getY()*this.width)]=t;
     }
 
-
     public Queue<Player> getActivePlayers() {
       return this.ordering;
     }
@@ -147,7 +159,7 @@ public class RealGrid implements Grid {
         return this.width;
     }
 
-	public int getHeight(){
+    public int getHeight(){
         return this.tiles.length/this.width;
     }
 
