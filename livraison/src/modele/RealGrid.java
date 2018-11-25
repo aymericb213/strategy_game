@@ -2,6 +2,9 @@ package modele;
 
 import java.util.*;
 
+/**
+ * The game grid, where everything in the game takes place.
+ */
 public class RealGrid implements Grid {
 
     private int turn_number = 0;
@@ -15,6 +18,14 @@ public class RealGrid implements Grid {
     private Player playerToPlay;
     private boolean explode = false;
 
+    /** Class constructor.
+     * @param width
+     * Grid width.
+     * @param height
+     * Grid height.
+     * @param nb_players
+     * Number of players in game.
+    */
     public RealGrid(int width, int height, int nb_players) {
         this.width = width;
         this.tiles = new Tile[width*height];
@@ -28,10 +39,16 @@ public class RealGrid implements Grid {
         this(0,0,2);
     }
 
+    /** Fills an empty Tile array with Tile nb_instances
+      * according to a generation strategy.*/
     public void createGrid() {
         generator.generate();
     }
 
+    /** Checks if the game is over,
+     * i.e. if only one player is alive.
+     * @return the test result.
+    */
     public boolean gameIsOver() {
         int cpt = 0;
         for (Player p : players) {
@@ -42,6 +59,9 @@ public class RealGrid implements Grid {
         return cpt==1;
     }
 
+    /** Finds and prepares the next player to play its turn.
+      * @return the next player.
+      */
     public Player nextPlayer() {
         if (this.ordering==null || this.ordering.isEmpty()) {
             nextTurn();
@@ -54,7 +74,8 @@ public class RealGrid implements Grid {
         return p;
     }
 
-
+    /** Prepares the next turn by making bombs tick
+      * and refilling the player queue.*/
     public void nextTurn() {
         ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
         for (Bomb b : copy_bombs) {
@@ -93,6 +114,7 @@ public class RealGrid implements Grid {
         this.explode = false;
     }
 
+    /** Fills the player queue with all alive players.*/
     public void fillPlayerQueue() {
       for (Player p : this.players) {
         if (p.getLife() > 0) {
@@ -101,6 +123,13 @@ public class RealGrid implements Grid {
       }
     }
 
+    /** Checks if the parameter coordinates are those of a grid tile.
+      * @param x
+      * X-axis coordinate to test.
+      * @param y
+      * Y-axis coordinate to test.
+      * @return the test result.
+    */
     public boolean isInBounds(int x, int y) {
         boolean check = false;
         if (x>=0 && x<this.width && y>=0 && y<this.tiles.length/this.width) {
@@ -109,6 +138,14 @@ public class RealGrid implements Grid {
         return check;
     }
 
+    /** Creates a list of every tile around the parameter tile
+      * in the given range.
+      * @param t
+      * The center tile.
+      * @param size
+      * Size of the area to cover.
+      * @return the list of all neighbouring tiles.
+    */
     public ArrayList<Tile> getNeighbouringTiles(Tile t, int size) {
         ArrayList<Tile> neighbours = new ArrayList<>();
         for (int i=-size ; i<=size ; i++) {
@@ -123,6 +160,14 @@ public class RealGrid implements Grid {
         return neighbours;
     }
 
+    /** Filtering method listing only the free tiles
+      * around the parameter tile, used to find planting sites.
+      * @param t
+      * The center tile.
+      * @param size
+      * Size of the area to cover.
+      * @return the list of all neighbouring free tiles.
+    */
     public ArrayList<FreeTile> getNeighbouringFreeTiles(Tile t, int size) {
         ArrayList<FreeTile> valids = new ArrayList<>();
         for (Tile d : getNeighbouringTiles(t,size)) {
@@ -174,6 +219,7 @@ public class RealGrid implements Grid {
     public int getHeight(){
         return this.tiles.length/this.width;
     }
+
 
     public void setWidth(int new_width) {
         this.width = new_width;
