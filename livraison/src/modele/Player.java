@@ -195,11 +195,19 @@ public class Player extends Tile {
     }
 
     public ArrayList<ArrayList<Integer>> visibleTiles(){
+<<<<<<< HEAD
         ArrayList<ArrayList<Integer>> t = new ArrayList<>();
 
         int c=1;
         while(c<this.visionSize){
             if(this.x+c>view.getModel().getWidth()){
+=======
+        ArrayList<ArrayList<Integer>> t = new ArrayList<>();			//create an arrayList who will contains all coordonates of tiles who are visible to given player
+        
+        int c=1;
+        while(c<this.visionSize){										//loop to look right
+            if(this.x+c>view.getModel().getWidth()){ 
+>>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){
@@ -216,8 +224,13 @@ public class Player extends Tile {
         }
 
         c=1;
+<<<<<<< HEAD
         while(c<this.visionSize){
             if(this.x-c<0){
+=======
+        while(c<this.visionSize){									//loop to look left
+            if(this.x-c<0){ 
+>>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){
@@ -234,7 +247,7 @@ public class Player extends Tile {
         }
 
         c=1;
-        while(c<this.visionSize){
+        while(c<this.visionSize){									//loop to look down
             if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
                 break;
             }else{
@@ -252,8 +265,13 @@ public class Player extends Tile {
         }
 
         c=1;
+<<<<<<< HEAD
         while(c<this.visionSize){
             if(this.y-c<0){
+=======
+        while(c<this.visionSize){									//loop to look up
+            if(this.y-c<0){ 
+>>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){
@@ -268,8 +286,13 @@ public class Player extends Tile {
             }
             c++;
         }
+<<<<<<< HEAD
 
         ArrayList<Integer> pos = new ArrayList<>(2);
+=======
+        
+        ArrayList<Integer> pos = new ArrayList<>(2);				//add player location
+>>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
         pos.add(0,this.x);
         pos.add(1,this.y);
         t.add(pos);
