@@ -268,7 +268,9 @@ public class GUI extends JFrame{
                         int depY = y - p.getY();
                         d = block2dir(x,y);
 
-                        if(depX != p.getX() && depY != p.getY()){
+                        if(game.getGrid().getTileAt(depX, depY) instanceof Player){
+                            
+                        }else{
                             p.fire(d);
                             sound = new SoundLoader(3);
                         }

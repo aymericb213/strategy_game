@@ -72,11 +72,9 @@ public class View extends JPanel implements ModelListener{
                         boolean isInViewable = (viewableTiles.contains(tmp));
                         boolean isInVisibles = (visiblesTiles.contains(tmp));
                         if(playerCanSee && ( isInViewable || isInVisibles ) ){
-                        //if(true){
                             g.drawImage(t.getImgRepr(), xx*64 , yy*64, this);
                         }else{
-                            g.setColor(new Color(50,50,50));
-                            g.fillRect(xx*64, yy*64, 64, 64);
+                            g.drawImage(ImagesLoader.fog, xx*64, yy*64, this);
                         }
                     }
                 }
@@ -277,8 +275,7 @@ public class View extends JPanel implements ModelListener{
             g.setColor(new Color(229,133,61));
         }else{
             g.setColor(new Color(255,0,0));
-        }
-
+        }        
         g.fillRect(x+10+1,y+2+1,hpSize-2, 5-2);
     }
 

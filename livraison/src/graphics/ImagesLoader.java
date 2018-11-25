@@ -15,6 +15,7 @@ public class ImagesLoader {
     public static ArrayList<BufferedImage> imageList;
     public static HashMap<Integer, ArrayList<BufferedImage>> imagePlayers;
     private final File file;
+    public static BufferedImage fog;
     public static BufferedImage shield;
     public static BufferedImage bomb;
     public static BufferedImage mine;
@@ -141,6 +142,7 @@ public class ImagesLoader {
         }
 
         try{
+            fog = ImageIO.read(new File("src/Images/fog.png"));
             shield = ImageIO.read(new File("src/Images/shield.png"));
             bomb = ImageIO.read(new File("src/Images/bomb2.png"));
             mine = ImageIO.read(new File("src/Images/mine2.png"));
