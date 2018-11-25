@@ -42,9 +42,7 @@ public class Bomb extends Mine {
                 if (!(t.isWalkable())) {
                   try {
                     ((Player)t).takeDamage(this.damage);
-                  } catch (ClassCastException not_a_player) {
-                    g.setTileAt(new FreeTile(t.getX(),t.getY()));
-                  }
+                  } catch (ClassCastException not_a_player) {}
                 }
             }
             g.setTileAt(new FreeTile(this.x,this.y));
