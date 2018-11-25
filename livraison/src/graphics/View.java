@@ -7,6 +7,7 @@ import java.util.*;
 import javax.swing.JPanel;
 
 public class View extends JPanel implements ModelListener{
+    private static final long serialVersionUID = 7526471155622776147L;
     private Tile[] entities;
     private final Game game;
     private final Dimension sizeImg;
@@ -57,10 +58,10 @@ public class View extends JPanel implements ModelListener{
 
         if(player.getLife() > 0){
                 BufferedImage img = player.getImgRepr();
-                
+
                 ArrayList<ArrayList<Integer>> viewableTiles = player.visibleTiles();
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
-		
+
 		for(int i = 0; i < game.getTileMap().size(); i++){
                     ArrayList<Tile> list = game.getTileMap().get(i);
                     for(Tile t : list){                                        //bloc for remis içi (modifié)
@@ -77,7 +78,7 @@ public class View extends JPanel implements ModelListener{
                         }
                     }
                 }
-                
+
                 Set<Player> players = game.getListPlayers().keySet();
                 for(Player p: players){
                     if(p.getName() != player.getName()){
@@ -92,7 +93,7 @@ public class View extends JPanel implements ModelListener{
                         }
                     }
                 }
-                
+
                 int baseX = (int)(( 64 - sizeImg.getWidth())/2);
                 int baseY = (int)(( 64 - sizeImg.getHeight())/2);
 
@@ -132,7 +133,7 @@ public class View extends JPanel implements ModelListener{
 
         displayBomb(g);
         Grid grid = game.getGrid();
-        
+
 
     if(observer.playerToPlay.getName() != null || player.getName() != null){
         observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
@@ -173,7 +174,7 @@ public class View extends JPanel implements ModelListener{
                     g.drawImage(ImagesLoader.mine, t.getX()*64 +12 , t.getY()*64 +12, this);
                 }
             }
-        }        
+        }
     }
 
     public void displayBullet(Graphics g, Player p){
@@ -274,7 +275,7 @@ public class View extends JPanel implements ModelListener{
             g.setColor(new Color(229,133,61));
         }else{
             g.setColor(new Color(255,0,0));
-        }        
+        }
         g.fillRect(x+10+1,y+2+1,hpSize-2, 5-2);
     }
 

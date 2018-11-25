@@ -4,7 +4,9 @@ import modele.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+
 public class GUI extends JFrame{
+    private static final long serialVersionUID = 7526471155622776147L;
     private View view;
     private Game game;
     private Integer[] coordPlayer = new Integer[2];
@@ -13,7 +15,7 @@ public class GUI extends JFrame{
     private boolean isMoving = false;
     private boolean isPlanting = false;
     private Player player;
-    private SoundLoader sound;    
+    private SoundLoader sound;
 
     public GUI(Player p){
         this(new Game(),p);
@@ -34,7 +36,7 @@ public class GUI extends JFrame{
         //Pour lire les entrées claviers
         setFocusable(true);
         requestFocus();
-        
+
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
 
         //Création de menu
@@ -244,7 +246,7 @@ public class GUI extends JFrame{
                         }
 
                         if(p.possibleMoves().contains(d)){
-                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {                                
+                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {
                                 sound = new SoundLoader(1);
                             }
 
@@ -266,12 +268,12 @@ public class GUI extends JFrame{
                         d = block2dir(x,y);
 
                         if(game.getGrid().getTileAt(depX, depY) instanceof Player){
-                            
+
                         }else{
                             p.fire(d);
                             sound = new SoundLoader(3);
                         }
-                        
+
                         isShooting = false;
                         if(p.getEnergy()==0){
                             changeTurn();
@@ -288,11 +290,11 @@ public class GUI extends JFrame{
                             }
                         }
                         p.disablePlant();
-                        p.disablePlantingBomb();                        
+                        p.disablePlantingBomb();
                         game.stateChange();
-                    }  
+                    }
                     damageSound();
-                }                
+                }
             }
 
             @Override
@@ -324,14 +326,14 @@ public class GUI extends JFrame{
         playerToPlay.setAsTurn(true);
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
 
-        if(game.getGrid().hearExplosion()){            
+        if(game.getGrid().hearExplosion()){
             sound = new SoundLoader(1);
             damageSound();
             game.getGrid().endExplosion();
         }
         game.stateChange();
     }
-    
+
     public void damageSound(){
         if(game.getGrid().checkDamage()){
             sound = new SoundLoader(2);
