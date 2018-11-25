@@ -7,7 +7,7 @@ public class RandomGeneration implements GridStrategy {
   private final RealGrid client;
 
   public RandomGeneration(RealGrid client) {
-      this.client = client;
+        this.client = client;
   }
 
     @Override

@@ -9,6 +9,7 @@ public class Player extends Tile {
     private final String classname;
     private int energy;
     private int life;
+    private int copy_life;
     private final HashMap<Weapon,Integer> loadout;
     private boolean shield_up = false;
     private PlayerStrategy strategy;
@@ -28,6 +29,7 @@ public class Player extends Tile {
         super(0,0);
         this.visionSize = GameConfig.PLAYER_FOV;
         this.life = GameConfig.PLAYER_BASE_HP;
+        this.copy_life = GameConfig.PLAYER_BASE_HP;
         this.energy = GameConfig.PLAYER_BASE_AP;
         this.baseEnergy = GameConfig.PLAYER_BASE_AP;
         this.name = name;
@@ -85,6 +87,14 @@ public class Player extends Tile {
 
     public int getLife() {
         return this.life;
+    }
+    
+    public int getCopyLife() {
+        return this.copy_life;
+    }
+    
+    public void setCopyLife(int new_life) {
+        this.copy_life=new_life;
     }
 
     public void enablePlant(){

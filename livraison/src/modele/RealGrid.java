@@ -73,7 +73,19 @@ public class RealGrid implements Grid {
 
         this.turn_number++;
     }
-
+    
+    public boolean checkDamage(){        
+        for(Player p : players){  
+            int current_life = p.getLife();
+            int copy_life = p.getCopyLife();            
+            if(copy_life != current_life){
+                p.setCopyLife(current_life);
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean hearExplosion(){
         return explode;
     }

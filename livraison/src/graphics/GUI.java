@@ -177,7 +177,6 @@ public class GUI extends JFrame{
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
             }
@@ -273,6 +272,7 @@ public class GUI extends JFrame{
                             p.fire(d);
                             sound = new SoundLoader(3);
                         }
+                        
                         isShooting = false;
                         if(p.getEnergy()==0){
                             changeTurn();
@@ -289,10 +289,14 @@ public class GUI extends JFrame{
                             }
                         }
                         p.disablePlant();
-                        p.disablePlantingBomb();
+                        p.disablePlantingBomb();                        
                         game.stateChange();
+                    }  
+                    if(game.getGrid().checkDamage()){
+                        sound = new SoundLoader(2);
+                        game.getGrid().checkDamage();
                     }
-                }
+                }                
             }
 
             @Override
