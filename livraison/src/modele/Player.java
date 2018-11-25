@@ -3,9 +3,10 @@ package modele;
 import java.util.*;
 import static java.lang.Math.*;
 
+/** The game actors.*/
 public class Player extends Tile {
 
-    private  String name;
+    private String name;
     private final String classname;
     private int energy;
     private int life;
@@ -21,10 +22,16 @@ public class Player extends Tile {
     private boolean asTurn = false;
     private boolean isPlanting = false;
     private int baseEnergy;
-
-    /////////////ATTTETION
     private boolean plantingBomb = false;
 
+    /** Class constructor.
+     * @param g
+     * Grid in which the player is.
+     * @param name
+     * Player's name.
+     * @param classname
+     * Player's class.
+    */
     public Player(RealGrid g, String name, String classname) {
         super(0,0);
         this.visionSize = GameConfig.PLAYER_FOV;
@@ -41,6 +48,7 @@ public class Player extends Tile {
         this.walkable=false;
     }
 
+    /** Do the action determined by the player strategy.*/
     public void act() {
         this.strategy.execute();
     }
@@ -88,11 +96,11 @@ public class Player extends Tile {
     public int getLife() {
         return this.life;
     }
-    
+
     public int getCopyLife() {
         return this.copy_life;
     }
-    
+
     public void setCopyLife(int new_life) {
         this.copy_life=new_life;
     }
@@ -134,7 +142,11 @@ public class Player extends Tile {
         this.shield_up = false;
     }
 
-    /* Mouvement */
+    /** Moves the player one tile towards the parameter direction
+      * and reacts to the content of the destination tile.
+      * @param d
+      * Move direction.
+      */
     public void move(Direction d) {
         if (this.possibleMoves().contains(d)) {
             this.view.setTileAt(new FreeTile(x,y));
@@ -158,7 +170,10 @@ public class Player extends Tile {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    /** Lists the available directions of a potential move.
+      * @return the list of possible directions.
+      */
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
         if((this.y > 0) && view.getTileAt(this.x,this.y-1).isWalkable()) {
@@ -179,90 +194,84 @@ public class Player extends Tile {
         return res;
     }
 
-    public Weapon getWeapon(Weapon a){
-        Set<Weapon> keys = this.loadout.keySet();
-        for(Weapon w : keys){}
-        return null;
-    }
-
     public ArrayList<ArrayList<Integer>> visibleTiles(){
         ArrayList<ArrayList<Integer>> t = new ArrayList<>();
-        
+
         int c=1;
         while(c<this.visionSize){
-            if(this.x+c>view.getModel().getWidth()){ 
+            if(this.x+c>view.getModel().getWidth()){
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){
-                    break; 
+                    break;
                 }
-                else{ 
+                else{
                     ArrayList<Integer> pos = new ArrayList<>(2);
-                    pos.add(0,this.x+c); 
-                    pos.add(1,this.y); 
-                    t.add(pos); 
+                    pos.add(0,this.x+c);
+                    pos.add(1,this.y);
+                    t.add(pos);
                 }
             }
             c++;
         }
-        
+
         c=1;
         while(c<this.visionSize){
-            if(this.x-c<0){ 
+            if(this.x-c<0){
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){
-                    break; 
+                    break;
                 }
-                else{ 
+                else{
                     ArrayList<Integer> pos = new ArrayList<>(2);
-                    pos.add(0,this.x-c); 
-                    pos.add(1,this.y); 
+                    pos.add(0,this.x-c);
+                    pos.add(1,this.y);
                     t.add(pos);
-                }            
+                }
             }
             c++;
         }
-        
+
         c=1;
         while(c<this.visionSize){
             if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x, this.y+c) instanceof FreeTile)){
-                    break; 
+                    break;
                 }
                 else{
                     ArrayList<Integer> pos = new ArrayList<>(2);
-                    pos.add(0,this.x); 
-                    pos.add(1,this.y+c); 
+                    pos.add(0,this.x);
+                    pos.add(1,this.y+c);
                     t.add(pos);
                 }
             }
             c++;
         }
-        
+
         c=1;
         while(c<this.visionSize){
-            if(this.y-c<0){ 
+            if(this.y-c<0){
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){
-                    break; 
+                    break;
                 }
-                else{ 
+                else{
                     ArrayList<Integer> pos = new ArrayList<>(2);
                     pos.add(0,this.x);
-                    pos.add(1,this.y-c); 
-                    t.add(pos); 
+                    pos.add(1,this.y-c);
+                    t.add(pos);
                 }
             }
             c++;
         }
-        
+
         ArrayList<Integer> pos = new ArrayList<>(2);
         pos.add(0,this.x);
-        pos.add(1,this.y); 
+        pos.add(1,this.y);
         t.add(pos);
         return t;
     }
@@ -281,16 +290,16 @@ public class Player extends Tile {
                 }
             }
         }
-        
+
         for(int vY = 0; vY<mapSizeY; vY++){
             for(int vX = 0; vX<mapSizeX; vX++){
-                
+
                 Tile t = view.getModel().getTileAt(vX, vY);
                 boolean isWall = t instanceof Wall;
-                
+
                 ArrayList<Integer> a = new ArrayList<>(); a.add(0,vX); a.add(1,vY);
                 boolean isContained = visibles.contains(a);
-                
+
                 boolean narrowContained;
                 if( isWall && !(isContained) ){
                     narrowContained = false;
@@ -305,7 +314,7 @@ public class Player extends Tile {
                     }
                     if(narrowContained){ visibles.add(a); }
                 }
-                
+
             }
         }
         return visibles;
@@ -343,14 +352,14 @@ public class Player extends Tile {
 
         for(int i=0; i<intHypothenuse; i++){
 
-            if(revX){ 
-                XX-=movingX; 
+            if(revX){
+                XX-=movingX;
             }else{
-                XX+=movingX; 
+                XX+=movingX;
             } //deplace XX de movingX (vers vX*20 donc)
             if(revY){
                 YY-=movingY;
-            }else{ 
+            }else{
                 YY+=movingY;
             }
 
@@ -358,20 +367,25 @@ public class Player extends Tile {
             int ytest = (int) floor( ((int)(YY)+10) /20 );
 
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
-            if(question){ 
+            if(question){
                 g[xtest][ytest] += 1;
             }
-            else{ 
-                return; 
+            else{
+                return;
             }
         }
 
-        ArrayList<Integer> tmp = new ArrayList<>(2); 
-        tmp.add(0,vX); 
-        tmp.add(1,vY); 
+        ArrayList<Integer> tmp = new ArrayList<>(2);
+        tmp.add(0,vX);
+        tmp.add(1,vY);
         visibles.add(tmp);
     }
 
+    /** Applies damage to the player
+      * and handles its death.
+      * @param damage
+      * Damage received.
+      */
     public void takeDamage(int damage) {
         if (!(this.shield_up)) {
             this.life -= damage;
@@ -387,18 +401,32 @@ public class Player extends Tile {
 
     }
 
+    /** Checks if an action is available, given its cost
+      * and the weapon's stock, if applicable.
+      * @param cost
+      * Action cost.
+      * @param weapon
+      * Index of the weapon in the factory's static inventory,
+      * or -1 if no weapon is involved in the action.
+      * @return the test result.
+    */
     public boolean actionIsAvailable(int cost, int weapon) {
         boolean enough_ap = (this.energy>=cost);
         return (weapon>=0 && weapon<PlayerFactory.inventory.size()) ? (enough_ap && this.loadout.get(PlayerFactory.inventory.get(weapon))>0) : enough_ap;
     }
 
-    /* Explosifs */
-    public void plant(Mine m, Tile t) {
+    /** Plants an explosive on the parameter tile.
+      * @param explosive
+      * The kind of explosive to plant.
+      * @param t
+      * The planting site.
+    */
+    public void plant(Mine explosive, Tile t) {
         if (t!=null) {
-            m.setPosition(t.getX(),t.getY());
-            this.view.setTileAt(m);
+            explosive.setPosition(t.getX(),t.getY());
+            this.view.setTileAt(explosive);
             try {
-                this.view.addBomb((Bomb)m);
+                this.view.addBomb((Bomb)explosive);
                 this.loadout.put(PlayerFactory.inventory.get(2), this.loadout.get(PlayerFactory.inventory.get(2))-1);
             } catch(ClassCastException not_a_bomb) {
                 this.loadout.put(PlayerFactory.inventory.get(1), this.loadout.get(PlayerFactory.inventory.get(1))-1);
@@ -407,7 +435,10 @@ public class Player extends Tile {
         }
     }
 
-    /* Tir */
+    /** Shoot with a firearm towards the parameter direction.
+      * @param d
+      * Fire direction.
+      */
     public void fire(Direction d) {
         this.isShooting = true;
         this.lastMove = d;
@@ -421,8 +452,6 @@ public class Player extends Tile {
         }
     }
 
-    
-    
     public boolean isShooting() {
         return isShooting;
     }
@@ -431,11 +460,6 @@ public class Player extends Tile {
         this.isShooting = false;
     }
 
-    /**
-    * Surcharge de hashCode().
-    * Nécessaire au bon fonctionnement de la surcharge d'equals.
-    * @return Le hashcode de l'objet.
-    */
     @Override
     public int hashCode() {
         int code=13;
@@ -443,12 +467,6 @@ public class Player extends Tile {
         return code;
     }
 
-    /**
-    * Surcharge de equals.
-    * Prend en compte l'égalité de coordonnées.
-    * @param o
-    * L'objet à comparer au noeud.
-    * @return Le résultat du test d'égalité.*/
     @Override
     public boolean equals(Object o) {
         if (o==this) {
