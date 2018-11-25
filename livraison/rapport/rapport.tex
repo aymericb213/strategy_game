@@ -83,10 +83,69 @@ L'application est séparée en deux packages : le package modele qui contient to
 \caption{Diagramme de packages}
 \end{figure}
 
+\newpage
+
+\section{Fonctionnement du modèle}
+
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.33]{images/modele.png}
 \caption{Diagramme de classe du package modele}
+\end{figure}
+
+Le package modele permet de jouer au jeu en console, avec plusieurs options d'exécution.
+\begin{itemize}
+\item S'il est lancé sans option, on lance une partie avec 4 joueurs IA sur une grille en 10x10.
+\item Avec l'option \textbf{-p0}, l'application donne accès à un menu permettant de choisir les dimensions de la grille, le nombre de joueurs et le choix de la présence d'IA ou non.
+\item Avec l'option \textbf{-p1}, on a en plus la possibilité de choisir la classe de chaque joueur.
+\end{itemize}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{images/menu.png}
+\caption{Menu avancé}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{images/game.png}
+\caption{Interface console}
+\end{figure}
+
+\subsection{Pattern factory}
+
+L'instanciation des différents joueurs se fait via la classe PlayerFactory, qui contient une méthode \textit{build()} qui renvoie une instance de Player paramétrée par de nombreux arguments.\\
+On peut ainsi facilement créer des archétypes de joueurs en définissant des méthodes appelant \textit{build()} avec des paramètres définis, par exemple un joueur résistant avec un bonus de points de vie, mais moins de munitions et d'explosifs.\\
+Actuellement, les archétypes sont identifiée par une chaîne de caractère en attribut de Player, mais on pourrait également rendre la classe Player abstraite et utiliser la factory pour instancier des classes filles représentant ces archétypes.\\
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{images/factory.png}
+\caption{Pattern factory pour les joueurs}
+\end{figure}
+
+\subsection{Pattern proxy}
+
+Pour simplifier la mise à jour des données lorsque les joueurs agissent, il est préférable de n'avoir qu'une seule grille qui stocke toutes les informations. Cependant, on veut aussi que chaque joueur n'ait qu'une vision partielle de la grille de jeu, ne voyant que les explosifs qu'il a lui-même posés.\\
+Le pattern proxy permet de réaliser ces deux impératifs en même temps. Dans notre application, nous utilisons une classe PlayerGrid qui est liée à la RealGrid unique de la partie, et à un des joueurs. Chaque joueur a donc un attribut PlayerGrid.\\
+La classe PlayerGrid propose des méthodes de RealGrid modifiées pour mentir au joueur. Ainsi, là où la méthode \textit{getTileAt()} de RealGrid renvoie simplement la case se trouvant aux coordonnées demandées, la même méthode de PlayerGrid vérifie d'abord si le joueur a le droit de connaître la nature exacte de la case, et renvoie une case vide si ce n'est pas le cas. La méthode \textit{toString()} fonctionne de la même façon et permet de produire des représentations de la grille adaptées à chaque joueur.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.3]{images/proxy.png}
+\caption{Pattern proxy pour les vues joueur}
+\end{figure}
+
+\subsection{Pattern strategy}
+
+Nous utilisons le pattern Strategy deux fois dans l'application : pour la génération de la grille et pour le comportement de l'IA.\\
+Ce pattern permet de modifier radicalement le résultat d'une méthode sans pour autant modifier le coeur du code.\\
+Ainsi, la génération de grille est faite en utilisant la méthode \textit{generate()} d'une implémentation de l'interface GridStrategy. Si on veut changer la façon dont on remplit la grille, il suffit d'ajouter une nouvelle implémentation et de faire appel à un simple setter de RealGrid.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{images/strategy.png}
+\caption{Pattern strategy pour la génération de grille}
 \end{figure}
 
 
