@@ -66,7 +66,7 @@ public class Player extends Tile {
     public void setBaseEnergy(int baseEnergy) {
         this.baseEnergy = baseEnergy;
     }
-    
+
     public boolean getAsTurn() {
         return asTurn;
     }
@@ -170,7 +170,7 @@ public class Player extends Tile {
         for(Weapon w : keys){}
         return null;
     }
-    
+
     public ArrayList<ArrayList> visibleTiles(){
         ArrayList<ArrayList> t = new ArrayList<>();
         //System.out.print(view.getTileAt(this.x, this.y));
@@ -380,7 +380,7 @@ public class Player extends Tile {
         visibles.add(tmp);
 //        System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
     }
-    
+
     public void affG(int[][] g){
         System.out.println("start");
         for(int[] i : g){
@@ -391,7 +391,7 @@ public class Player extends Tile {
         }
         System.out.println("end");
     }
-    
+
     public void takeDamage(int damage) {
         if (!(this.shield_up)) {
             this.life -= damage;
@@ -427,9 +427,10 @@ public class Player extends Tile {
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
             if (w instanceof Rifle) {
-                w.fire(this.view.getModel(),d);
-                this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);
-                this.energy-=GameConfig.FIRE_COST;
+              Rifle fire_rifle = new Rifle(this);//nouveau Rifle juste pour le tir
+              fire_rifle.fire(this.view.getModel(),d);
+              this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);// màj des munitions
+              this.energy-=GameConfig.FIRE_COST;
             }
         }
     }
@@ -500,7 +501,7 @@ public class Player extends Tile {
       }
       return controls;
     }
-    
+
     public boolean isPlantingBomb() {
         return plantingBomb;
     }
