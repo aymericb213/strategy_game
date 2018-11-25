@@ -27,7 +27,7 @@ public class RandomGeneration implements GridStrategy {
 
         for (Player p : client.getPlayers()) {
             int rx = r.nextInt(client.getWidth());
-            int ry = r.nextInt(client.getGrid().length/client.getWidth());
+            int ry = r.nextInt(client.getHeight());
             p.setPosition(rx,ry);
             client.setTileAt(p);
             for (Tile t : client.getNeighbouringTiles(p,1)) {

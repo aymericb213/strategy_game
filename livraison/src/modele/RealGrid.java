@@ -55,32 +55,29 @@ public class RealGrid implements Grid {
         return p;
     }
 
-    public Player getPlayerToPlay() {
-        return playerToPlay;
-    }
 
-    public void nextTurn() {     
-        ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);      
+    public void nextTurn() {
+        ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
         for (Bomb b : copy_bombs) {
             if(b.getDelay() == 1){
                 this.explode = true;
             }
-            b.tick();      
-            b.explode(this);      
-        }      
-        this.ordering = new LinkedList<>();      
-        this.fillPlayerQueue();      
-        if (this.random_order) {       
-            Collections.shuffle((List)this.ordering);     
+            b.tick();
+            b.explode(this);
         }
-      
-        this.turn_number++;    
+        this.ordering = new LinkedList<>();
+        this.fillPlayerQueue();
+        if (this.random_order) {
+            Collections.shuffle((List)this.ordering);
+        }
+
+        this.turn_number++;
     }
-    
+
     public boolean hearExplosion(){
         return explode;
     }
-    
+
     public void endExplosion(){
         this.explode = false;
     }
@@ -125,6 +122,10 @@ public class RealGrid implements Grid {
         return valids;
     }
 
+    public Player getPlayerToPlay() {
+      return playerToPlay;
+    }
+
     @Override
     public Tile getTileAt(int x, int y) {
         return isInBounds(x,y) ? this.tiles[x+(y*this.width)] : null;
@@ -167,19 +168,33 @@ public class RealGrid implements Grid {
         this.width = new_width;
     }
 
+    /** Adds a player to the array of registered players.
+      * @param p
+      * The player to add.
+    */
     public void addPlayer(Player p){
         this.players[PlayerFactory.nb_instances-1]=p;
-        this.tiles[p.getX()+(p.getY()*this.width)]=p;
     }
 
+    /** Adds a bomb to the list of active bombs.
+      * @param b
+      * The bomb to add.
+    */
     public void addBomb(Bomb b){
         this.bombs.add(b);
     }
 
+    /** Removes a bomb from the list of active bombs.
+      * @param b
+      * The bomb to remove.
+    */
     public void removeBomb(Bomb b) {
         this.bombs.remove(b);
     }
 
+    /** Provides a string representing the full grid without proxy filtering. Useful for debug purposes.
+      * @return the string version of the grid.
+    */
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
