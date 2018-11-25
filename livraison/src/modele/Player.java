@@ -186,10 +186,10 @@ public class Player extends Tile {
     }
 
     public ArrayList<ArrayList<Integer>> visibleTiles(){
-        ArrayList<ArrayList<Integer>> t = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> t = new ArrayList<>();			//create an arrayList who will contains all coordonates of tiles who are visible to given player
         
         int c=1;
-        while(c<this.visionSize){
+        while(c<this.visionSize){										//loop to look right
             if(this.x+c>view.getModel().getWidth()){ 
                 break;
             }else{
@@ -207,7 +207,7 @@ public class Player extends Tile {
         }
         
         c=1;
-        while(c<this.visionSize){
+        while(c<this.visionSize){									//loop to look left
             if(this.x-c<0){ 
                 break;
             }else{
@@ -225,7 +225,7 @@ public class Player extends Tile {
         }
         
         c=1;
-        while(c<this.visionSize){
+        while(c<this.visionSize){									//loop to look down
             if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
                 break;
             }else{
@@ -243,7 +243,7 @@ public class Player extends Tile {
         }
         
         c=1;
-        while(c<this.visionSize){
+        while(c<this.visionSize){									//loop to look up
             if(this.y-c<0){ 
                 break;
             }else{
@@ -260,7 +260,7 @@ public class Player extends Tile {
             c++;
         }
         
-        ArrayList<Integer> pos = new ArrayList<>(2);
+        ArrayList<Integer> pos = new ArrayList<>(2);				//add player location
         pos.add(0,this.x);
         pos.add(1,this.y); 
         t.add(pos);
