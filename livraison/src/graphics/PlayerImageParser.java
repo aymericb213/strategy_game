@@ -33,9 +33,6 @@ public class PlayerImageParser extends DefaultHandler {
 
     @Override
     public void startElement(String namespaceURI,String localName,String qname,Attributes atts) throws SAXException {
-        // System.out.println("Element started");
-       // if(qname.equals("Currency"))
-       //System.out.print(qname+"-->");
        if(qname == "SubTexture"){
            x = Integer.parseInt(atts.getValue("x"));
            y = Integer.parseInt(atts.getValue("y"));
@@ -58,11 +55,8 @@ public class PlayerImageParser extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
        String str =  new String(ch,start,length);
-       //System.out.println(str);
        if(str.trim().length() > 0 ){
            listCase.add(str);
        }
-       //System.out.println(str);
-       //System.out.println();
     }
 }

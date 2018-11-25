@@ -33,7 +33,6 @@ public class Game extends AbstractListenableModel {
     }
 
     public void addPlayer(Player p) {
-        //p.getThreadShoot().setGame(this);
         listPlayers.put(p, p.getImgRepr());
         grid.addPlayer(p);
     }
@@ -112,9 +111,7 @@ public class Game extends AbstractListenableModel {
         }
         return res;
     }
-
-
-
+    
     public void computeTileGrid(HashMap<Integer,ArrayList<ArrayList<Integer>>> l) {
         int size = l.get(0).get(0).size()*l.get(0).size();
         Tile[] res = new Tile[l.get(0).get(0).size()*l.get(0).size()];
@@ -136,8 +133,7 @@ public class Game extends AbstractListenableModel {
                         BufferedImage img = null;
                         if(index == 999){
                             img = ImagesLoader.bonus;
-                        }else{
-                            
+                        }else{                            
                             img = ImagesLoader.imageList.get(index);
                         }
                         Tile tile = null;

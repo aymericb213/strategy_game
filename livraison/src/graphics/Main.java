@@ -59,26 +59,18 @@ public class Main {
             p2.setX(3);
             p2.setY(12);
             game.addPlayer(p2);
-            //p.setImgRepr(img);
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
             p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
 
             p2.lastMove = Direction.s;
 
-//            game.addPlayer(p);
-//            game.addPlayer(p2);
-//
-//            game.getGrid().addPlayer(p);
-//            game.getGrid().addPlayer(p2);
             game.getGrid().nextPlayer();
             System.out.println(game.getGrid().getPlayerToPlay());
             GUI gui1 = new GUI(game, p);
             GUI gui2 = new GUI(game, p2);
             ViewConsole console = new ViewConsole(null,game);
             console.update(console);
-            /*console.display();*/
-            //GUI gui2 = new GUI(game);
-            //gui.getView().addEntity(ground);
+
         } catch (IOException | ParserConfigurationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

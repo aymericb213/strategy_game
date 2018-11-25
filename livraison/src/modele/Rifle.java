@@ -21,10 +21,10 @@ public class Rifle implements Weapon {
             Tile lof = g.getTileAt(this.owner.getX()+(i*d.x()),this.owner.getY()+(i*d.y()));
             if (!(lof==null) && !lof.isWalkable()) {
                 try {
-                  ((Player)lof).takeDamage(this.damage);
-                  break;
+                    ((Player)lof).takeDamage(this.damage);
+                    break;
                 } catch (ClassCastException not_a_player) {
-                  break;
+                    break;
                 }
             }
         }
@@ -75,6 +75,4 @@ public class Rifle implements Weapon {
     public int getDamage() {
         return damage;
     }
-
-
 }

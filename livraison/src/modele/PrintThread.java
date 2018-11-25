@@ -16,19 +16,19 @@ public class PrintThread implements Runnable {
     public synchronized void run() {
         while(true) {
             try {
-              System.out.println("\033[H\033[2J");
-              System.out.println("Tour " + g.getTurnNumber());
-              System.out.println(p.getName() + "\n");
-              //System.out.println(g + "\n");//vue globale
-              System.out.println(p.getView().toStringForThread() + "\n");//vues joueur
-              System.out.println("# : mur");
-              System.out.println("; : mine");
-              System.out.println("3 : bombe (délai avant détonation)");
-              System.out.println(". : bonus");
-              System.out.println("@ : joueur (€ si bouclier actif)");
-              System.out.println("\n" + p.printStats());
-              System.out.println(p.printControls());
-              Thread.sleep(800);
+                System.out.println("\033[H\033[2J");
+                System.out.println("Tour " + g.getTurnNumber());
+                System.out.println(p.getName() + "\n");
+                //System.out.println(g + "\n");//vue globale
+                System.out.println(p.getView().toStringForThread() + "\n");//vues joueur
+                System.out.println("# : mur");
+                System.out.println("; : mine");
+                System.out.println("3 : bombe (délai avant détonation)");
+                System.out.println(". : bonus");
+                System.out.println("@ : joueur (€ si bouclier actif)");
+                System.out.println("\n" + p.printStats());
+                System.out.println(p.printControls());
+                Thread.sleep(800);
             } catch (InterruptedException e) {
                 break;
             }

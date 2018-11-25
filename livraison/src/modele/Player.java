@@ -132,10 +132,10 @@ public class Player extends Tile {
             this.y += d.y();
 
             try {
-              ((Bonus)this.view.getTileAt(x,y)).boost(this);
+                ((Bonus)this.view.getTileAt(x,y)).boost(this);
             } catch (ClassCastException not_a_bonus) {}
             try {
-              ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
+                ((Weapon)this.view.getModel().getTileAt(x,y)).explode(this.view.getModel(), this);
             } catch(ClassCastException not_a_weapon) { }
 
 
@@ -235,15 +235,6 @@ public class Player extends Tile {
             c++;
         }
         ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y); t.add(pos);
-        //System.out.println(t.toString());
-//        System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT:");
-//        for(ArrayList l : t){
-//            for(Object i : l){
-//                System.out.print(i+":");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("end TTTTTTTTTTTTTTTTTTTTTTTT\n\n\n\n");
         return t;
     }
 
@@ -257,71 +248,14 @@ public class Player extends Tile {
         for(int vX = 0; vX<mapSizeX; vX++){
             for(int vY = 0; vY<mapSizeY; vY++){
                 if(!(jX==vX && jY==vX)){
-                    /*System.out.println(" test vx :"+vX+" vY:"+vY);*/testView(jX,jY,vX,vY,visibles);
+                    testView(jX,jY,vX,vY,visibles);
                 }
             }
         }
-//        for(int vY = 0; vY<mapSizeY; vY++){
-//            for(int vX = 0; vX<mapSizeX; vX++){
-//                Tile t = view.getModel().getTileAt(vX, vY);
-//                ArrayList<Integer> a = new ArrayList<>(); a.add(0,vX); a.add(1,vY);
-//                boolean isWall = t instanceof Wall;
-//                boolean isContained = visibles.contains(a);
-//                if( "#".equals(t.toString()) && !(isContained) ){
-//                    System.out.println(" test vx :"+vX+" vY:"+vY+"\nisWall ? "+isWall+"\nisContained ? "+isContained);
-//
-//                    if(vX>0){System.out.print("droite ");
-//                    ArrayList<Integer> testd = new ArrayList<>(); a.add(0,vX-1); a.add(1,vY);
-//                    boolean asVisibleD = visibles.contains(testd) ;
-//                        if ( !"#".equals(view.getModel().getTileAt(vX-1,vY).toString()) && asVisibleD){
-//                            visibles.add(a);
-//                        }
-//                    }
-//
-//                    if(vX<mapSizeX){System.out.print("gauche ");
-//                    ArrayList<Integer> testg = new ArrayList<>(); a.add(0,vX+1); a.add(1,vY);
-//                    boolean asVisibleG = visibles.contains(testg) ;
-//                        if ( !"#".equals(view.getModel().getTileAt(vX+1,vY).toString()) && asVisibleG){
-//                            visibles.add(a);
-//                        }
-//                    }
-//
-//                    if(vY>0){System.out.print("haut ");
-//                    ArrayList<Integer> testh = new ArrayList<>(); a.add(0,vX); a.add(1,vY-1);
-//                    boolean asVisibleH = visibles.contains(testh) ;
-//                        if ( !"#".equals(view.getModel().getTileAt(vX,vY-1).toString()) && asVisibleH){
-//                            visibles.add(a);
-//                        }
-//                    }
-//
-//                    if(vY<mapSizeY){System.out.println("bas");
-//                    ArrayList<Integer> testb = new ArrayList<>(); a.add(0,vX); a.add(1,vY+1);
-//                    boolean asVisibleB = visibles.contains(testb) ;
-//                        if ( !"#".equals(view.getModel().getTileAt(vX,vY+1).toString()) && asVisibleB){
-//                            visibles.add(a);
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-
-
-        //testView(jX,jY,5,5,visibles);
-
-//        System.out.println("visiblesTiles:");
-//        for(ArrayList l : visibles){
-//            for(Object i : l){
-//                System.out.print(i+":");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("end Visibles\n\n\n\n");
         return visibles;
     }
 
     public void testView(int jX, int jY, int vX, int vY, ArrayList visibles){
-        //visibles.removeAll(visibles);
         int mapSizeX = view.getModel().getWidth(); //creation de g[][], liste de valeurs parcourues
         int mapSizeY = view.getModel().getHeight();
         int[][] g = new int[mapSizeX][mapSizeY];
@@ -353,24 +287,27 @@ public class Player extends Tile {
         revX = vX-jX<0;
         revY = vY-jY<0;
 
-//        System.out.println("points === jX:"+jX+" jY:"+jY);
-//        System.out.println("points === vX:"+vX+" vY:"+vY);
-//        System.out.println();
-
         for(int i=0; i<intHypothenuse; i++){
 
-            if(revX){ XX-=movingX; }else{ XX+=movingX; } //deplace XX de movingX (vers vX*20 donc)
-            if(revY){ YY-=movingY; }else{ YY+=movingY; }
+            if(revX){ 
+                XX-=movingX; }else{ XX+=movingX; 
+            } //deplace XX de movingX (vers vX*20 donc)
+            if(revY){ 
+                YY-=movingY; 
+            }else{
+                YY+=movingY; 
+            }
 
             int xtest = (int) floor( ((int)(XX)+10) /20 );
             int ytest = (int) floor( ((int)(YY)+10) /20 );
 
-//            System.out.println("x:"+xtest+" y:"+ytest);
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
-//            System.out.println("walkable ? "+question);
-            if(question){ g[xtest][ytest] += 1; /*System.out.println("ON CONTINU LE TEST");*/}
-            else{ /*System.out.println("ON QUITTE LE TEST");*/ return; }
-
+            if(question){ 
+                g[xtest][ytest] += 1;
+            }
+            else{
+                return; 
+            }
         }
 
         //affG(g);
@@ -378,7 +315,6 @@ public class Player extends Tile {
         tmp.add(0,vX);
         tmp.add(1,vY);
         visibles.add(tmp);
-//        System.out.println("ON FINI LE TEST pour vX:"+vX+" vY:"+vY);
     }
 
     public void affG(int[][] g){
@@ -396,9 +332,9 @@ public class Player extends Tile {
         if (!(this.shield_up)) {
             this.life -= damage;
             if (this.life<=0) {
-              this.energy=0;
-              this.view.setTileAt(new FreeTile(this.x,this.y));
-              this.view.getModel().getActivePlayers().remove(this);
+                this.energy=0;
+                this.view.setTileAt(new FreeTile(this.x,this.y));
+                this.view.getModel().getActivePlayers().remove(this);
             }
         } else {
             this.disableShield();
@@ -407,8 +343,8 @@ public class Player extends Tile {
     }
 
     public boolean actionIsAvailable(int cost, int weapon) {
-      boolean enough_ap = (this.energy>=cost);
-      return (weapon>=0 && weapon<PlayerFactory.inventory.size()) ? (enough_ap && this.loadout.get(PlayerFactory.inventory.get(weapon))>0) : enough_ap;
+        boolean enough_ap = (this.energy>=cost);
+        return (weapon>=0 && weapon<PlayerFactory.inventory.size()) ? (enough_ap && this.loadout.get(PlayerFactory.inventory.get(weapon))>0) : enough_ap;
     }
 
     /* Explosifs */
@@ -417,10 +353,10 @@ public class Player extends Tile {
             m.setPosition(t.getX(),t.getY());
             this.view.setTileAt(m);
             try {
-              this.view.addBomb((Bomb)m);
-              this.loadout.put(PlayerFactory.inventory.get(2), this.loadout.get(PlayerFactory.inventory.get(2))-1);
+                this.view.addBomb((Bomb)m);
+                this.loadout.put(PlayerFactory.inventory.get(2), this.loadout.get(PlayerFactory.inventory.get(2))-1);
             } catch(ClassCastException not_a_bomb) {
-              this.loadout.put(PlayerFactory.inventory.get(1), this.loadout.get(PlayerFactory.inventory.get(1))-1);
+                this.loadout.put(PlayerFactory.inventory.get(1), this.loadout.get(PlayerFactory.inventory.get(1))-1);
             }
             this.energy-=GameConfig.PLANT_COST;
         }
@@ -432,10 +368,10 @@ public class Player extends Tile {
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
             if (w instanceof Rifle) {
-              Rifle fire_rifle = new Rifle(this);//nouveau Rifle juste pour le tir
-              fire_rifle.fire(this.view.getModel(),d);
-              this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);// màj des munitions
-              this.energy-=GameConfig.FIRE_COST;
+                Rifle fire_rifle = new Rifle(this);//nouveau Rifle juste pour le tir
+                fire_rifle.fire(this.view.getModel(),d);
+                this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);// màj des munitions
+                this.energy-=GameConfig.FIRE_COST;
             }
         }
     }
@@ -479,11 +415,11 @@ public class Player extends Tile {
     }
 
     public String getName() {
-      return this.name;
+        return this.name;
     }
 
     public String printLoadout() {
-      return "Rifle : " + this.loadout.get(PlayerFactory.inventory.get(0)) + " balles      Mines : " + this.loadout.get(PlayerFactory.inventory.get(1)) + "    Bombes : " + this.loadout.get(PlayerFactory.inventory.get(1));
+        return "Rifle : " + this.loadout.get(PlayerFactory.inventory.get(0)) + " balles      Mines : " + this.loadout.get(PlayerFactory.inventory.get(1)) + "    Bombes : " + this.loadout.get(PlayerFactory.inventory.get(1));
     }
 
     public String printStats() {
@@ -491,23 +427,23 @@ public class Player extends Tile {
     }
 
     public String printControls() {
-      String controls = "\nn : tour auto     p : fin de tour     e : quitter";
-      if (actionIsAvailable(GameConfig.MOVE_COST,-1)) {
-        controls+="\nz,q,s,d : déplacer joueur\n";
-      }
-      if (actionIsAvailable(GameConfig.PLANT_COST,1)) {
-        controls+="m : poser mine      ";
-      }
-      if (actionIsAvailable(GameConfig.PLANT_COST,2)) {
-        controls+="b : poser bombe     ";
-      }
-      if (actionIsAvailable(GameConfig.FIRE_COST,0)) {
-        controls+="t : tirer     ";
-      }
-      if (actionIsAvailable(GameConfig.SHIELD_COST,-1) && !this.shield_up) {
-        controls+="a : activer bouclier";
-      }
-      return controls;
+        String controls = "\nn : tour auto     p : fin de tour     e : quitter";
+        if (actionIsAvailable(GameConfig.MOVE_COST,-1)) {
+            controls+="\nz,q,s,d : déplacer joueur\n";
+        }
+        if (actionIsAvailable(GameConfig.PLANT_COST,1)) {
+            controls+="m : poser mine      ";
+        }
+        if (actionIsAvailable(GameConfig.PLANT_COST,2)) {
+            controls+="b : poser bombe     ";
+        }
+        if (actionIsAvailable(GameConfig.FIRE_COST,0)) {
+            controls+="t : tirer     ";
+        }
+        if (actionIsAvailable(GameConfig.SHIELD_COST,-1) && !this.shield_up) {
+            controls+="a : activer bouclier";
+        }
+        return controls;
     }
 
     public boolean isPlantingBomb() {

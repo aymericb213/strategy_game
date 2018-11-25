@@ -6,10 +6,18 @@ import java.util.Arrays;
 import java.util.logging.*;
 import javafx.scene.media.*;
 
+/**
+* Class that loads all the sound files included in the game.
+*/
+
 public class SoundLoader {
     private Media loadSound;
     private MediaPlayer playSound;
-
+    
+    /**
+     * Constructor method that takes an action as a parameter to play a certain sound
+     * @param action int value that represents an action performed (Shooting, getting hurt, etc..) 
+     */
     public SoundLoader(int action) {
         String mainPath = new File("").getAbsolutePath();
         File audioFiles = new File("src/Sons/");
@@ -29,11 +37,10 @@ public class SoundLoader {
             playSound.play();
         }
     }
-
-    public MediaPlayer getTrack(){
-        return playSound;
-    }
-
+    
+    /**
+     * Method to play a track in a loop
+     */
     public void loopTrack(){
         playSound.setOnEndOfMedia(() -> {
             playSound.seek(playSound.getStartTime());

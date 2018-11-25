@@ -44,7 +44,7 @@ public class RealGrid implements Grid {
 
     public Player nextPlayer() {
         if (this.ordering==null || this.ordering.isEmpty()) {
-          nextTurn();
+            nextTurn();
         }
         Player p = this.ordering.poll();
         p.setEnergy(p.getBaseEnergy());
@@ -88,7 +88,7 @@ public class RealGrid implements Grid {
     public void fillPlayerQueue() {
       for (Player p : this.players) {
         if (p.getLife() > 0) {
-          this.ordering.add(p);
+            this.ordering.add(p);
         }
       }
     }
@@ -107,7 +107,7 @@ public class RealGrid implements Grid {
           for (int j=-size; j<=size; j++) {
             Tile candidate = this.getTileAt(t.getX()+i,t.getY()+j);
             if (candidate!=null) {//gestion du résultat négatif de getTileAt
-              neighbours.add(candidate);
+                neighbours.add(candidate);
             }
           }
         }

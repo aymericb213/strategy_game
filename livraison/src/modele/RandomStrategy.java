@@ -35,12 +35,12 @@ public class RandomStrategy implements PlayerStrategy {
                 break;
             case 2 ://bouclier
                 if (client.actionIsAvailable(GameConfig.SHIELD_COST,-1) && !client.isShield_up()) {
-                  client.enableShield();
+                    client.enableShield();
                 }
                 break;
             case 3 ://tir
                 if (client.actionIsAvailable(GameConfig.FIRE_COST,0)) {
-                  client.fire(Direction.getDirections().get(r_dir));
+                    client.fire(Direction.getDirections().get(r_dir));
                 }
                 break;
             default :

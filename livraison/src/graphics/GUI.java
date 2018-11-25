@@ -37,15 +37,8 @@ public class GUI extends JFrame{
         //Pour lire les entrées claviers
         setFocusable(true);
         requestFocus();
-
-
-        //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
-        //playerToPlay = game.getGrid().getPlayers()[index];
-
+        
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
-        /*
-        System.out.println(game.getGrid().getPlayers().length);
-        */
 
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
@@ -99,7 +92,6 @@ public class GUI extends JFrame{
         plantMine.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
                 if(player.getEnergy() >= GameConfig.PLANT_COST){
                     player.enablePlant();
                     game.stateChange();
@@ -113,7 +105,6 @@ public class GUI extends JFrame{
         plantBomb.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                //playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(playerToPlay.getX(), playerToPlay.getY() -1));
                 if(player.getEnergy() >= GameConfig.PLANT_COST){
                     player.enablePlant();
                     player.enablePlantingBomb();
@@ -181,7 +172,6 @@ public class GUI extends JFrame{
 
         getContentPane().addMouseListener(new MouseListener(){
             public void showPopup(MouseEvent e){
-                //if(e.isPopupTrigger())
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
 
@@ -209,11 +199,7 @@ public class GUI extends JFrame{
                 if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
                     if(p.getAsTurn()){
-                        //coordPlayer[0] = x;
-                        //coordPlayer[1] = y;
-
                         if(!p.isSelected() && p.getName().equals(player.getName()) && !game.getGrid().gameIsOver()){
-                            //p.select();
                             showPopup(e);
                             if(p.getEnergy() >= GameConfig.MOVE_COST){
                                 depItem.setText("Déplacement: "  + GameConfig.MOVE_COST + " AP");
@@ -262,17 +248,12 @@ public class GUI extends JFrame{
                         }
 
                         if(p.possibleMoves().contains(d)){
-                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y())  instanceof Mine) {
+                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {
                                 sound = new SoundLoader(1);
-                                sound.getTrack().setOnEndOfMedia(() -> {
-                                    sound = new SoundLoader(2);
-                                });
                             }
 
                             p.move(d);
                             isMoving = false;
-                            //coordPlayer[0] = null;
-                            //coordPlayer[1] = null;
                             p.unselect();
                             if(p.getEnergy()==0){
                                 changeTurn();
@@ -284,19 +265,9 @@ public class GUI extends JFrame{
                         game.stateChange();
                     }else if(isShooting){
                         Direction d = null;
-                        //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
                         int depX = x - p.getX();
                         int depY = y - p.getY();
                         d = block2dir(x,y);
-                        /*if(depX == 0 && depY == -1){
-                            d = Direction.z;
-                        }else if(depX == 0 && depY == 1){
-                            d = Direction.s;
-                        }else if(depX == -1 && depY == 0){
-                            d = Direction.q;
-                        }else if(depX == 1 && depY == 0){
-                            d = Direction.d;
-                        }*/
 
                         if(depX != p.getX() && depY != p.getY()){
                             p.fire(d);
@@ -308,9 +279,9 @@ public class GUI extends JFrame{
                         }
                         game.stateChange();
 
-                    }else if(p.isPlanting()){
+                    }else if(p.isPlanting() && game.getGrid().getTileAt(x,y) instanceof FreeTile){
                         int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
-                        if(distance == 1){
+                        if(distance == 1 ){
                             if(playerToPlay.isPlantingBomb()){
                                 playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));
                             }else{
@@ -357,19 +328,6 @@ public class GUI extends JFrame{
             sound = new SoundLoader(1);
             game.getGrid().endExplosion();
         }
-        //Le joueur actuel ne joues plus
-        //On incrémente le tour
-        /*
-        game.getGrid().nextTurn();
-        game.getGrid().nextPlayer();
-        //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size()) -1;
-        //Dans les tests on a 2 jours donc :
-        int index = (game.getGrid().getTurnNumber() % 2) ;
-        System.out.println("index= "+index);
-        System.out.println(game.getGrid().getTurnNumber());
-        playerToPlay = game.getGrid().getPlayers()[index];
-        playerToPlay.setAsTurn(true);
-        */
         game.stateChange();
     }
 

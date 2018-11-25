@@ -39,9 +39,8 @@ public abstract class AbstractListenableModel implements ListenableModel{
      * Method called to prevents listeners the model has been updated.
      */
     public void stateChange() {
-        for(ModelListener listener : this.listeners) {
-                listener.update(this);
+        for(ModelListener listener : this.listeners) {                
+            listener.update(this);
         }
     }
-
 }

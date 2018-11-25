@@ -31,9 +31,9 @@ public class RandomGeneration implements GridStrategy {
             p.setPosition(rx,ry);
             client.setTileAt(p);
             for (Tile t : client.getNeighbouringTiles(p,1)) {
-              if (!(t instanceof Player)) {
-                client.setTileAt(new FreeTile(t.getX(),t.getY()));
-              }
+                if (!(t instanceof Player)) {
+                    client.setTileAt(new FreeTile(t.getX(),t.getY()));
+                }
             }
         }
         client.setGrid(random_grid);

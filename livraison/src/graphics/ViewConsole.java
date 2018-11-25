@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphics;
 
 import static java.lang.Thread.sleep;
-import java.util.logging.*;
 import modele.*;
 
-/**
- *
- * @author quentindeme
- */
 public class ViewConsole implements ModelListener{
 
-    private Tile[] entities;
-    private Game game;
+    private final Tile[] entities;
+    private final Game game;
     private Player playerToPlay;
     private ThreadPlay threadPlay = null;
 
@@ -53,5 +43,4 @@ public class ViewConsole implements ModelListener{
         }
         display();
     }
-
 }

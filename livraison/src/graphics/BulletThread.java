@@ -47,30 +47,23 @@ public class BulletThread extends Thread {
      * Define tasks in order to perform the animation.
      */
     @Override
-    public void run(){
-        //while(running){
-            int counter = 0;
-            while(counter <= range /*+ speed*/){
-                this.x += d.x() * speed;
-                this.y += d.y() * speed;
-                int caseX = x/64;
-                int caseY = y/64;
-                //game.stateChange();
-                observer.repaint();
-                try {
-                    sleep(13);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(BulletThread.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                counter += speed;
+    public void run(){  
+        int counter = 0;        
+        while(counter <= range){       
+            this.x += d.x() * speed;            
+            this.y += d.y() * speed;            
+            int caseX = x/64;            
+            int caseY = y/64; 
+            observer.repaint();            
+            try {            
+                sleep(13);                
+            } catch (InterruptedException ex) {                    
+                Logger.getLogger(BulletThread.class.getName()).log(Level.SEVERE, null, ex);                
             }
-
-            //owner.notShooting();
-            over = true;
-            observer.repaint();
-            //game.stateChange();
-            //this.interrupt();
-        //}
+            counter += speed;           
+        }    
+        over = true;         
+        observer.repaint();
     }
 
     /**

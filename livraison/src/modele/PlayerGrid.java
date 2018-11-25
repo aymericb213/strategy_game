@@ -16,15 +16,15 @@ public class PlayerGrid implements Grid {
       * Le joueur à qui est destinée l'instance.
     */
     public PlayerGrid(RealGrid model, Player client) {
-        this.model = g;
-        this.client = p;
+        this.model = model;
+        this.client = client;
     }
 
     /** Getter de la RealGrid.
       * @return la RealGrid liée au proxy.
     */
     public RealGrid getModel() {
-      return this.model;
+        return this.model;
     }
 
     /** Détermine si le joueur peut voir la case en argument.
@@ -91,10 +91,10 @@ public class PlayerGrid implements Grid {
       * @return two strings alternating to crate a blinking animation in command prompt.
     */
     public String toStringForThread() {
-      StringBuilder res_thread = new StringBuilder(this.toString());
-      int position = client.getX()+(client.getY()*(this.getModel().getWidth()+1));
-      res_thread.replace(position,position+1,new FreeTile(-1,-1).toString());
-      alt_string=!alt_string;
-      return alt_string ? this.toString() : res_thread.toString();
+        StringBuilder res_thread = new StringBuilder(this.toString());
+        int position = client.getX()+(client.getY()*(this.getModel().getWidth()+1));
+        res_thread.replace(position,position+1,new FreeTile(-1,-1).toString());
+        alt_string=!alt_string;
+        return alt_string ? this.toString() : res_thread.toString();
     }
 }
