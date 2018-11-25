@@ -24,12 +24,6 @@ public class View extends JPanel implements ModelListener{
         game.addListener(this);
     }
 
-    /*
-    public void addEntity(Tile entity){
-        entities.add(entity);
-    }
-    */
-
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -113,10 +107,11 @@ public class View extends JPanel implements ModelListener{
 
                 }
             }
-
         displayBomb(g);
+        
         Grid grid = game.getGrid();
         Set<Player> players = game.getListPlayers().keySet();
+        
         for(Player p: players){
             if(p.getName() != player.getName()){
                 if(p.getLife() > 0){
@@ -124,22 +119,20 @@ public class View extends JPanel implements ModelListener{
                 }
             }
         }
-
-    if(observer.playerToPlay.getName() != null || player.getName() != null){
-        observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
-    }
-
-    if(game.getGrid().gameIsOver() && player.getLife() > 0){
-        g.setColor(Color.GREEN);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-        g.drawString("VICTOIRE", 300, 416);
-    }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){
-        g.setColor(Color.RED);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-        g.drawString("DEFAITE", 300, 416);
-    }
-
-
+        
+        if(observer.playerToPlay.getName() != null || player.getName() != null){        
+            observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());    
+        }
+        
+        if(game.getGrid().gameIsOver() && player.getLife() > 0){       
+            g.setColor(Color.GREEN);        
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));        
+            g.drawString("VICTOIRE", 300, 416);    
+        }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){        
+            g.setColor(Color.RED);        
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));        
+            g.drawString("DEFAITE", 300, 416);    
+        }    
     }
 
     public void displayPlantPoints(Graphics g, Player p){
@@ -235,9 +228,7 @@ public class View extends JPanel implements ModelListener{
             g.setColor(new Color(255,0,0));
             g.drawRect(p.getX()*64, p.getY()*64, 64, 64);
         }
-
         drawLife(p,g);
-
     }
 
     public void drawActionPoint(Player p, Graphics g){
