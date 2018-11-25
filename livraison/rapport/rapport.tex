@@ -209,5 +209,22 @@ L'application est jouable au clique et au clavier. En effet pour chaque action l
 \subsubsection{Entrées claviers}
 Pour lire les entrées claviers, on doit dans un premier temps invoquer la méthode \textit{setFocusable(true)} puis la méthode \textit{requestFocus()}. Puis ajouter un keyListener a la fenêtre. 
 \subsubsection{Entrées souris}
-La majorité des actions se font grâce aux cliques. Pour cela, on ajoute un \textit{mouseListener} à la fenêtre. Ensuite on agis en conséquence lorsque l'on reçoit un clique.
+La majorité des actions se font grâce aux cliques. Pour cela, on ajoute un \textit{mouseListener} à la fenêtre. Ensuite on agit en conséquence lorsque l'on reçoit un clique.
+\subsection{Player}
+\subsubsection{line of sight : visiblesTiles}
+Cette fonction est originellement utilisée comme test pour la ligne de vue des joueurs. Son principe est la base du suivant. Il test uniquement les directions cardinales dans quatre boucles \textit{while} qui s'arrêtent si elles rencontrent un mur ou si elles sont arrivées à la limite de taille de vue (\textit{visionSize}).
+\subsubsection{line of sight : testView}
+Dans \textit{testView()} nous testons si la case indiqué est visible par le joueur, pour cela, nous considérons une grille temporaire composée de 0, nous allons ensuite calculer la distance en case qui sépare nos deux points, puis les vecteurs, nous décomposeront ce vecteur en plusieurs que nous appliquerons 1 par 1, a chaque application, nous approchons du point testé, et a  chaque avancé, nous ajoutons +1 a la grille, dans la case équivalent à la où nous nous situons, cela permet de connaître les cases parcourues (voir schéma) si dans la boucle des cases parcourues, nous observons une Tile qui a sont attribut \textit{isWalkable} à \textit{faux}, alors la fonction \textit{testView} est arretée. Dans le cas contraire, si elle fini la boucle, alors nous sommes bien arrivé à la case testée, nous pouvons donc l'ajouter dans la liste des cases visibles.
+\subsubsection{line of sight : visibleTiles}
+La fonction \textit{visiblesTiles()} quand à elle fait deux choses, en premier lieu elle appelle \textit{testView} pour chaque case, ensuite, elle teste tout les murs afin de savoir si une case adjacente est visible, si c'est le cas alors le mur sélectionné le deviens aussi, cela permet au joueur de comprendre ce qui  bloque son champs de vision.
+\subsubsection{line of sight : notes}
+Dans la gestion de la ligne de vue, nous utilisons finalement les deux fonctions renvoyant les Tuiles visibles, \textit{visibleTiles} et \textit{visiblesTiles} pour éviter toute possibilité de bug dans les zones proches dûes à la gestion des lignes, celle-ci pouvant sembler anormale pour l'humain, mais pour autant mathématiquement exacte.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.2]{images/ex1.png}
+\includegraphics[scale=0.2]{images/ex2.png}
+\caption{exemple de fonctionnement de plusieurs \textit{testView}}
+
+\end{figure}
+
 \end{document}
