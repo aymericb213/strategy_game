@@ -1,16 +1,8 @@
 package graphics;
 
 import modele.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 public class GUI extends JFrame{
@@ -21,16 +13,16 @@ public class GUI extends JFrame{
     public  Player playerToPlay = null;
     private boolean isShooting = false;
     private boolean isMoving = false;
-    private boolean isPlanting = false;    
+    private boolean isPlanting = false;
     private Player player;
     private SoundLoader sound;
-    
+
     public GUI(Player p){
         this(new Game(),p);
     }
 
     public GUI(Game game, Player p){
-        this.player = p;    
+        this.player = p;
         this.game = game;
         playerToPlay = game.getGrid().getPlayerToPlay();
         System.out.println("JOUEUR ==> "+playerToPlay);
@@ -49,7 +41,7 @@ public class GUI extends JFrame{
 
         //int index = (game.getGrid().getTurnNumber() % game.getListPlayers().size());
         //playerToPlay = game.getGrid().getPlayers()[index];
-        
+
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
         /*
         System.out.println(game.getGrid().getPlayers().length);
@@ -166,7 +158,7 @@ public class GUI extends JFrame{
                           player.move(Direction.q);
                           game.stateChange();
                         }
-                        
+
                     }
                     if(e.getKeyCode() == KeyEvent.VK_S){
                             if(player.possibleMoves().contains(Direction.s)){
@@ -195,7 +187,7 @@ public class GUI extends JFrame{
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
             }
@@ -212,8 +204,8 @@ public class GUI extends JFrame{
                 int popX = e.getX();
                 int popY = e.getY();
                 int x = e.getX() / 64;
-                int y = e.getY() / 64; 
-                
+                int y = e.getY() / 64;
+
                 if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
                     if(p.getAsTurn()){
@@ -250,97 +242,97 @@ public class GUI extends JFrame{
                         }
                     }
                     game.stateChange();
-                }                
-                
-                Player p = playerToPlay;                
-                if(p.getEnergy() > 0){                
-                    if(isMoving){                    
-                        int depX = x - p.getX();                        
-                        int depY = y - p.getY();    
-                        
+                }
+
+                Player p = playerToPlay;
+                if(p.getEnergy() > 0){
+                    if(isMoving){
+                        int depX = x - p.getX();
+                        int depY = y - p.getY();
+
                         Direction d = null;
-                        if(depX == 0 && depY == -1){                        
-                            d = Direction.z;                            
-                        }else if(depX == 0 && depY == 1){                        
-                            d = Direction.s;                            
-                        }else if(depX == -1 && depY == 0){                        
-                            d = Direction.q;                            
-                        }else if(depX == 1 && depY == 0){                        
-                            d = Direction.d;                            
-                        }                        
-                        
-                        if(p.possibleMoves().contains(d)){                        
-                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y())  instanceof Mine) {                            
-                                sound = new SoundLoader(1);                                
-                                sound.getTrack().setOnEndOfMedia(() -> {                                        
-                                    sound = new SoundLoader(2);                                    
-                                });                                
-                            }                                
-                               
-                            p.move(d);                                
-                            isMoving = false;                                
+                        if(depX == 0 && depY == -1){
+                            d = Direction.z;
+                        }else if(depX == 0 && depY == 1){
+                            d = Direction.s;
+                        }else if(depX == -1 && depY == 0){
+                            d = Direction.q;
+                        }else if(depX == 1 && depY == 0){
+                            d = Direction.d;
+                        }
+
+                        if(p.possibleMoves().contains(d)){
+                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y())  instanceof Mine) {
+                                sound = new SoundLoader(1);
+                                sound.getTrack().setOnEndOfMedia(() -> {
+                                    sound = new SoundLoader(2);
+                                });
+                            }
+
+                            p.move(d);
+                            isMoving = false;
                             //coordPlayer[0] = null;
-                            //coordPlayer[1] = null;                               
-                            p.unselect();                            
-                            if(p.getEnergy()==0){                            
-                                changeTurn();                                
-                            }                            
-                            game.stateChange();                            
-                        }                        
-                        isMoving = false;                        
-                        p.unselect();                        
-                        game.stateChange();                        
-                    }else if(isShooting){                    
-                        Direction d = null;                        
-                        //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);                            
-                        int depX = x - p.getX();                          
-                        int depY = y - p.getY();                        
+                            //coordPlayer[1] = null;
+                            p.unselect();
+                            if(p.getEnergy()==0){
+                                changeTurn();
+                            }
+                            game.stateChange();
+                        }
+                        isMoving = false;
+                        p.unselect();
+                        game.stateChange();
+                    }else if(isShooting){
+                        Direction d = null;
+                        //Player p = (Player) game.getGrid().getTileAt(coordPlayer[0], coordPlayer[1]);
+                        int depX = x - p.getX();
+                        int depY = y - p.getY();
                         d = block2dir(x,y);
                         /*if(depX == 0 && depY == -1){
-                            d = Direction.z;                         
-                        }else if(depX == 0 && depY == 1){                        
-                            d = Direction.s;                        
-                        }else if(depX == -1 && depY == 0){                        
-                            d = Direction.q;                        
-                        }else if(depX == 1 && depY == 0){                        
-                            d = Direction.d;                        
+                            d = Direction.z;
+                        }else if(depX == 0 && depY == 1){
+                            d = Direction.s;
+                        }else if(depX == -1 && depY == 0){
+                            d = Direction.q;
+                        }else if(depX == 1 && depY == 0){
+                            d = Direction.d;
                         }*/
-                            
-                        if(depX != p.getX() && depY != p.getY()){                        
-                            p.fire(d);   
-                            sound = new SoundLoader(3);                            
-                        }                        
-                        isShooting = false;                           
-                        if(p.getEnergy()==0){   
+
+                        if(depX != p.getX() && depY != p.getY()){
+                            p.fire(d);
+                            sound = new SoundLoader(3);
+                        }
+                        isShooting = false;
+                        if(p.getEnergy()==0){
                             changeTurn();
-                        }               
+                        }
                         game.stateChange();
-                        
-                    }else if(p.isPlanting()){                    
-                        int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));                        
-                        if(distance == 1){                        
-                            if(playerToPlay.isPlantingBomb()){                            
-                                playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));                                
-                            }else{                            
-                                playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));                                
-                            }                            
-                        }                        
-                        p.disablePlant();                        
-                        p.disablePlantingBomb();                        
+
+                    }else if(p.isPlanting()){
+                        int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
+                        if(distance == 1){
+                            if(playerToPlay.isPlantingBomb()){
+                                playerToPlay.plant(new Bomb(playerToPlay), game.getGrid().getTileAt(x,y));
+                            }else{
+                                playerToPlay.plant(new Mine(playerToPlay), game.getGrid().getTileAt(x,y));
+                            }
+                        }
+                        p.disablePlant();
+                        p.disablePlantingBomb();
                         game.stateChange();
-                    }                    
-                } 
+                    }
+                }
             }
-            
+
             @Override
             public void mouseEntered(MouseEvent e) {
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-            }        
+            }
         });
-        
+
         setVisible(true);
         int difX = 832 + (832 - this.getContentPane().getWidth());
         int difY = 832 + (832 - this.getContentPane().getHeight());
@@ -356,13 +348,13 @@ public class GUI extends JFrame{
     }
 
     public void changeTurn(){
-        playerToPlay.setAsTurn(false);        
-        playerToPlay = game.getGrid().nextPlayer();        
+        playerToPlay.setAsTurn(false);
+        playerToPlay = game.getGrid().nextPlayer();
         playerToPlay.setAsTurn(true);
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
-        
+
         if(game.getGrid().hearExplosion()){
-            sound = new SoundLoader(1);            
+            sound = new SoundLoader(1);
             game.getGrid().endExplosion();
         }
         //Le joueur actuel ne joues plus

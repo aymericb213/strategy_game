@@ -1,15 +1,11 @@
 package graphics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Hashtable;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
+import java.util.*;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class PlayerImageParser extends DefaultHandler {
-    
+
     public String chemin;
     public ArrayList<String> listCase = new ArrayList<>();
     String buildingChemin = "";
@@ -19,20 +15,20 @@ public class PlayerImageParser extends DefaultHandler {
     //Nom, x, y, width, height;
     HashMap<String, ArrayList<Integer>> playerImages = new HashMap<>();
     ArrayList<String> playerNames = new ArrayList<>();
-    
-    public PlayerImageParser(){        
+
+    public PlayerImageParser(){
     }
-    
+
     Hashtable tags;
     @Override
     public void startDocument() {
         //System.out.println("Document started");
         //tags = new Hashtable();
     }
-    
+
     @Override
     public void endDocument() {
-        //System.out.println("Documents ended"); 
+        //System.out.println("Documents ended");
     }
 
     @Override
@@ -49,7 +45,7 @@ public class PlayerImageParser extends DefaultHandler {
            playerImages.put(atts.getValue("name"), new ArrayList<>(Arrays.asList(
                    x,y,width,height
            )));
-       }        
+       }
     }
 
     @Override
@@ -58,7 +54,7 @@ public class PlayerImageParser extends DefaultHandler {
            listCase.add(",");
        }
     }
-    
+
     @Override
     public void characters(char[] ch, int start, int length) {
        String str =  new String(ch,start,length);

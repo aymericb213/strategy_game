@@ -1,8 +1,7 @@
 package graphics;
 
 import modele.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * Thread used for bullet animation after a shot.
@@ -26,7 +25,7 @@ public class BulletThread extends Thread {
      * @param y
      * @param range
      * @param d
-     * @param p 
+     * @param p
      */
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
@@ -36,7 +35,7 @@ public class BulletThread extends Thread {
         this.d = d;
         this.owner = p;
     }
-    
+
     /**
      * Second constructor.
      */
@@ -111,11 +110,11 @@ public class BulletThread extends Thread {
     public void setPlayer(Player p){
         this.owner = p;
     }
-    
+
     public void setGame(Game g){
         this.game =g;
     }
-    
+
     public void setObserver(View view){
         this.observer = view;
     }

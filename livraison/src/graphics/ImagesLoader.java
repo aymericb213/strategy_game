@@ -1,17 +1,12 @@
 package graphics;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
 import javax.imageio.ImageIO;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import modele.Grid;
+import javax.xml.parsers.*;
+import modele.*;
 import org.xml.sax.SAXException;
 
 

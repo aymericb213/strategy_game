@@ -6,17 +6,15 @@
 package graphics;
 
 import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modele.Player;
-import modele.Tile;
+import java.util.logging.*;
+import modele.*;
 
 /**
  *
  * @author quentindeme
  */
 public class ViewConsole implements ModelListener{
-    
+
     private Tile[] entities;
     private Game game;
     private Player playerToPlay;
@@ -27,7 +25,7 @@ public class ViewConsole implements ModelListener{
         this.game = game;
         game.addListener(this);
     }
-    
+
     public void display(){
         System.out.println("On crée un nouveau Thread"+ThreadPlay.counterInstance);
         threadPlay = new ThreadPlay(game);
@@ -37,10 +35,10 @@ public class ViewConsole implements ModelListener{
         System.out.println(playerToPlay.getName() + "\n");
         //System.out.println(g + "\n");//vue globale
         System.out.println(playerToPlay.getView() + "\n");//vues joueur
-        
+
         threadPlay.start();
     }
-    
+
     @Override
     public void update(Object source) {
         playerToPlay = game.getGrid().getPlayerToPlay();
@@ -55,5 +53,5 @@ public class ViewConsole implements ModelListener{
         }
         display();
     }
-    
+
 }

@@ -1,13 +1,9 @@
 package graphics;
 
 import modele.*;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 import javax.swing.JPanel;
 
 public class View extends JPanel implements ModelListener{
@@ -61,10 +57,10 @@ public class View extends JPanel implements ModelListener{
                     }
                 }
             }catch(java.util.ConcurrentModificationException e){
-                
+
             }
         }
-        
+
         if(player.getLife() > 0){
                 BufferedImage img = player.getImgRepr();
 
@@ -111,13 +107,13 @@ public class View extends JPanel implements ModelListener{
                 ArrayList<ArrayList> viewableTiles = player.visibleTiles();
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
                 //System.out.print(viewableTiles);
-		/*		
+		/*
 				for(int i = 0; i < game.getTileMap().size(); i++){
                     ArrayList<Tile> list = game.getTileMap().get(i);
                     for(Tile t : list){
                         int xx = 64 * t.getX();
                         int yy = 64 * t.getY();
-                        
+
                         boolean playerCanSee = player.getView().playerCanSee(t);				//bloc for remis içi (modifié)
                         ArrayList<Integer> tmp = new ArrayList<Integer>(); tmp.add(0,t.getX()); tmp.add(1,t.getY());
                         boolean isInViewable = (viewableTiles.contains(tmp));
@@ -130,17 +126,17 @@ public class View extends JPanel implements ModelListener{
                 }
                 */
                 if(player.isSelected()){
-                    
+
                     g.setColor(new Color(125,25,255));
                     for(ArrayList t : visiblesTiles){
                         Integer tx = Integer.parseInt(t.get(0).toString());
                         Integer ty = Integer.parseInt(t.get(1).toString());
                         g.fillOval(64*tx+24, 64*ty+24, 15, 15);
                     }
-                    
+
                 }
             }
-        
+
         displayBomb(g);
         Grid grid = game.getGrid();
         Set<Player> players = game.getListPlayers().keySet();
@@ -209,14 +205,14 @@ public class View extends JPanel implements ModelListener{
 //                        Integer ty = Integer.parseInt(t.get(1).toString());
 //                        g.fillOval(64*tx+22, 64*ty+22, 20, 20);
 //                    }
-//                    
+//
 //                    g.setColor(new Color(125,25,255));
 //                    for(ArrayList t : visiblesTiles){
 //                        Integer tx = Integer.parseInt(t.get(0).toString());
 //                        Integer ty = Integer.parseInt(t.get(1).toString());
 //                        g.fillOval(64*tx+22, 64*ty+22, 15, 15);
 //                    }
-//                    
+//
 //                }
 //            }
 //        }
@@ -226,7 +222,7 @@ public class View extends JPanel implements ModelListener{
     if(observer.playerToPlay.getName() != null || player.getName() != null){
         observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
     }
-    
+
     if(game.getGrid().gameIsOver() && player.getLife() > 0){
         g.setColor(Color.GREEN);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
@@ -236,8 +232,8 @@ public class View extends JPanel implements ModelListener{
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
         g.drawString("DEFAITE", 300, 416);
     }
-        
-    
+
+
     }
 
     public void displayPlantPoints(Graphics g, Player p){
@@ -349,7 +345,7 @@ public class View extends JPanel implements ModelListener{
             g.setColor(new Color(255,0,0));
             g.drawRect(p.getX()*64, p.getY()*64, 64, 64);
         }
-        
+
         drawLife(p,g);
 
     }

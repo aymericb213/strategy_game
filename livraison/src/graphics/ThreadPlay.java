@@ -5,18 +5,10 @@
  */
 package graphics;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modele.Bomb;
-import modele.Direction;
-import modele.FreeTile;
-import modele.Mine;
-import modele.Player;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+import modele.*;
 
 /**
  *
