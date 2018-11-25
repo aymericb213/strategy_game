@@ -1,13 +1,16 @@
 package modele;
 
+import java.util.*;
+
 public final class PlayerFactory {
 
     private static PlayerFactory instance = null;
     public static int nb_instances = 0;
-
+    public static ArrayList<Weapon> inventory = new ArrayList<Weapon>();
 
     private PlayerFactory() {
         super();
+        fullLoadout();
     }
 
     public final static PlayerFactory getInstance() {
@@ -17,14 +20,21 @@ public final class PlayerFactory {
         return PlayerFactory.instance;
     }
 
+    public ArrayList<Weapon> fullLoadout() {
+      inventory.add(new Rifle(new Player(new RealGrid(),"","")));
+      inventory.add(new Mine(new Player(new RealGrid(),"","")));
+      inventory.add(new Bomb(new Player(new RealGrid(),"","")));
+      return inventory;
+    }
+
     public Player build(RealGrid g, String classname, int hp_mod, int ap_mod, int rifle_ammo_mod, int bombs_mod, int mines_mod) {
       PlayerFactory.nb_instances++;
       Player p = new Player(g,"Player "+PlayerFactory.nb_instances, classname);
       p.setLife(p.getLife()+hp_mod);
-      p.setEnergy(p.getEnergy()+ap_mod);
-      p.addWeapon(new Rifle(p), GameConfig.RIFLE_BASE_AMMO+rifle_ammo_mod);
-      p.addWeapon(new Mine(p), GameConfig.MINE_BASE_COUNT+mines_mod);
-      p.addWeapon(new Bomb(p), GameConfig.BOMB_BASE_COUNT+bombs_mod);
+      p.setBaseEnergy(p.getBaseEnergy()+ap_mod);
+      p.addWeapon(this.inventory.get(0), GameConfig.RIFLE_BASE_AMMO+rifle_ammo_mod);
+      p.addWeapon(this.inventory.get(1), GameConfig.MINE_BASE_COUNT+mines_mod);
+      p.addWeapon(this.inventory.get(2), GameConfig.BOMB_BASE_COUNT+bombs_mod);
       return p;
     }
 

@@ -452,11 +452,13 @@ public class Player extends Tile {
         if (t!=null) {
             m.setPosition(t.getX(),t.getY());
             this.view.setTileAt(m);
-            //this.loadout.put(m, this.loadout.get(m)-1);
-            this.energy-=GameConfig.PLANT_COST;
             try {
               this.view.addBomb((Bomb)m);
-            } catch(ClassCastException not_a_bomb) {}
+              this.loadout.put(PlayerFactory.inventory.get(2), this.loadout.get(PlayerFactory.inventory.get(2))-1);
+            } catch(ClassCastException not_a_bomb) {
+              this.loadout.put(PlayerFactory.inventory.get(1), this.loadout.get(PlayerFactory.inventory.get(1))-1);
+            }
+            this.energy-=GameConfig.PLANT_COST;
         }
     }
 
@@ -465,9 +467,9 @@ public class Player extends Tile {
         this.isShooting = true;
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
-            if (w.equals(new Rifle(this))) {
+            if (w instanceof Rifle) {
                 w.fire(this.view.getModel(),d);
-                //this.loadout.put(this.getRifle(), this.loadout.get(this.getRifle())-1);
+                this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);
                 this.energy-=GameConfig.FIRE_COST;
             }
         }
@@ -515,8 +517,12 @@ public class Player extends Tile {
       return this.name;
     }
 
+    public String printLoadout() {
+      return "Rifle : " + this.loadout.get(PlayerFactory.inventory.get(0)) + " balles      Mines : " + this.loadout.get(PlayerFactory.inventory.get(1)) + "    Bombes : " + this.loadout.get(PlayerFactory.inventory.get(1));
+    }
+
     public String printStats() {
-        return "Classe : " + this.classname + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.loadout;
+        return "Classe : " + this.classname + "\nPosition : " + this.x + " " + this.y + "\nEnergie : " + this.energy + "\nPoints de vie : " + this.life + "\nEquipement : "+ this.printLoadout();
     }
 
     public String printControls() {

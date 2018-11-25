@@ -53,6 +53,38 @@ public class Bomb extends Mine {
     }
 
     /**
+    * Surcharge de hashCode().
+    * Nécessaire au bon fonctionnement de la surcharge d'equals.
+    * @return Le hashcode de l'objet.
+    */
+    @Override
+    public int hashCode() {
+        int code=11;
+        code+=77*code+this.owner.getX();
+        code+=77*code+this.owner.getY();
+        return code;
+    }
+
+    /**
+    * Surcharge de equals.
+    * Prend en compte l'égalité de coordonnées.
+    * @param o
+    * L'objet à comparer au noeud.
+    * @return Le résultat du test d'égalité.
+    */
+    @Override
+    public boolean equals(Object o) {
+        if (o==this) {
+            return true;
+        }
+        if (!(o instanceof Bomb)) {
+            return false;
+        }
+        Bomb b = (Bomb)o;
+        return this.owner.equals(b.getOwner());
+    }
+
+    /**
     * Retourne la représentation de l'objectif.
     * @return Un caractère représentant l'objectif.
     */
