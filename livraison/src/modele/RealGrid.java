@@ -73,11 +73,11 @@ public class RealGrid implements Grid {
 
         this.turn_number++;
     }
-    
-    public boolean checkDamage(){        
-        for(Player p : players){  
+
+    public boolean checkDamage(){
+        for(Player p : players){
             int current_life = p.getLife();
-            int copy_life = p.getCopyLife();            
+            int copy_life = p.getCopyLife();
             if(copy_life != current_life){
                 p.setCopyLife(current_life);
                 return true;
@@ -85,7 +85,7 @@ public class RealGrid implements Grid {
         }
         return false;
     }
-    
+
     public boolean hearExplosion(){
         return explode;
     }
@@ -186,6 +186,7 @@ public class RealGrid implements Grid {
     */
     public void addPlayer(Player p){
         this.players[PlayerFactory.nb_instances-1]=p;
+        this.tiles[p.getX()+(p.getY()*this.width)]=p;
     }
 
     /** Adds a bomb to the list of active bombs.
