@@ -17,9 +17,7 @@ public class LevelHandlerParser extends DefaultHandler{
 
     public LevelHandlerParser(){
     }
-
-    Hashtable tags;
-
+    
     @Override
     public void startElement(String namespaceURI,String localName,String qname,Attributes atts) throws SAXException {
         balises.push(qname);

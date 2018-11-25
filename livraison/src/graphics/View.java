@@ -58,7 +58,7 @@ public class View extends JPanel implements ModelListener{
         if(player.getLife() > 0){
                 BufferedImage img = player.getImgRepr();
                 
-                ArrayList<ArrayList> viewableTiles = player.visibleTiles();
+                ArrayList<ArrayList<Integer>> viewableTiles = player.visibleTiles();
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
 		
 		for(int i = 0; i < game.getTileMap().size(); i++){

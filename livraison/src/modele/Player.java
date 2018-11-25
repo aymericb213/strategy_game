@@ -181,50 +181,85 @@ public class Player extends Tile {
         return null;
     }
 
-    public ArrayList<ArrayList> visibleTiles(){
-        ArrayList<ArrayList> t = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> visibleTiles(){
+        ArrayList<ArrayList<Integer>> t = new ArrayList<>();
         
         int c=1;
         while(c<this.visionSize){
-            if(this.x+c>view.getModel().getWidth()){ break;
+            if(this.x+c>view.getModel().getWidth()){ 
+                break;
             }else{
-                if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){ break; }
-                else{ ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x+c); pos.add(1,this.y); t.add(pos); }
+                if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){
+                    break; 
+                }
+                else{ 
+                    ArrayList<Integer> pos = new ArrayList<>(2);
+                    pos.add(0,this.x+c); 
+                    pos.add(1,this.y); 
+                    t.add(pos); 
+                }
             }
             c++;
         }
         
         c=1;
         while(c<this.visionSize){
-            if(this.x-c<0){ break;
+            if(this.x-c<0){ 
+                break;
             }else{
-                if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){ break; }
-                else{ ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x-c); pos.add(1,this.y); t.add(pos); }
+                if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){
+                    break; 
+                }
+                else{ 
+                    ArrayList<Integer> pos = new ArrayList<>(2);
+                    pos.add(0,this.x-c); 
+                    pos.add(1,this.y); 
+                    t.add(pos);
+                }            
             }
             c++;
         }
         
         c=1;
         while(c<this.visionSize){
-            if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){ break;
+            if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
+                break;
             }else{
-                if(!(view.getModel().getTileAt(this.x, this.y+c) instanceof FreeTile)){ break; }
-                else{ ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y+c); t.add(pos); }
+                if(!(view.getModel().getTileAt(this.x, this.y+c) instanceof FreeTile)){
+                    break; 
+                }
+                else{
+                    ArrayList<Integer> pos = new ArrayList<>(2);
+                    pos.add(0,this.x); 
+                    pos.add(1,this.y+c); 
+                    t.add(pos);
+                }
             }
             c++;
         }
         
         c=1;
         while(c<this.visionSize){
-            if(this.y-c<0){ break;
+            if(this.y-c<0){ 
+                break;
             }else{
-                if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){ break; }
-                else{ ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y-c); t.add(pos); }
+                if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){
+                    break; 
+                }
+                else{ 
+                    ArrayList<Integer> pos = new ArrayList<>(2);
+                    pos.add(0,this.x);
+                    pos.add(1,this.y-c); 
+                    t.add(pos); 
+                }
             }
             c++;
         }
         
-        ArrayList<Integer> pos = new ArrayList<>(2); pos.add(0,this.x); pos.add(1,this.y); t.add(pos);
+        ArrayList<Integer> pos = new ArrayList<>(2);
+        pos.add(0,this.x);
+        pos.add(1,this.y); 
+        t.add(pos);
         return t;
     }
 
@@ -272,7 +307,7 @@ public class Player extends Tile {
         return visibles;
     }
 
-    public void testView(int jX, int jY, int vX, int vY, ArrayList visibles){
+    public void testView(int jX, int jY, int vX, int vY, ArrayList<ArrayList<Integer>> visibles){
         int mapSizeX = view.getModel().getWidth(); //creation de g[][], liste de valeurs parcourues
         int mapSizeY = view.getModel().getHeight();
         int[][] g = new int[mapSizeX][mapSizeY];
@@ -304,19 +339,32 @@ public class Player extends Tile {
 
         for(int i=0; i<intHypothenuse; i++){
 
-            if(revX){ XX-=movingX; }else{ XX+=movingX; } //deplace XX de movingX (vers vX*20 donc)
-            if(revY){ YY-=movingY; }else{ YY+=movingY; }
+            if(revX){ 
+                XX-=movingX; 
+            }else{
+                XX+=movingX; 
+            } //deplace XX de movingX (vers vX*20 donc)
+            if(revY){
+                YY-=movingY;
+            }else{ 
+                YY+=movingY;
+            }
 
             int xtest = (int) floor( ((int)(XX)+10) /20 );
             int ytest = (int) floor( ((int)(YY)+10) /20 );
 
             boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
-            if(question){ g[xtest][ytest] += 1;}
-            else{ return; }
-
+            if(question){ 
+                g[xtest][ytest] += 1;
+            }
+            else{ 
+                return; 
+            }
         }
 
-        ArrayList<Integer> tmp = new ArrayList<>(2); tmp.add(0,vX); tmp.add(1,vY); 
+        ArrayList<Integer> tmp = new ArrayList<>(2); 
+        tmp.add(0,vX); 
+        tmp.add(1,vY); 
         visibles.add(tmp);
     }
 

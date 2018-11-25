@@ -4,9 +4,7 @@ import modele.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class GUI extends JFrame{
-
     private View view;
     private Game game;
     private Integer[] coordPlayer = new Integer[2];
@@ -15,7 +13,7 @@ public class GUI extends JFrame{
     private boolean isMoving = false;
     private boolean isPlanting = false;
     private Player player;
-    private SoundLoader sound;
+    private SoundLoader sound;    
 
     public GUI(Player p){
         this(new Game(),p);
