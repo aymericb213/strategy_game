@@ -247,7 +247,7 @@ public class GUI extends JFrame{
                         }
 
                         if(p.possibleMoves().contains(d)){
-                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {
+                            if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {                                
                                 sound = new SoundLoader(1);
                             }
 
@@ -292,10 +292,7 @@ public class GUI extends JFrame{
                         p.disablePlantingBomb();                        
                         game.stateChange();
                     }  
-                    if(game.getGrid().checkDamage()){
-                        sound = new SoundLoader(2);
-                        game.getGrid().checkDamage();
-                    }
+                    damageSound();
                 }                
             }
 
@@ -328,11 +325,19 @@ public class GUI extends JFrame{
         playerToPlay.setAsTurn(true);
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
 
-        if(game.getGrid().hearExplosion()){
+        if(game.getGrid().hearExplosion()){            
             sound = new SoundLoader(1);
+            damageSound();
             game.getGrid().endExplosion();
         }
         game.stateChange();
+    }
+    
+    public void damageSound(){
+        if(game.getGrid().checkDamage()){
+            sound = new SoundLoader(2);
+            game.getGrid().checkDamage();
+        }
     }
 
     public Direction block2dir(int x, int y){
