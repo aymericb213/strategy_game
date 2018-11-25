@@ -57,7 +57,45 @@ public class View extends JPanel implements ModelListener{
 
         if(player.getLife() > 0){
                 BufferedImage img = player.getImgRepr();
-
+                
+                ArrayList<ArrayList> viewableTiles = player.visibleTiles();
+                ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
+                //System.out.print(viewableTiles);
+		
+		for(int i = 0; i < game.getTileMap().size(); i++){
+                    ArrayList<Tile> list = game.getTileMap().get(i);
+                    for(Tile t : list){                                         	//bloc for remis içi (modifié)
+                        boolean playerCanSee = player.getView().playerCanSee(t);
+                        int xx = t.getX();
+                        int yy = t.getY();
+                        ArrayList<Integer> tmp = new ArrayList<Integer>(); tmp.add(0,t.getX()); tmp.add(1,t.getY());
+                        boolean isInViewable = (viewableTiles.contains(tmp));
+                        boolean isInVisibles = (visiblesTiles.contains(tmp));
+                        if(playerCanSee && ( isInViewable || isInVisibles ) ){
+                        //if(true){
+                            g.drawImage(t.getImgRepr(), xx*64 , yy*64, this);
+                        }else{
+                            g.setColor(new Color(50,50,50));
+                            g.fillRect(xx*64, yy*64, 64, 64);
+                        }
+                    }
+                }
+                
+                Set<Player> players = game.getListPlayers().keySet();
+                for(Player p: players){
+                    if(p.getName() != player.getName()){
+                        if( (p.getLife()>0) ){
+                            ArrayList<Integer> tmp = new ArrayList<Integer>(); tmp.add(0,p.getX()); tmp.add(1,p.getY());
+                            boolean playerCanSee = player.getView().playerCanSee(p);
+                            boolean isInViewable = (viewableTiles.contains(tmp));
+                            boolean isInVisibles = (visiblesTiles.contains(tmp));
+                            if(playerCanSee && ( isInViewable || isInVisibles ) ){
+                                displayPlayer(g,p);
+                            }
+                        }
+                    }
+                }
+                
                 int baseX = (int)(( 64 - sizeImg.getWidth())/2);
                 int baseY = (int)(( 64 - sizeImg.getHeight())/2);
 
@@ -88,52 +126,31 @@ public class View extends JPanel implements ModelListener{
                     if(player.getEnergy() != 0){
                         g.setColor(new Color(0,255,0));
                         for(Direction d : possibleMoves){
+                            //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
                             g.fillOval(64 * (player.getX()+d.x()) + 17, 64* (player.getY()+d.y()) +17 , 30, 30);
                         }
                     }
                 }
-
-
-                ArrayList<ArrayList> viewableTiles = player.visibleTiles();
-                ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
-                if(player.isSelected()){
-
-                    g.setColor(new Color(125,25,255));
-                    for(ArrayList t : visiblesTiles){
-                        Integer tx = Integer.parseInt(t.get(0).toString());
-                        Integer ty = Integer.parseInt(t.get(1).toString());
-                        g.fillOval(64*tx+24, 64*ty+24, 15, 15);
-                    }
-
-                }
             }
+
         displayBomb(g);
-        
         Grid grid = game.getGrid();
-        Set<Player> players = game.getListPlayers().keySet();
         
-        for(Player p: players){
-            if(p.getName() != player.getName()){
-                if(p.getLife() > 0){
-                    displayPlayer(g,p);
-                }
-            }
-        }
-        
-        if(observer.playerToPlay.getName() != null || player.getName() != null){        
-            observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());    
-        }
-        
-        if(game.getGrid().gameIsOver() && player.getLife() > 0){       
-            g.setColor(Color.GREEN);        
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));        
-            g.drawString("VICTOIRE", 300, 416);    
-        }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){        
-            g.setColor(Color.RED);        
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));        
-            g.drawString("DEFAITE", 300, 416);    
-        }    
+
+    if(observer.playerToPlay.getName() != null || player.getName() != null){
+        observer.setTitle("Shooter Game ("+player.getName()+"). Tour de: "+observer.playerToPlay.getName());
     }
+
+    if(game.getGrid().gameIsOver() && player.getLife() > 0){
+        g.setColor(Color.GREEN);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+        g.drawString("VICTOIRE", 300, 416);
+    }else if(game.getGrid().gameIsOver() && player.getLife() <= 0){
+        g.setColor(Color.RED);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+        g.drawString("DEFAITE", 300, 416);
+    }
+}
 
     public void displayPlantPoints(Graphics g, Player p){
         for(int i = p.getX()-1;  i <= p.getX()+1; i++){
