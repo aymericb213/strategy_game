@@ -58,7 +58,6 @@ public class ImagesLoader {
             int y = list.get(1);
             int width = list.get(2);
             int height = list.get(3);
-            System.out.println(index);
             BufferedImage temp = spritesheet.getSubimage(x,y,width, height);
             imagePlayers.get(index).add(temp);
             acc++;
@@ -67,7 +66,6 @@ public class ImagesLoader {
                 index++;
             }
         }
-        System.out.println("Taille ==> "+imagePlayers.get(0).size());
     }
 
     public static BufferedImage lookUp(BufferedImage img) {
@@ -156,9 +154,6 @@ public class ImagesLoader {
         int size = 64;
         int nbImagesWidth = width / size;
         int nbImagesHeight = height / size;
-
-        System.out.println("Largeur "+ nbImagesWidth);
-        System.out.println("Hauteur "+nbImagesHeight);
 
         for(int y = 0 ; y < nbImagesHeight ; y++){
             for(int x = 0 ; x < nbImagesWidth ; x++){

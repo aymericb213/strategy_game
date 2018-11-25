@@ -60,11 +60,10 @@ public class View extends JPanel implements ModelListener{
                 
                 ArrayList<ArrayList> viewableTiles = player.visibleTiles();
                 ArrayList<ArrayList<Integer>> visiblesTiles = player.visiblesTiles();
-                //System.out.print(viewableTiles);
 		
 		for(int i = 0; i < game.getTileMap().size(); i++){
                     ArrayList<Tile> list = game.getTileMap().get(i);
-                    for(Tile t : list){                                         	//bloc for remis içi (modifié)
+                    for(Tile t : list){                                        //bloc for remis içi (modifié)
                         boolean playerCanSee = player.getView().playerCanSee(t);
                         int xx = t.getX();
                         int yy = t.getY();

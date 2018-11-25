@@ -17,18 +17,6 @@ public class Main {
         SoundLoader bg = new SoundLoader(0);
         bg.loopTrack();
         new GameConfig();
-        System.out.println(System.getProperty("user.dir"));
-
-        //Chargement de l'image qui représentera le joueur
-        BufferedImage img = null;
-        BufferedImage img2 = null;
-
-        try {
-            img = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_hold.png"));
-            img2 = ImageIO.read(new File("src/Images/PNG/Hitman1/hitman1_gun.png"));
-        } catch(IOException e) {
-            System.out.println(e);
-        }
 
         File file2 = new File("src/Images/Spritesheet/spritesheet_characters.xml");
         ImagesLoader il = new ImagesLoader(file2);
@@ -43,31 +31,44 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        File file = new File("src/Levels/level3.xml");
+        File file = new File("src/Levels/level.xml");
 
         try {
             Game game = new Game();            
-            System.out.println("MARQUEE");
-            game.loadGrid(file, 2);
-            System.out.println("Grille ==>"+game.getGrid());
+            game.loadGrid(file, 4);
 
             Player p = factory.buildBasic(game.getGrid());
             p.setX(0);
-            p.setY(12);
+            p.setY(0);
             game.addPlayer(p);
+            
             Player p2 = factory.buildBasic(game.getGrid());
-            p2.setX(3);
-            p2.setY(12);
+            p2.setX(12);
+            p2.setY(0);
             game.addPlayer(p2);
+            
+            Player p3 = factory.buildBasic(game.getGrid());
+            p3.setX(0);
+            p3.setY(12);
+            game.addPlayer(p3);
+            
+            Player p4 = factory.buildBasic(game.getGrid());
+            p4.setX(11);
+            p4.setY(12);
+            game.addPlayer(p4);            
+            
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
             p2.setImgRepr(ImagesLoader.imagePlayers.get(5).get(0));
+            p3.setImgRepr(ImagesLoader.imagePlayers.get(1).get(0));
+            p4.setImgRepr(ImagesLoader.imagePlayers.get(4).get(0));
 
             p2.lastMove = Direction.s;
 
             game.getGrid().nextPlayer();
-            System.out.println(game.getGrid().getPlayerToPlay());
             GUI gui1 = new GUI(game, p);
             GUI gui2 = new GUI(game, p2);
+            GUI gui3 = new GUI(game, p3);
+            GUI gui4 = new GUI(game, p4);
             ViewConsole console = new ViewConsole(null,game);
             console.update(console);
 

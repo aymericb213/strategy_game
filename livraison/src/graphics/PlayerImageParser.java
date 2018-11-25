@@ -19,18 +19,6 @@ public class PlayerImageParser extends DefaultHandler {
     public PlayerImageParser(){
     }
 
-    Hashtable tags;
-    @Override
-    public void startDocument() {
-        //System.out.println("Document started");
-        //tags = new Hashtable();
-    }
-
-    @Override
-    public void endDocument() {
-        //System.out.println("Documents ended");
-    }
-
     @Override
     public void startElement(String namespaceURI,String localName,String qname,Attributes atts) throws SAXException {
        if(qname == "SubTexture"){

@@ -18,7 +18,8 @@ public class PrintThread implements Runnable {
         this.active_player = active_player;
     }
 
-    /** Prints the console interface with alternating grid displays, making the active player blink.
+    /** 
+     * Prints the console interface with alternating grid displays, making the active player blink.
      */
     @Override
     public synchronized void run() {
@@ -27,7 +28,6 @@ public class PrintThread implements Runnable {
                 System.out.println("\033[H\033[2J");
                 System.out.println("Tour " + grid.getTurnNumber());
                 System.out.println(active_player.getName() + "\n");
-                //System.out.println(grid + "\n");//vue globale
                 System.out.println(active_player.getView().toStringForThread() + "\n");//vues joueur
                 System.out.println("# : mur");
                 System.out.println("; : mine");

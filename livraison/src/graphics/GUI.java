@@ -25,7 +25,6 @@ public class GUI extends JFrame{
         this.player = p;
         this.game = game;
         playerToPlay = game.getGrid().getPlayerToPlay();
-        System.out.println("JOUEUR ==> "+playerToPlay);
         this.view = new View(null,game, player, this);
         view.setEntities(game.getGrid().getGrid());
         setContentPane(view);

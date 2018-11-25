@@ -50,7 +50,6 @@ public class RealGrid implements Grid {
         p.setEnergy(p.getBaseEnergy());
         p.disableShield();
         playerToPlay = p;
-        System.out.println(playerToPlay);
         p.setAsTurn(true);
         return p;
     }
