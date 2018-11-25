@@ -136,35 +136,37 @@ public class GUI extends JFrame{
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(player.getEnergy() >= GameConfig.MOVE_COST && player.getName().equals(playerToPlay.getName())){
-                    if(e.getKeyCode() == KeyEvent.VK_Z){
-                        if(player.possibleMoves().contains(Direction.z)){
-                          player.move(Direction.z);
-                          game.stateChange();
-                        }
-                    }
-                    if(e.getKeyCode() == KeyEvent.VK_Q){
-                        if(player.possibleMoves().contains(Direction.q)){
-                          player.move(Direction.q);
-                          game.stateChange();
-                        }
-
-                    }
-                    if(e.getKeyCode() == KeyEvent.VK_S){
-                            if(player.possibleMoves().contains(Direction.s)){
-                              player.move(Direction.s);
+                if(player.getName() == playerToPlay.getName()){
+                    if(player.getEnergy() >= GameConfig.MOVE_COST && player.getName().equals(playerToPlay.getName())){
+                        if(e.getKeyCode() == KeyEvent.VK_Z){
+                            if(player.possibleMoves().contains(Direction.z)){
+                              player.move(Direction.z);
                               game.stateChange();
                             }
-                    }
-                    if(e.getKeyCode() == KeyEvent.VK_D){
-                        if(player.possibleMoves().contains(Direction.d)){
-                          player.move(Direction.d);
-                          game.stateChange();
+                        }
+                        if(e.getKeyCode() == KeyEvent.VK_Q){
+                            if(player.possibleMoves().contains(Direction.q)){
+                              player.move(Direction.q);
+                              game.stateChange();
+                            }
+
+                        }
+                        if(e.getKeyCode() == KeyEvent.VK_S){
+                                if(player.possibleMoves().contains(Direction.s)){
+                                  player.move(Direction.s);
+                                  game.stateChange();
+                                }
+                        }
+                        if(e.getKeyCode() == KeyEvent.VK_D){
+                            if(player.possibleMoves().contains(Direction.d)){
+                              player.move(Direction.d);
+                              game.stateChange();
+                            }
                         }
                     }
-                }
-                if(player.getEnergy() == 0){
-                    changeTurn();
+                    if(player.getEnergy() == 0){
+                        changeTurn();
+                    }
                 }
             }
         });
@@ -280,6 +282,8 @@ public class GUI extends JFrame{
                         }
                         game.stateChange();
 
+                    }else if(p.isPlanting() && x == p.getX() && y == p.getY()){
+                        p.disablePlant();
                     }else if(p.isPlanting() && game.getGrid().getTileAt(x,y) instanceof FreeTile){
                         int distance = (int) Math.sqrt(Math.pow(playerToPlay.getX() - x, 2) + Math.pow(playerToPlay.getY() - y, 2));
                         if(distance == 1 ){

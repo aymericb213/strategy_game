@@ -5,7 +5,7 @@ import static java.lang.Math.*;
 
 public class Player extends Tile {
 
-    private final String name;
+    private  String name;
     private final String classname;
     private int energy;
     private int life;
@@ -155,6 +155,10 @@ public class Player extends Tile {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public ArrayList<Direction> possibleMoves() {
         ArrayList<Direction> res = new ArrayList<>();
         if((this.y > 0) && view.getTileAt(this.x,this.y-1).isWalkable()) {
@@ -375,6 +379,7 @@ public class Player extends Tile {
                 this.energy=0;
                 this.view.setTileAt(new FreeTile(this.x,this.y));
                 this.view.getModel().getActivePlayers().remove(this);
+                this.view.getModel().nextPlayer();
             }
         } else {
             this.disableShield();
@@ -416,6 +421,8 @@ public class Player extends Tile {
         }
     }
 
+    
+    
     public boolean isShooting() {
         return isShooting;
     }

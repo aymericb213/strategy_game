@@ -40,21 +40,25 @@ public class Main {
             Player p = factory.buildBasic(game.getGrid());
             p.setX(0);
             p.setY(0);
+            p.setName("Quentin");
             game.addPlayer(p);
             
             Player p2 = factory.buildBasic(game.getGrid());
             p2.setX(12);
             p2.setY(0);
+            p.setName("Sami");
             game.addPlayer(p2);
             
             Player p3 = factory.buildBasic(game.getGrid());
             p3.setX(0);
             p3.setY(12);
+            p3.setName("Aymeric");
             game.addPlayer(p3);
             
             Player p4 = factory.buildBasic(game.getGrid());
             p4.setX(11);
             p4.setY(12);
+            p4.setName("Martin");
             game.addPlayer(p4);            
             
             p.setImgRepr(ImagesLoader.imagePlayers.get(3).get(0));
