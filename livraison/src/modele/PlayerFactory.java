@@ -10,7 +10,7 @@ public final class PlayerFactory {
 
     private PlayerFactory() {
         super();
-        fullLoadout();
+        weapons();
     }
 
     public final static PlayerFactory getInstance() {
@@ -20,7 +20,7 @@ public final class PlayerFactory {
         return PlayerFactory.instance;
     }
 
-    public ArrayList<Weapon> fullLoadout() {
+    public ArrayList<Weapon> weapons() {
         inventory.add(new Rifle(new Player(new RealGrid(),"","")));
         inventory.add(new Mine(new Player(new RealGrid(),"","")));
         inventory.add(new Bomb(new Player(new RealGrid(),"","")));
@@ -28,8 +28,8 @@ public final class PlayerFactory {
     }
 
     public Player build(RealGrid g, String classname, int hp_mod, int ap_mod, int rifle_ammo_mod, int bombs_mod, int mines_mod) {
-        PlayerFactory.nb_instances++;      
-        Player p = new Player(g,"Player "+PlayerFactory.nb_instances, classname);      
+        PlayerFactory.nb_instances++;
+        Player p = new Player(g,"Player "+PlayerFactory.nb_instances, classname);
         p.setLife(p.getLife()+hp_mod);
         p.setBaseEnergy(p.getBaseEnergy()+ap_mod);
         p.addWeapon(PlayerFactory.inventory.get(0), GameConfig.RIFLE_BASE_AMMO+rifle_ammo_mod);

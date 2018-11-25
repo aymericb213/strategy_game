@@ -406,6 +406,11 @@ public class Player extends Tile {
 
     }
 
+    public boolean actionIsAvailable(int cost, int weapon) {
+      boolean enough_ap = (this.energy>=cost);
+      return (weapon>=0 && weapon<PlayerFactory.inventory.size()) ? (enough_ap && this.loadout.get(PlayerFactory.inventory.get(weapon))>0) : enough_ap;
+    }
+
     /* Explosifs */
     public void plant(Mine m, Tile t) {
         if (t!=null) {
@@ -487,16 +492,19 @@ public class Player extends Tile {
 
     public String printControls() {
       String controls = "\nn : tour auto     p : fin de tour     e : quitter";
-      if (this.energy>=GameConfig.MOVE_COST) {
+      if (actionIsAvailable(GameConfig.MOVE_COST,-1)) {
         controls+="\nz,q,s,d : déplacer joueur\n";
       }
-      if (this.energy>=GameConfig.PLANT_COST) {
-        controls+="m : poser mine      b : poser bombe     ";
+      if (actionIsAvailable(GameConfig.PLANT_COST,1)) {
+        controls+="m : poser mine      ";
       }
-      if (this.energy>=GameConfig.FIRE_COST) {
+      if (actionIsAvailable(GameConfig.PLANT_COST,2)) {
+        controls+="b : poser bombe     ";
+      }
+      if (actionIsAvailable(GameConfig.FIRE_COST,0)) {
         controls+="t : tirer     ";
       }
-      if (this.energy>=GameConfig.SHIELD_COST && !this.shield_up) {
+      if (actionIsAvailable(GameConfig.SHIELD_COST,-1) && !this.shield_up) {
         controls+="a : activer bouclier";
       }
       return controls;

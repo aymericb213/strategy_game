@@ -17,7 +17,6 @@ public class PrintThread implements Runnable {
         while(true) {
             try {
               System.out.println("\033[H\033[2J");
-              System.out.println("================ STRATEGY GAME =================\n");
               System.out.println("Tour " + g.getTurnNumber());
               System.out.println(p.getName() + "\n");
               //System.out.println(g + "\n");//vue globale
