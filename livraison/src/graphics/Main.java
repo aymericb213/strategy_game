@@ -46,7 +46,7 @@ public class Main {
             Player p2 = factory.buildBasic(game.getGrid());
             p2.setX(12);
             p2.setY(0);
-            p.setName("Sami");
+            p2.setName("Sami");
             game.addPlayer(p2);
             
             Player p3 = factory.buildBasic(game.getGrid());

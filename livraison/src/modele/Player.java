@@ -195,19 +195,11 @@ public class Player extends Tile {
     }
 
     public ArrayList<ArrayList<Integer>> visibleTiles(){
-<<<<<<< HEAD
         ArrayList<ArrayList<Integer>> t = new ArrayList<>();
 
         int c=1;
         while(c<this.visionSize){
             if(this.x+c>view.getModel().getWidth()){
-=======
-        ArrayList<ArrayList<Integer>> t = new ArrayList<>();			//create an arrayList who will contains all coordonates of tiles who are visible to given player
-        
-        int c=1;
-        while(c<this.visionSize){										//loop to look right
-            if(this.x+c>view.getModel().getWidth()){ 
->>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x+c, this.y) instanceof FreeTile)){
@@ -224,13 +216,8 @@ public class Player extends Tile {
         }
 
         c=1;
-<<<<<<< HEAD
         while(c<this.visionSize){
             if(this.x-c<0){
-=======
-        while(c<this.visionSize){									//loop to look left
-            if(this.x-c<0){ 
->>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x-c, this.y) instanceof FreeTile)){
@@ -247,7 +234,7 @@ public class Player extends Tile {
         }
 
         c=1;
-        while(c<this.visionSize){									//loop to look down
+        while(c<this.visionSize){
             if(this.y+c>view.getModel().getGrid().length/view.getModel().getWidth()){
                 break;
             }else{
@@ -265,13 +252,8 @@ public class Player extends Tile {
         }
 
         c=1;
-<<<<<<< HEAD
         while(c<this.visionSize){
             if(this.y-c<0){
-=======
-        while(c<this.visionSize){									//loop to look up
-            if(this.y-c<0){ 
->>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
                 break;
             }else{
                 if(!(view.getModel().getTileAt(this.x, this.y-c) instanceof FreeTile)){
@@ -286,13 +268,8 @@ public class Player extends Tile {
             }
             c++;
         }
-<<<<<<< HEAD
 
         ArrayList<Integer> pos = new ArrayList<>(2);
-=======
-        
-        ArrayList<Integer> pos = new ArrayList<>(2);				//add player location
->>>>>>> 8bc812f15f51a73aefbc7a946ebd0a57d80a65d7
         pos.add(0,this.x);
         pos.add(1,this.y);
         t.add(pos);
@@ -306,28 +283,28 @@ public class Player extends Tile {
         int mapSizeX = view.getModel().getWidth();
         int mapSizeY = view.getModel().getHeight();
 
-        for(int vX = 0; vX<mapSizeX; vX++){					//loop for all positions in the map
+        for(int vX = 0; vX<mapSizeX; vX++){
             for(int vY = 0; vY<mapSizeY; vY++){
                 if(!(jX==vX && jY==vX)){
-                    testView(jX,jY,vX,vY,visibles);			//launch testView with the playerPosition and the position we want to test
+                    testView(jX,jY,vX,vY,visibles);
                 }
             }
         }
-        
-        for(int vY = 0; vY<mapSizeY; vY++){					//loop to test all walls
+
+        for(int vY = 0; vY<mapSizeY; vY++){
             for(int vX = 0; vX<mapSizeX; vX++){
-                
+
                 Tile t = view.getModel().getTileAt(vX, vY);
                 boolean isWall = t instanceof Wall;
-                
+
                 ArrayList<Integer> a = new ArrayList<>(); a.add(0,vX); a.add(1,vY);
                 boolean isContained = visibles.contains(a);
-                
+
                 boolean narrowContained;
-                if( isWall && !(isContained) ){				//if Tile at vX vY is a Wall :
+                if( isWall && !(isContained) ){
                     narrowContained = false;
                     ArrayList<Integer> narrow = new ArrayList<>(); narrow.add(0,0); narrow.add(1,0);
-                    for(int narrowvX=-1; narrowvX<=1; narrowvX+=1){			//and if right/left/up/down Tiles is(are) in visible Tile (normals one, not wall)
+                    for(int narrowvX=-1; narrowvX<=1; narrowvX+=1){
                         for(int narrowvY=-(1); narrowvY<=1; narrowvY+=1){
                             try{
                                 narrow.set(0,vX+narrowvX); narrow.set(1,vY+narrowvY);
@@ -335,9 +312,9 @@ public class Player extends Tile {
                             }catch(Exception e){ }
                         }
                     }
-                    if(narrowContained){ visibles.add(a); }			// add this wall if all is good.
+                    if(narrowContained){ visibles.add(a); }
                 }
-                
+
             }
         }
         return visibles;
@@ -375,33 +352,33 @@ public class Player extends Tile {
 
         for(int i=0; i<intHypothenuse; i++){
 
-            if(revX){ 
-                XX-=movingX; 
+            if(revX){
+                XX-=movingX;
             }else{
-                XX+=movingX; 
+                XX+=movingX;
             } //deplace XX de movingX (vers vX*20 donc)
             if(revY){
                 YY-=movingY;
-            }else{ 
+            }else{
                 YY+=movingY;
-            } //deplace YY de movingY (vers vY*20 donc)
-
-            int xtest = (int) floor( ((int)(XX)+10) /20 );//regarde sur quelle case on se trouve
-            int ytest = (int) floor( ((int)(YY)+10) /20 );//regarde sur quelle case on se trouve
-
-            boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;// si la  case testée n'est pas un obstacle (joueurs à part) alors
-            if(question){ 
-                g[xtest][ytest] += 1;			// on ajoute 1 a la position de la grille
             }
-            else{ 
-                return; 			// sinon on arrete testView
+
+            int xtest = (int) floor( ((int)(XX)+10) /20 );
+            int ytest = (int) floor( ((int)(YY)+10) /20 );
+
+            boolean question =  view.getModel().getTileAt(xtest,ytest).isWalkable() || view.getModel().getTileAt(xtest,ytest) instanceof Player;
+            if(question){
+                g[xtest][ytest] += 1;
+            }
+            else{
+                return;
             }
         }
 
-        ArrayList<Integer> tmp = new ArrayList<>(2); 
-        tmp.add(0,vX); 
-        tmp.add(1,vY); 
-        visibles.add(tmp);			//si la boucle est fini alors il n'y a pas d'obstacle qui a bloqué la vue, on ajoute donc la position de la tuile qui était testée aux positions ee tuiles visibles
+        ArrayList<Integer> tmp = new ArrayList<>(2);
+        tmp.add(0,vX);
+        tmp.add(1,vY);
+        visibles.add(tmp);
     }
 
     /** Applies damage to the player
