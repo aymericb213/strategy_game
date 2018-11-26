@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 
 public class Bonus extends Tile {
 
-  //Ammount of health/energy/ammunation restored
   private final int value = GameConfig.BONUS_VALUE;
 
     /**
@@ -21,7 +20,7 @@ public class Bonus extends Tile {
     public Bonus(int x, int y) {
         super(x,y);
     }
-    
+
     public Bonus(int x, int y, BufferedImage img){
         super(x,y,img);
     }
@@ -30,14 +29,19 @@ public class Bonus extends Tile {
         return this.value;
     }
 
+    /** Permanently increases the amount of action points restored to
+      * a player each turn.
+      * @param p
+      * Player receiving the boost.
+      */
     public void boost(Player p) {
       //p.setEnergy(p.getEnergy()+this.value);
       p.setBaseEnergy(p.getBaseEnergy()+1);
     }
 
     /**
-    * Returns the representation of the objective.
-    * @return A character representing the objective.
+    * Returns the representation of the bonus.
+    * @return A character representing the bonus.
     */
     @Override
     public String toString() {
