@@ -2,17 +2,20 @@ package modele;
 
 import java.util.*;
 
+/** Factory class for player creation.*/
 public final class PlayerFactory {
 
     private static PlayerFactory instance = null;
     public static int nb_instances = 0;
     public static ArrayList<Weapon> inventory = new ArrayList<Weapon>();
 
+    /** Singleton class constructor.*/
     private PlayerFactory() {
         super();
         weapons();
     }
 
+    /** Creates an instance if none exists, or returns a pointer to the instance.*/
     public final static PlayerFactory getInstance() {
         if (PlayerFactory.instance == null) {
             PlayerFactory.instance = new PlayerFactory();
@@ -20,6 +23,10 @@ public final class PlayerFactory {
         return PlayerFactory.instance;
     }
 
+    /** Makes a static list of all weapons in the game used to create map keys in player      *
+      * loadouts.
+      * @return the list of weapons a player can use.
+      */
     public ArrayList<Weapon> weapons() {
         inventory.add(new Rifle(new Player(new RealGrid(),"","")));
         inventory.add(new Mine(new Player(new RealGrid(),"","")));
@@ -27,6 +34,24 @@ public final class PlayerFactory {
         return inventory;
     }
 
+    /** General player creation method.
+      * @param g
+      * The game grid where the player will play.
+      * @param classname
+      * Class to which the player belongs.
+      * @param hp_mod
+      * Value of the bonus (or malus) life points given to the player,
+      * compared to the base value in the config file.
+      * @param ap_mod
+      * Action points modifier.
+      * @param rifle_ammo_mod
+      * Starting rifle ammunition modifier.
+      * @param bombs_mod
+      * Starting bomb count modifier.
+      * @param mines_mod
+      * Starting mine count modifier.
+      * @return an instance of Player.
+      */
     public Player build(RealGrid g, String classname, int hp_mod, int ap_mod, int rifle_ammo_mod, int bombs_mod, int mines_mod) {
         PlayerFactory.nb_instances++;
         Player p = new Player(g,"Player "+PlayerFactory.nb_instances, classname);
@@ -38,6 +63,7 @@ public final class PlayerFactory {
         return p;
     }
 
+    /* Player classes*/
     public Player buildBasic(RealGrid g) {
         return build(g,"Basic",0,0,0,0,0);
     }
