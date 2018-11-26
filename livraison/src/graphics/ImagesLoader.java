@@ -53,7 +53,6 @@ public class ImagesLoader {
         int index = 0;
         for(String name: playerHandler.playerNames){
             ArrayList<Integer> list = playerHandler.playerImages.get(name);
-            //x,y,width,height
             int x = list.get(0);
             int y = list.get(1);
             int width = list.get(2);

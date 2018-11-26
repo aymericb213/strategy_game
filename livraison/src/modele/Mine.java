@@ -1,7 +1,7 @@
 package modele;
 
 /**
-* Classe fille de Tile représentant une mine.
+* Class that extends Tile, represents a mine.
 */
 public class Mine extends Tile implements Weapon {
 
@@ -9,8 +9,8 @@ public class Mine extends Tile implements Weapon {
     protected int damage = GameConfig.MINE_DAMAGE;
 
     /**
-    * Constructeur de la classe.
-     * @param owner
+    * Class constructor.
+    * @param owner
     */
     public Mine(Player owner) {
         super(-1,-1);
@@ -41,9 +41,9 @@ public class Mine extends Tile implements Weapon {
     }
 
     /**
-    * Surcharge de hashCode().
-    * Nécessaire au bon fonctionnement de la surcharge d'equals.
-    * @return Le hashcode de l'objet.
+    * hashCode() Override.
+    * Necessary for the well functioning of equals' Override.
+    * @return The object's hashcode.
     */
     @Override
     public int hashCode() {
@@ -54,11 +54,11 @@ public class Mine extends Tile implements Weapon {
     }
 
     /**
-    * Surcharge de equals.
-    * Prend en compte l'égalité de coordonnées.
+    * equals Override.
+    * Checks the equality of the coordinates.
     * @param o
-    * L'objet à comparer au noeud.
-    * @return Le résultat du test d'égalité.
+    * The object to compare to a node.
+    * @return Equality test result.
     */
     @Override
     public boolean equals(Object o) {
@@ -73,8 +73,8 @@ public class Mine extends Tile implements Weapon {
     }
 
     /**
-    * Retourne la représentation de l'objectif.
-    * @return Un caractère représentant l'objectif.
+    * Returns the representation of the objective.
+    * @return A character representing the objective.
     */
     @Override
     public String toString() {

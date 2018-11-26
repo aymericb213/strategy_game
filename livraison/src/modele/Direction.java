@@ -3,8 +3,7 @@ package modele;
 import java.util.ArrayList;
 
 /**
- *  Class used for movements. We use it by add direction's value to the object position.
- *  This makes him move to right direction.
+ *  Class used for movements. We use it by adding a direction's value to the object's position.
  */
 public enum Direction {
     z("z",0,-1),
@@ -43,7 +42,7 @@ public enum Direction {
     }
 
     /**
-     * Get all the directions the player can potentially play
+     * Gets all the possible directions 
      * @return ArrayList of the Directions
      */
     public static ArrayList<Direction> getDirections(){

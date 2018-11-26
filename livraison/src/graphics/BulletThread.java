@@ -30,7 +30,6 @@ public class BulletThread extends Thread {
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
         this.y = y *64;
-        //this.range = range;
         this.range = (range-1) * 64;
         this.d = d;
         this.owner = p;

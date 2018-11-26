@@ -1,15 +1,15 @@
 package modele;
 
 /**
-* Classe fille de Tile représentant un bonus.
+* Class that extends Tile, represents a bomb.
 */
 public class Bomb extends Mine {
-
-    //Nombre de tours avant explosion
-    private int delay = GameConfig.BOMB_DELAY;
+    
+    private int delay = GameConfig.BOMB_DELAY; //Number of turns before explosion
     private int range = GameConfig.BOMB_RANGE;
+    
     /**
-    * Constructeur de la classe.
+    * Class constructor.
     * @param owner
     */
     public Bomb(Player owner) {
@@ -51,9 +51,9 @@ public class Bomb extends Mine {
     }
 
     /**
-    * Surcharge de hashCode().
-    * Nécessaire au bon fonctionnement de la surcharge d'equals.
-    * @return Le hashcode de l'objet.
+    * hashCode() Override.
+    * Necessary for the well functioning of equals' Override.
+    * @return The object's hashcode.
     */
     @Override
     public int hashCode() {
@@ -64,11 +64,11 @@ public class Bomb extends Mine {
     }
 
     /**
-    * Surcharge de equals.
-    * Prend en compte l'égalité de coordonnées.
+    * equals Override.
+    * Checks the equality of the coordinates.
     * @param o
-    * L'objet à comparer au noeud.
-    * @return Le résultat du test d'égalité.
+    * The object to compare to a node.
+    * @return Equality test result.
     */
     @Override
     public boolean equals(Object o) {
@@ -83,8 +83,8 @@ public class Bomb extends Mine {
     }
 
     /**
-    * Retourne la représentation de l'objectif.
-    * @return Un caractère représentant l'objectif.
+    * Returns the representation of the objective.
+    * @return A character representing the objective.
     */
     @Override
     public String toString() {

@@ -12,7 +12,6 @@ public class PlayerImageParser extends DefaultHandler {
     public int x;
     public int y;
     private final boolean end = false;
-    //Nom, x, y, width, height;
     HashMap<String, ArrayList<Integer>> playerImages = new HashMap<>();
     ArrayList<String> playerNames = new ArrayList<>();
 

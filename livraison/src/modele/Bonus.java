@@ -3,23 +3,21 @@ package modele;
 import java.awt.image.BufferedImage;
 
 /**
-* Classe fille de Tile représentant un bonus.
+* Class that extends Tile, represents a bonus.
 */
 
 public class Bonus extends Tile {
 
-  //Quantité de vie/énergie/munitions restaurée
+  //Ammount of health/energy/ammunation restored
   private final int value = GameConfig.BONUS_VALUE;
 
     /**
-    * Constructeur de la classe.
+    * Class constructor.
     * @param x
-    * Ordonnée de la case.
+    * Square ordinate.
     * @param y
-    * Abscisse de la case.
-    * @param value
+    * Square abscissa.
     */
-
     public Bonus(int x, int y) {
         super(x,y);
     }
@@ -38,8 +36,8 @@ public class Bonus extends Tile {
     }
 
     /**
-    * Retourne la représentation de l'objectif.
-    * @return Un caractère représentant l'objectif.
+    * Returns the representation of the objective.
+    * @return A character representing the objective.
     */
     @Override
     public String toString() {

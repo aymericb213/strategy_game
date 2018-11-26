@@ -3,7 +3,7 @@ package modele;
 import java.awt.image.BufferedImage;
 
 /**
-* Classe abstraite représentant un objet du plateau de jeu.
+* Abstract class representing a grid object of the game.
 */
 public abstract class Tile {
 
@@ -14,11 +14,11 @@ public abstract class Tile {
     protected BufferedImage imgRepr;
 
     /**
-    * Constructeur de la classe.
+    * Class constructor.
     * @param x
-    * Ordonnée de la case.
+    * Square ordinate.
     * @param y
-    * Abscisse de la case.
+    * Square abscissa.
     */
     public Tile(int x, int y) {
         this.x = x;
@@ -27,8 +27,8 @@ public abstract class Tile {
 
 
     /**
-    * Version graphique du Tile, ce dernier n'est pas obligatoirement utilisé,
-    * on lui passe une image si on utilise une interface graphique.
+    * Graphic version of Tile
+    * Receive an image if used in a graphic interface.
     * @param x
     * @param y
     * @param img
@@ -77,8 +77,8 @@ public abstract class Tile {
     }
 
     /**
-    * Retourne la représentation de la case.
-    * @return Un caractère représentant le type de la case.
+    * Returns the representation of a tile.
+    * @return a character representing a tile.
     */
     @Override
     public abstract String toString();

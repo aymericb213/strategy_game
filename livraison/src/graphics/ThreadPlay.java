@@ -41,7 +41,6 @@ public class ThreadPlay extends Thread{
         try {
             sleep(1000);
         } catch (InterruptedException ex) {
-            //Logger.getLogger(ThreadPlay.class.getName()).log(Level.SEVERE, null, ex);
         }
         game.getGrid().nextPlayer();
         try {
@@ -66,21 +65,21 @@ public class ThreadPlay extends Thread{
             case "man":
                 displayMan(r, p);
                 break;              
-            case "E"://quitter             
+            case "E"://quit            
             case "e":            
                 break;              
-            case "P"://fin de tour même avec AP>0           
+            case "P"://end turn even if AP>0           
             case "p":           
                 break;              
-            case "N"://action de l'IA           
+            case "N"://AI action           
             case "n":           
                 p.act();               
                 break;              
-            case "A"://bouclier           
+            case "A"://Shield           
             case "a":           
                 p.enableShield();               
                 break;              
-            case "M"://posage d'explosif           
+            case "M"://explosive plant          
             case "m":           
             case "B":          
             case "b":           
@@ -97,7 +96,7 @@ public class ThreadPlay extends Thread{
                   p.plant(new Bomb(p), sites.get(Integer.parseInt(r.readLine())));
                 }
                 break;             
-            case "T"://tir            
+            case "T"://firing          
             case "t":            
                 System.out.println("\nChoisissez une direction (z,q,s,d):");                
                 switch (r.readLine()) {                  
@@ -122,7 +121,7 @@ public class ThreadPlay extends Thread{
                         break;                  
                 }                  
                 break;              
-            case "Z"://mouvements            
+            case "Z"://movements            
             case "z":            
                 p.move(Direction.z);                
                 break;              

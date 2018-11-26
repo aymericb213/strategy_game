@@ -3,18 +3,17 @@ package modele;
 import java.awt.image.BufferedImage;
 
 /**
-* Classe fille de Tile représentant une case vide.
+* Class that extends Tile, represents an empty tile.
 */
 public class FreeTile extends Tile {
 
     /**
-    * Constructeur de la classe.
+    * Class constructor.
     * @param x
-    * Ordonnée de la case.
+    * Square ordinate.
     * @param y
-    * Abscisse de la case.
+    * Square abscissa.
     */
-
     public FreeTile(int x, int y){
         super(x,y);
     }
@@ -24,8 +23,8 @@ public class FreeTile extends Tile {
     }
 
     /**
-    * Retourne la représentation de la case vide.
-    * @return Un caractère représentant la case vide.
+    * Returns the representation of an empty tile.
+    * @return a character representing an empty tile.
     */
 
     @Override

@@ -6,7 +6,6 @@ import java.util.logging.*;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 

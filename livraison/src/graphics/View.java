@@ -32,7 +32,7 @@ public class View extends JPanel implements ModelListener{
             ArrayList<Tile> list = game.getTileMap().get(i);
             try{
                 for(Tile t : list){
-                    int x = 64 * t.getX();	// bloc for décalé plus loin
+                    int x = 64 * t.getX();
                     int y = 64 * t.getY();
                     if(player.getView().playerCanSee(t)){
                         if(t instanceof Bonus){
@@ -64,7 +64,7 @@ public class View extends JPanel implements ModelListener{
 
 		for(int i = 0; i < game.getTileMap().size(); i++){
                     ArrayList<Tile> list = game.getTileMap().get(i);
-                    for(Tile t : list){                                        //bloc for remis içi (modifié)
+                    for(Tile t : list){
                         boolean playerCanSee = player.getView().playerCanSee(t);
                         int xx = t.getX();
                         int yy = t.getY();
@@ -107,7 +107,6 @@ public class View extends JPanel implements ModelListener{
                     g.drawImage(ImagesLoader.shield, player.getX()*64, player.getY()*64, this);
                 }
 
-                //drawLife(player,g);
                 drawActionPoint(player,g);
                 if(player.isPlanting()){
                     displayPlantPoints(g,player);
@@ -124,7 +123,6 @@ public class View extends JPanel implements ModelListener{
                     if(player.getEnergy() != 0){
                         g.setColor(new Color(0,255,0));
                         for(Direction d : possibleMoves){
-                            //g.drawRect(64 * (p.getX()+d.x()), 64* (p.getY()+d.y()), 64, 64);
                             g.fillOval(64 * (player.getX()+d.x()) + 17, 64* (player.getY()+d.y()) +17 , 30, 30);
                         }
                     }
@@ -190,8 +188,8 @@ public class View extends JPanel implements ModelListener{
                 startAnim = false;
             }
             else if(!anim.over){
-                int x = anim.getX();//* 64;
-                int y = anim.getY();// * 64;
+                int x = anim.getX();
+                int y = anim.getY();
 
                 if(p.lastMove == Direction.z){
                 g.drawImage(ImagesLoader.lookUp(ImagesLoader.bullet), x + 40, y, this);
@@ -229,7 +227,6 @@ public class View extends JPanel implements ModelListener{
         int drawLocationY = 300;
 
         // Rotation information
-
         if(p.lastMove == Direction.z){
             g.drawImage(ImagesLoader.lookUp(img), x, y, this);
         }else if(p.lastMove == Direction.s){
@@ -265,7 +262,7 @@ public class View extends JPanel implements ModelListener{
         int x = 64 * p.getX();
         int y = 64 * p.getY();
 
-        double percentLife = life / (double)10;// * 100;
+        double percentLife = life / (double)10;
         int hpSize = (int) (size * percentLife);
         g.drawRect(x+10,y+2,size, 5);
 

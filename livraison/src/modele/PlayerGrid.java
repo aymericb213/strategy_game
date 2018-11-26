@@ -1,7 +1,7 @@
 package modele;
 
 /**
-  * Proxy de RealGrid permettant une vue propre à chaque joueur
+  * Proxy of RealGrid allowing a separate view for each player
 */
 public class PlayerGrid implements Grid {
 
@@ -9,40 +9,40 @@ public class PlayerGrid implements Grid {
     private final Player client;
     private boolean alt_string =false;
 
-    /** Constructeur de la classe.
+    /** Class constructor.
       * @param model
-      * La grille de jeu dont l'instance va être le proxy.
+      * The game's grid whose instance is the proxy
       * @param client
-      * Le joueur à qui est destinée l'instance.
+      * The player destined to that instance
     */
     public PlayerGrid(RealGrid model, Player client) {
         this.model = model;
         this.client = client;
     }
 
-    /** Getter de la RealGrid.
-      * @return la RealGrid liée au proxy.
+    /** Getter method of RealGrid.
+      * @return RealGrid related to a proxy.
     */
     public RealGrid getModel() {
         return this.model;
     }
 
-    /** Détermine si le joueur peut voir la case en argument.
+    /** Determines if the player can see a Tile in question.
       * @param t
-      * La case à tester.
-      * @return le résultat du test.
+      * Tile to test.
+      * @return test result.
     */
     public boolean playerCanSee(Tile t) {
         return (t.isVisible() || (!(t.isVisible()) && (((Weapon)t).getOwner().equals(this.client))));
     }
 
-    /** Getter modifié de la case aux coordonnées en argument, qui peut mentir sur le contenu
-      * si le joueur n'est pas censé le connaître.
+    /** Modified getter of the tile with the coordinates in argument, can change the tile's content
+      * if the player is not supposed to see it.
       * @param x
-      * Abscisse de la case.
+      * Square ordinate.
       * @param y
-      * Ordonnée de la case.
-      * @return Le contenu de la case si le joueur peut le voir, sinon une case vide.
+      * Square abscissa.
+      * @return The tile's content of the player is allowed to see it, otherwise an empty tile.
     */
     @Override
     public Tile getTileAt(int x, int y) {

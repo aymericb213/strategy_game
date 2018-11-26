@@ -3,7 +3,9 @@ package modele;
 import java.util.*;
 import static java.lang.Math.*;
 
-/** The game actors.*/
+/** 
+ * The game actors.
+ */
 public class Player extends Tile {
 
     private String name;
@@ -321,30 +323,30 @@ public class Player extends Tile {
     }
 
     public void testView(int jX, int jY, int vX, int vY, ArrayList<ArrayList<Integer>> visibles){
-        int mapSizeX = view.getModel().getWidth(); //creation de g[][], liste de valeurs parcourues
+        int mapSizeX = view.getModel().getWidth(); //creation of g[][], liste of all the values ran
         int mapSizeY = view.getModel().getHeight();
         int[][] g = new int[mapSizeX][mapSizeY];
 
-        for(int[] i : g){ //parcours g
+        for(int[] i : g){ //run g
             for(int j : i){
-                j = 0; //met toutes les valeurs de g à 0
+                j = 0; //resets g to 0
             }
         }
 
-        int distanceX = abs(vX-jX); //calcul la distance absolue entre le joueur et le point (X)
-        int distanceY = abs(vY-jY); //calcul la distance absolue entre le joueur et le point (X)
-        double hypothenuse = sqrt(pow(distanceX,2)+pow(distanceY,2)); //calcul la longueur de l'hypothenuse
-        int intHypothenuse = ((int)(hypothenuse))*20; //arrondi la longueur de l'hypothenuse en int
+        int distanceX = abs(vX-jX); //calculates the absolute distance between the player and point (X)
+        int distanceY = abs(vY-jY); //calculates the absolute distance between the player and point (Y)
+        double hypothenuse = sqrt(pow(distanceX,2)+pow(distanceY,2)); //calculates the lenght of the hypotenuse
+        int intHypothenuse = ((int)(hypothenuse))*20; //rounds the length of the hypotenuse to an int
 
-        double movingX = distanceX*20; //calcul la distance par mouvement de test en X
-        double movingY = distanceY*20; //calcul la distance par mouvement de test en Y
+        double movingX = distanceX*20; //calculates the distance per mouvement of test in X
+        double movingY = distanceY*20; //calculates the distance per mouvement of test in Y
         if(intHypothenuse!=0){
-            movingX/=intHypothenuse; //la divise par la taille de l'hypothenuse si la distance est supérieure à 0
-            movingY/=intHypothenuse; //la divise par la taille de l'hypothenuse si la distance est supérieure à 0
+            movingX/=intHypothenuse; //divides movingX by the length of the hypotenuse if the distance is greater than 0
+            movingY/=intHypothenuse; //divides movingY by the length of the hypotenuse if the distance is greater than 0
         }
 
-        float XX = jX*20; //creer XX valeur en jX * 20
-        float YY = jY*20; //creer YY valeur en jY * 20
+        float XX = jX*20; //creates XX value in jX * 20
+        float YY = jY*20; //creates YY value in jY * 20
         boolean revX;
         boolean revY;
         revX = vX-jX<0;
@@ -356,7 +358,7 @@ public class Player extends Tile {
                 XX-=movingX;
             }else{
                 XX+=movingX;
-            } //deplace XX de movingX (vers vX*20 donc)
+            } //moves XX of movingX (towards vX*20 therefore)
             if(revY){
                 YY-=movingY;
             }else{
@@ -444,9 +446,9 @@ public class Player extends Tile {
         this.lastMove = d;
         for (Weapon w : this.loadout.keySet()) {
             if (w instanceof Rifle) {
-                Rifle fire_rifle = new Rifle(this);//nouveau Rifle juste pour le tir
+                Rifle fire_rifle = new Rifle(this);//new Rifle just for firing
                 fire_rifle.fire(this.view.getModel(),d);
-                this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);// màj des munitions
+                this.loadout.put(PlayerFactory.inventory.get(0), this.loadout.get(PlayerFactory.inventory.get(0))-1);// ammunation
                 this.energy-=GameConfig.FIRE_COST;
             }
         }

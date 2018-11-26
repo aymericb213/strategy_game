@@ -23,7 +23,7 @@ public class ViewConsole implements ModelListener{
         System.out.println("================ STRATEGY GAME =================\n");
         System.out.println("Tour " + game.getGrid().getTurnNumber());
         System.out.println(playerToPlay.getName() + "\n");
-        System.out.println(playerToPlay.getView() + "\n");//vues joueur
+        System.out.println(playerToPlay.getView() + "\n");//player's view
 
         threadPlay.start();
     }

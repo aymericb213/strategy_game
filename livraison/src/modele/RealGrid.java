@@ -59,7 +59,7 @@ public class RealGrid implements Grid {
         return cpt==1;
     }
 
-    /** Finds and prepares the next player to play its turn.
+    /** Finds and prepares the next player to play his turn.
       * @return the next player.
       */
     public Player nextPlayer() {
@@ -75,7 +75,8 @@ public class RealGrid implements Grid {
     }
 
     /** Prepares the next turn by making bombs tick
-      * and refilling the player queue.*/
+      * and refilling the player queue.
+      */
     public void nextTurn() {
         ArrayList<Bomb> copy_bombs = new ArrayList<>(this.bombs);
         for (Bomb b : copy_bombs) {
@@ -114,7 +115,9 @@ public class RealGrid implements Grid {
         this.explode = false;
     }
 
-    /** Fills the player queue with all alive players.*/
+    /** 
+     * Fills the player queue with all alive players.
+     */
     public void fillPlayerQueue() {
       for (Player p : this.players) {
         if (p.getLife() > 0) {

@@ -3,15 +3,15 @@ package modele;
 import java.awt.image.BufferedImage;
 
 /**
-* Classe fille de Tile représentant un mur.
+* Class that extends Tile, represents a wall.
 */
 public class Wall extends Tile {
     /**
-    * Constructeur de la classe.
+    * Class constructor.
     * @param x
-    * Ordonnée de la case.
+    * Square ordinate.
     * @param y
-    * Abscisse de la case.
+    * Square abscissa.
     */
     public Wall(int x, int y) {
         super(x,y);
@@ -24,8 +24,8 @@ public class Wall extends Tile {
     }
 
     /**
-    * Retourne la représentation du mur.
-    * @return Un caractère représentant le mur.
+    * Returns the representation of a wall.
+    * @return a character representing a wall.
     */
     @Override
     public String toString() {

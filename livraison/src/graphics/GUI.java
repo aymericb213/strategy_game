@@ -123,8 +123,6 @@ public class GUI extends JFrame{
         });
         popup.add(passTurn);
 
-
-        //Je mets ça juste pour les tests, on verra ce qu'on en fait
         addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {
