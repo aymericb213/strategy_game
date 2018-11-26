@@ -65,7 +65,7 @@ public class Mine extends Tile implements Weapon {
     * equals Override.
     * Checks the equality of the coordinates.
     * @param o
-    * The object to compare to a node.
+    * The object to compare to this mine.
     * @return Equality test result.
     */
     @Override

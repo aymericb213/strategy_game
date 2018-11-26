@@ -80,7 +80,7 @@ public class Bomb extends Mine {
     * equals Override.
     * Checks the equality of the coordinates.
     * @param o
-    * The object to compare to a node.
+    * The object to compare to this bomb.
     * @return Equality test result.
     */
     @Override

@@ -1,5 +1,6 @@
 package modele;
 
+/** Weapon used by the player to shoot.*/
 public class Rifle implements Weapon {
 
     private final Player owner;
@@ -15,6 +16,12 @@ public class Rifle implements Weapon {
         return this.owner;
     }
 
+    /** Shoots towards the parameter direction.
+      * @param g
+      * Grid in which the action takes place.
+      * @param default:
+      * Fire direction.
+      */
     @Override
     public void fire(Grid g, Direction d) {
         for (int i=1 ; i<=this.range ; i++) {
@@ -30,12 +37,11 @@ public class Rifle implements Weapon {
         }
     }
 
+    /** Required by interface implementation. Not used in this class.*/
     @Override
     public void explode(RealGrid g, Player p) {
         throw new UnsupportedOperationException("Not supported.");
     }
-
-    /**
 
     /**
     * hashCode() Override.
@@ -54,7 +60,7 @@ public class Rifle implements Weapon {
     * equals Override.
     * Checks the equality of the coordinates.
     * @param o
-    * The object to compare to a node.
+    * The object to compare to this rifle.
     * @return Equality test result.
     */
     @Override
