@@ -11,6 +11,7 @@ public class Mine extends Tile implements Weapon {
     /**
     * Class constructor.
     * @param owner
+    * Player that planted the mine.
     */
     public Mine(Player owner) {
         super(-1,-1);
@@ -29,11 +30,18 @@ public class Mine extends Tile implements Weapon {
         return this.owner;
     }
 
+    /** Required by interface implementation. Not used in this class.*/
     @Override
     public void fire(Grid g, Direction d) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** Explosion method used if a player steps on the mine.
+      * @param g
+      * The grid in which the explosion takes place.
+      * @param p
+      * The player that stepped on the mine.
+      */
     @Override
     public void explode(RealGrid g, Player p) {
         p.takeDamage(this.damage);
@@ -73,8 +81,8 @@ public class Mine extends Tile implements Weapon {
     }
 
     /**
-    * Returns the representation of the objective.
-    * @return A character representing the objective.
+    * Returns the representation of the mine.
+    * @return A character representing the mine.
     */
     @Override
     public String toString() {
