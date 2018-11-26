@@ -5,6 +5,7 @@ import java.nio.charset.*;
 import java.nio.file.*;
 import java.io.*;
 
+/** Class containing all static parameters used in the game, read from a text file.*/
 public final class GameConfig {
 
     public static int RANDOMIZED_PLAYER_ORDER;
@@ -32,6 +33,7 @@ public final class GameConfig {
         this.assignParameters();
     }
 
+    /** Reads a text file and assigns the static variables with the values stored in the file.*/
     public void assignParameters() {
         ArrayList<Integer> parameters = new ArrayList<>();
         try {
