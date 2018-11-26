@@ -3,7 +3,7 @@ package modele;
 import java.util.*;
 import static java.lang.Math.*;
 
-/** 
+/**
  * The game actors.
  */
 public class Player extends Tile {
@@ -392,7 +392,6 @@ public class Player extends Tile {
         if (!(this.shield_up)) {
             this.life -= damage;
             if (this.life<=0) {
-                this.energy=0;
                 this.view.setTileAt(new FreeTile(this.x,this.y));
                 this.view.getModel().getActivePlayers().remove(this);
                 this.view.getModel().nextPlayer();
