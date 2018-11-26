@@ -35,7 +35,7 @@ public final class GameConfig {
     public void assignParameters() {
         ArrayList<Integer> parameters = new ArrayList<>();
         try {
-            Path file_path = FileSystems.getDefault().getPath("src/config.txt");
+            Path file_path = FileSystems.getDefault().getPath("config.txt");
             List<String> d = Files.readAllLines(file_path, StandardCharsets.UTF_8);
             for (String line : d) {
                 String[] s = line.split("=");

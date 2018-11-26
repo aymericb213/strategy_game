@@ -30,7 +30,7 @@ public class ImagesLoader {
         imagePlayers = new HashMap<>();
         BufferedImage spritesheet = null;
         try{
-            spritesheet = ImageIO.read(new File("src/Images/Spritesheet/spritesheet_characters.png"));
+            spritesheet = ImageIO.read(new File("Images/Spritesheet/spritesheet_characters.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }
@@ -134,18 +134,18 @@ public class ImagesLoader {
         BufferedImage tilesheet = null;
 
         try{
-            tilesheet = ImageIO.read(new File("src/Images/Tilesheet/tilesheet_complete.png"));
+            tilesheet = ImageIO.read(new File("Images/Tilesheet/tilesheet_complete.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }
 
         try{
-            fog = ImageIO.read(new File("src/Images/fog.png"));
-            shield = ImageIO.read(new File("src/Images/shield.png"));
-            bomb = ImageIO.read(new File("src/Images/bomb2.png"));
-            mine = ImageIO.read(new File("src/Images/mine2.png"));
-            bullet = ImageIO.read(new File("src/Images/bullet.png"));
-            bonus = ImageIO.read(new File("src/Images/bonus.png"));
+            fog = ImageIO.read(new File("Images/fog.png"));
+            shield = ImageIO.read(new File("Images/shield.png"));
+            bomb = ImageIO.read(new File("Images/bomb2.png"));
+            mine = ImageIO.read(new File("Images/mine2.png"));
+            bullet = ImageIO.read(new File("Images/bullet.png"));
+            bonus = ImageIO.read(new File("Images/bonus.png"));
         }catch(IOException e){
             System.out.println("Loader"+e);
         }

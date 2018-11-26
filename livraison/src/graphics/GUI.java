@@ -42,7 +42,7 @@ public class GUI extends JFrame{
         //Création de menu
         final JPopupMenu popup = new JPopupMenu();
 
-        JMenuItem depItem = new JMenuItem("Déplacement"  + GameConfig.MOVE_COST + " AP", new ImageIcon("src/Images/moveIcon.png"));
+        JMenuItem depItem = new JMenuItem("Déplacement"  + GameConfig.MOVE_COST + " AP", new ImageIcon("Images/moveIcon.png"));
         depItem.getAccessibleContext().setAccessibleDescription("Déplacer le personnage");
         depItem.addActionListener(new ActionListener(){
             @Override
@@ -56,7 +56,7 @@ public class GUI extends JFrame{
         });
         popup.add(depItem);
 
-        JMenuItem shieldItem = new JMenuItem("Activer bouclier"  + GameConfig.SHIELD_COST + " AP", new ImageIcon("src/Images/shieldIcon.png"));
+        JMenuItem shieldItem = new JMenuItem("Activer bouclier"  + GameConfig.SHIELD_COST + " AP", new ImageIcon("Images/shieldIcon.png"));
         shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
         shieldItem.addActionListener(new ActionListener(){
             @Override
@@ -74,7 +74,7 @@ public class GUI extends JFrame{
         });
         popup.add(shieldItem);
 
-        JMenuItem shootItem = new JMenuItem("Tirer"  + GameConfig.FIRE_COST + " AP", new ImageIcon("src/Images/target.png"));
+        JMenuItem shootItem = new JMenuItem("Tirer"  + GameConfig.FIRE_COST + " AP", new ImageIcon("Images/target.png"));
         shootItem.getAccessibleContext().setAccessibleDescription("Tirer dans une direction");
         shootItem.addActionListener(new ActionListener(){
             @Override
@@ -86,7 +86,7 @@ public class GUI extends JFrame{
         });
         popup.add(shootItem);
 
-        JMenuItem plantMine = new JMenuItem("Poser une mine"  + GameConfig.PLANT_COST + " AP", new ImageIcon("src/Images/mine.png"));
+        JMenuItem plantMine = new JMenuItem("Poser une mine"  + GameConfig.PLANT_COST + " AP", new ImageIcon("Images/mine.png"));
         plantMine.getAccessibleContext().setAccessibleDescription("Poser une mine");
         plantMine.addActionListener(new ActionListener(){
             @Override
@@ -99,7 +99,7 @@ public class GUI extends JFrame{
         });
         popup.add(plantMine);
 
-        JMenuItem plantBomb = new JMenuItem("Poser une bombe"  + GameConfig.PLANT_COST + " AP", new ImageIcon("src/Images/bomb.png"));
+        JMenuItem plantBomb = new JMenuItem("Poser une bombe"  + GameConfig.PLANT_COST + " AP", new ImageIcon("Images/bomb.png"));
         plantBomb.getAccessibleContext().setAccessibleDescription("Poser une bombe");
         plantBomb.addActionListener(new ActionListener(){
             @Override
@@ -113,7 +113,7 @@ public class GUI extends JFrame{
         });
         popup.add(plantBomb);
 
-        JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("src/Images/pass.png"));
+        JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("Images/pass.png"));
         passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
         passTurn.addActionListener(new ActionListener(){
             @Override

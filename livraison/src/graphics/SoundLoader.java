@@ -13,18 +13,18 @@ import javafx.scene.media.*;
 public class SoundLoader {
     private Media loadSound;
     private MediaPlayer playSound;
-    
+
     /**
      * Constructor method that takes an action as a parameter to play a certain sound
-     * @param action int value that represents an action performed (Shooting, getting hurt, etc..) 
+     * @param action int value that represents an action performed (Shooting, getting hurt, etc..)
      */
     public SoundLoader(int action) {
         String mainPath = new File("").getAbsolutePath();
-        File audioFiles = new File("src/Sons/");
+        File audioFiles = new File("Sons/");
         File[] fileList = audioFiles.listFiles();
         Arrays.sort(fileList);
         for (File f: fileList){
-            String sound = mainPath + "/src/Sons/"+fileList[action].getName();
+            String sound = mainPath + "/Sons/"+fileList[action].getName();
             try {
                 final URL songPath = new File(sound).toURI().toURL();
                 loadSound = new Media(songPath.toString());
@@ -37,7 +37,7 @@ public class SoundLoader {
             playSound.play();
         }
     }
-    
+
     /**
      * Method to play a track in a loop
      */
