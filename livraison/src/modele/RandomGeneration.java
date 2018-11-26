@@ -2,6 +2,7 @@ package modele;
 
 import java.util.*;
 
+/** A grid generation stategy based on randomness.*/
 public class RandomGeneration implements GridStrategy {
 
   private final RealGrid client;
@@ -10,6 +11,9 @@ public class RandomGeneration implements GridStrategy {
         this.client = client;
   }
 
+    /** Fills the game grid with random tiles, with protections
+      * to ensure every player can move.
+      */
     @Override
     public void generate() {
         Tile[] random_grid=client.getGrid();
