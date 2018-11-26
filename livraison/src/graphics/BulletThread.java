@@ -21,11 +21,11 @@ public class BulletThread extends Thread {
     private View observer;
     /**
      * Constructor of a new BulletThread.
-     * @param x
-     * @param y
-     * @param range
-     * @param d
-     * @param p
+     * @param x Shootman x position
+     * @param y Shootman y position
+     * @param range weapon range
+     * @param d Shooting direction
+     * @param p Player that is shooting
      */
     public BulletThread(int x, int y, int range, Direction d, Player p){
         this.x = x *64;
@@ -103,10 +103,18 @@ public class BulletThread extends Thread {
         this.owner = p;
     }
 
+    /**
+    * Set the model of the Thread
+    * @param g The model to follow.
+    */
     public void setGame(Game g){
         this.game =g;
     }
 
+    /**
+    * Set the view that will be actualize.
+    * @param view View to actualize.
+    */
     public void setObserver(View view){
         this.observer = view;
     }

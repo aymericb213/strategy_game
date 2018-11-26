@@ -20,14 +20,26 @@ public class Game extends AbstractListenableModel {
     private HashMap<Integer, ArrayList<Tile>> tile_map;
     protected HashMap<Player, BufferedImage> listPlayers = new HashMap<>();
 
+    /**
+    * Construct a nex Game
+    *
+    */
     public Game() {
         this(new RealGrid());
     }
 
+    /**
+    * Construct a nex Game
+    * @param grid Grid of the game.
+    */
     public Game(RealGrid grid) {
         this.grid = grid;
     }
 
+    /**
+    * Get the grid of the game
+    * 
+    */
     public RealGrid getGrid() {
         return this.grid;
     }
