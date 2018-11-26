@@ -6,6 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.JPanel;
 
+/**
+ * Class representing player graphic view.
+ * @author quentindeme
+ */
 public class View extends JPanel implements ModelListener{
     private static final long serialVersionUID = 7526471155622776147L;
     private Tile[] entities;
@@ -16,6 +20,13 @@ public class View extends JPanel implements ModelListener{
     private final Player player;
     private final GUI observer;
 
+    /**
+     * Constructor of a new View
+     * @param entities Tile to render at the screen.
+     * @param game Model to listen.
+     * @param p Player to whom belongs the view.
+     * @param observer The GUI containing the view. 
+     */
     public View(Tile[] entities, Game game, Player p, GUI observer) {
         this.player = p;
         this.entities = entities;
@@ -25,6 +36,10 @@ public class View extends JPanel implements ModelListener{
         game.addListener(this);
     }
 
+    /**
+     * Display entities at the screen.
+     * @param g 
+     */
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -159,6 +174,10 @@ public class View extends JPanel implements ModelListener{
         }
     }
 
+    /**
+     * Display bomb when it belong to the player.
+     * @param g graphics.
+     */
     public void displayBomb(Graphics g){
         for(Tile t : player.getView().getModel().getGrid()){
             if(t instanceof Bomb){
@@ -175,6 +194,11 @@ public class View extends JPanel implements ModelListener{
         }
     }
 
+    /**
+     * Display bullet when the player is shooting.
+     * @param g graphics
+     * @param p Player that is shooting.
+     */
     public void displayBullet(Graphics g, Player p){
         g.setColor(Color.BLACK);
         if(p.isShooting()){
@@ -210,7 +234,11 @@ public class View extends JPanel implements ModelListener{
         }
     }
 
-
+    /**
+     * Display player at the screen.
+     * @param g
+     * @param p Player to display
+     */
     public void displayPlayer(Graphics g, Player p){
 
         BufferedImage img = p.getImgRepr();
@@ -243,6 +271,11 @@ public class View extends JPanel implements ModelListener{
         drawLife(p,g);
     }
 
+    /**
+     * Draw player action's points.
+     * @param p player
+     * @param g 
+     */
     public void drawActionPoint(Player p, Graphics g){
         int nbAction = p.getEnergy();
 
@@ -254,6 +287,11 @@ public class View extends JPanel implements ModelListener{
         g.drawString(Integer.toString(nbAction), x+10, y-10);
     }
 
+    /**
+     * Draw player's life.
+     * @param p Player
+     * @param g 
+     */
     public void drawLife(Player p, Graphics g){
         g.setColor(Color.BLACK);
         int life = p.getLife();
@@ -276,10 +314,18 @@ public class View extends JPanel implements ModelListener{
         g.fillRect(x+10+1,y+2+1,hpSize-2, 5-2);
     }
 
+    /**
+     * Set entities of the view.
+     * @param l 
+     */
     public void setEntities(Tile[] l){
         this.entities = l;
     }
 
+    /**
+     * Signal to view the model has changed.
+     * @param source 
+     */
     @Override
     public void update(Object source) {
         this.repaint();

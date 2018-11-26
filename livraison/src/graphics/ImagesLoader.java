@@ -22,10 +22,21 @@ public class ImagesLoader {
     public static BufferedImage bullet;
     public static BufferedImage bonus;
 
+    /**
+     * Construct ImagesLoader with a file to read.
+     * @param file File to load.
+     */
     public ImagesLoader(File file){
         this.file = file;
     }
 
+    /**
+     * Load images that will represent the players.
+     * The base image is cut with an XML.
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException 
+     */
     public void loadPlayerImages() throws ParserConfigurationException, IOException, SAXException{
         imagePlayers = new HashMap<>();
         BufferedImage spritesheet = null;
@@ -67,6 +78,11 @@ public class ImagesLoader {
         }
     }
 
+    /**
+     * Return the image corresponding to the player when he is looking UP. The image is completely recalculated.
+     * @param img Basic image player that will be rotated.
+     * @return The image rotated in the right sens.
+     */
     public static BufferedImage lookUp(BufferedImage img) {
         int height = img.getHeight();
         int width = img.getWidth();
@@ -81,6 +97,11 @@ public class ImagesLoader {
         return rotated;
     }
 
+    /**
+     * Return the image corresponding to the player when he is looking DOWN. The image is completely recalculated.
+     * @param img Basic image player that will be rotated.
+     * @return The image rotated in the right sens.
+     */
     public static BufferedImage lookDown(BufferedImage img) {
 
         int height = img.getHeight();
@@ -96,6 +117,11 @@ public class ImagesLoader {
         return rotated;
     }
 
+    /**
+     * Return the image corresponding to the player when he is looking RIGHT. The image is completely recalculated.
+     * @param img Basic image player that will be rotated.
+     * @return The image rotated in the right sens.
+     */
     public static BufferedImage lookRight(BufferedImage img) {
 
         int height = img.getHeight();
@@ -111,6 +137,11 @@ public class ImagesLoader {
         return rotated;
     }
 
+    /**
+     * Return the image corresponding to the player when he is looking LEFT. The image is completely recalculated.
+     * @param img Basic image player that will be rotated.
+     * @return The image rotated in the right sens.
+     */
     public static BufferedImage lookLeft(BufferedImage img) {
 
         int height = img.getHeight();
@@ -126,7 +157,10 @@ public class ImagesLoader {
         return rotated;
     }
 
-    //Méthode a appelé une seule, ensuite les images sont accessibles de n'importe ou.
+    /**
+     * Method to call only once at the beggining of the program. After that, the images will be accessible from everywhere in the code.
+     * @return ArrayList containing images.
+     */
     public static ArrayList<BufferedImage> loadImages(){
         imageList = new ArrayList<>();
 

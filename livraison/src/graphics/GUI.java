@@ -4,7 +4,10 @@ import modele.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
+/**
+ * Class used for create a new player's window.
+ * @author quentindeme
+ */
 public class GUI extends JFrame{
     private static final long serialVersionUID = 7526471155622776147L;
     private View view;
@@ -21,27 +24,41 @@ public class GUI extends JFrame{
         this(new Game(),p);
     }
 
+    /**
+     * JFrame containing player's view.
+     * @param game Model the view will be listening.
+     * @param p player to whom the view belongs.
+     */
     public GUI(Game game, Player p){
         this.player = p;
         this.game = game;
         playerToPlay = game.getGrid().getPlayerToPlay();
+        //Create a new View (that is a JPanel)
         this.view = new View(null,game, player, this);
         view.setEntities(game.getGrid().getGrid());
+        //Set the view as contentPane of the Frame
         setContentPane(view);
         setTitle("Shooter Game ("+player.getName()+")");
-        setSize(832,832); //64*20;
+        //In this code the GUI does not adapt to level size.
+        //But it could performing like this:
+//        int size = game.getGrid().getWidth() * 64; (64x64 is size of the images)    
+        setSize(832,832); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Place window center of the screen
+        setResizable(false);
         setLocationRelativeTo(null);
 
-        //Pour lire les entrées claviers
+        //In order to read keys input
         setFocusable(true);
         requestFocus();
 
+        //The title of the window in the name of the player and indicates who is playing
         setTitle("Shooter Game ("+player.getName()+"). Tour de: "+playerToPlay.getName());
 
-        //Création de menu
+        //Création du menu clique
         final JPopupMenu popup = new JPopupMenu();
 
+        //Move action
         JMenuItem depItem = new JMenuItem("Déplacement"  + GameConfig.MOVE_COST + " AP", new ImageIcon("Images/moveIcon.png"));
         depItem.getAccessibleContext().setAccessibleDescription("Déplacer le personnage");
         depItem.addActionListener(new ActionListener(){
@@ -56,6 +73,7 @@ public class GUI extends JFrame{
         });
         popup.add(depItem);
 
+        //Shield action
         JMenuItem shieldItem = new JMenuItem("Activer bouclier"  + GameConfig.SHIELD_COST + " AP", new ImageIcon("Images/shieldIcon.png"));
         shieldItem.getAccessibleContext().setAccessibleDescription("Activer le bouclier");
         shieldItem.addActionListener(new ActionListener(){
@@ -74,6 +92,7 @@ public class GUI extends JFrame{
         });
         popup.add(shieldItem);
 
+        //Shoot action
         JMenuItem shootItem = new JMenuItem("Tirer"  + GameConfig.FIRE_COST + " AP", new ImageIcon("Images/target.png"));
         shootItem.getAccessibleContext().setAccessibleDescription("Tirer dans une direction");
         shootItem.addActionListener(new ActionListener(){
@@ -86,6 +105,7 @@ public class GUI extends JFrame{
         });
         popup.add(shootItem);
 
+        //Plant mine action
         JMenuItem plantMine = new JMenuItem("Poser une mine"  + GameConfig.PLANT_COST + " AP", new ImageIcon("Images/mine.png"));
         plantMine.getAccessibleContext().setAccessibleDescription("Poser une mine");
         plantMine.addActionListener(new ActionListener(){
@@ -99,6 +119,7 @@ public class GUI extends JFrame{
         });
         popup.add(plantMine);
 
+        //Plant bomb action
         JMenuItem plantBomb = new JMenuItem("Poser une bombe"  + GameConfig.PLANT_COST + " AP", new ImageIcon("Images/bomb.png"));
         plantBomb.getAccessibleContext().setAccessibleDescription("Poser une bombe");
         plantBomb.addActionListener(new ActionListener(){
@@ -113,6 +134,7 @@ public class GUI extends JFrame{
         });
         popup.add(plantBomb);
 
+        //Pass turn
         JMenuItem passTurn = new JMenuItem("Passer", new ImageIcon("Images/pass.png"));
         passTurn.getAccessibleContext().setAccessibleDescription("Passer son tour");
         passTurn.addActionListener(new ActionListener(){
@@ -132,6 +154,10 @@ public class GUI extends JFrame{
             public void keyPressed(KeyEvent e) {
             }
 
+            /**
+             * If the player wants to move with keyboard (for multiples movements).
+             * @param e Keyvent.
+             */
             @Override
             public void keyReleased(KeyEvent e) {
                 if(player.getName() == playerToPlay.getName()){
@@ -170,16 +196,28 @@ public class GUI extends JFrame{
         });
 
         getContentPane().addMouseListener(new MouseListener(){
+            /**
+             * Display actions menu.
+             * @param e 
+             */
             public void showPopup(MouseEvent e){
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
 
+            /**
+             * Not used.
+             * @param e 
+             */
             @Override
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
             }
 
+            /**
+             * If we press the window, the player to play is actualized.
+             * @param e 
+             */
             @Override
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
@@ -187,6 +225,10 @@ public class GUI extends JFrame{
                 playerToPlay = game.getGrid().getPlayerToPlay();
             }
 
+            /**
+             * On mouse released all actions are treated in consequences.
+             * @param e MouseEvent.
+             */
             @Override
             public void mouseReleased(MouseEvent e) {
                 int popX = e.getX();
@@ -194,6 +236,7 @@ public class GUI extends JFrame{
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
 
+                //Display actions menu and distinct what is possible or not.
                 if(game.getGrid().getTileAt(x, y) instanceof Player ){ //Test si il est le joueur qui doit jouer
                     Player p = (Player) game.getGrid().getTileAt(x, y);
                     if(p.getAsTurn()){
@@ -227,13 +270,17 @@ public class GUI extends JFrame{
                     }
                     game.stateChange();
                 }
-
+                
+                //Just actualize player
                 Player p = playerToPlay;
+                //First of all, we act if the player as energy.
                 if(p.getEnergy() > 0){
+                    //If the past choice was a move
                     if(isMoving){
                         int depX = x - p.getX();
                         int depY = y - p.getY();
 
+                        //We check click coordinate and get the direction of the click
                         Direction d = null;
                         if(depX == 0 && depY == -1){
                             d = Direction.z;
@@ -245,12 +292,15 @@ public class GUI extends JFrame{
                             d = Direction.d;
                         }
 
+                        //If the direction is in player's possible moves, that's ok
                         if(p.possibleMoves().contains(d)){
+                            //If the player is moving on a mine, we play explosion sound
                             if (game.getGrid().getTileAt(p.getX()+d.x(),p.getY()+d.y()) instanceof Mine) {
                                 sound = new SoundLoader(1);
                             }
-
+                            //We compute the movement
                             p.move(d);
+                            //After the movement, the player is not moving anymore for now
                             isMoving = false;
                             p.unselect();
                             if(p.getEnergy()==0){
@@ -262,6 +312,7 @@ public class GUI extends JFrame{
                         p.unselect();
                         game.stateChange();
                     }else if(isShooting){
+                        //Everything follow the same mechanic than before.
                         Direction d = null;
                         int depX = x - p.getX();
                         int depY = y - p.getY();
@@ -314,14 +365,25 @@ public class GUI extends JFrame{
         this.setSize(difX, difY);
     }
 
+    /**
+     * Getter for the view.
+     * @return The view inside the Frame
+     */
     public View getView(){
         return this.view;
     }
 
+    /**
+     * Getter for the game.
+     * @return The model that is listened.
+     */
     public Game getGame(){
         return this.game;
     }
 
+    /**
+     * Change the turn and reset informations for the GUI.
+     */
     public void changeTurn(){
         playerToPlay.setAsTurn(false);
         playerToPlay = game.getGrid().nextPlayer();
@@ -336,6 +398,9 @@ public class GUI extends JFrame{
         game.stateChange();
     }
 
+    /**
+     * Play damage sounds.
+     */
     public void damageSound(){
         if(game.getGrid().checkDamage()){
             sound = new SoundLoader(2);
@@ -343,6 +408,12 @@ public class GUI extends JFrame{
         }
     }
 
+    /**
+     * Convert block into direction between x y coordinates and the player.
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return The direction of the player looking to x y coordinate.
+     */
     public Direction block2dir(int x, int y){
         int varX = playerToPlay.getX() - x;
         int varY = playerToPlay.getY() - y;

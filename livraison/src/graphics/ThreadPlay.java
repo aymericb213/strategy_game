@@ -5,15 +5,25 @@ import java.util.*;
 import java.util.logging.*;
 import modele.*;
 
+/**
+ * Thread waiting for user's input to play in the console, even if the GUI is running.
+ */
 public class ThreadPlay extends Thread{
 
     private final Game game;
     public static int counterInstance = 0;
 
+    /**
+     * Thread constructor
+     * @param game Model to interact with.
+     */
     public ThreadPlay(Game game){
         this.game = game;
     }
 
+    /**
+     * Run method waiting.
+     */
     @Override
     public void run(){
         Player p = game.getGrid().getPlayerToPlay();

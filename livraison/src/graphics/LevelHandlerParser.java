@@ -4,6 +4,10 @@ import java.util.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Handler used to read and interprete XML level.
+ * Juste implementing methods and read xml file.
+ */
 public class LevelHandlerParser extends DefaultHandler{
 
     Stack<String> balises= new Stack<>();

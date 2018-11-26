@@ -4,6 +4,10 @@ import java.util.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Handler used for parse XML player's images coordinates.
+ * basic handler parser.
+ */
 public class PlayerImageParser extends DefaultHandler {
 
     public String chemin;
