@@ -13,8 +13,6 @@ public class Main {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         com.sun.javafx.application.PlatformImpl.startup(()->{});
-        SoundLoader bg = new SoundLoader(0);
-        bg.loopTrack();
         new GameConfig();
 
         File file2 = new File("Images/Spritesheet/spritesheet_characters.xml");
@@ -74,6 +72,9 @@ public class Main {
             GUI gui4 = new GUI(game, p4);
             ViewConsole console = new ViewConsole(null,game);
             console.update(console);
+
+            SoundLoader bg = new SoundLoader(0);
+            bg.loopTrack();
 
         } catch (IOException | ParserConfigurationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
